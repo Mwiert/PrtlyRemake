@@ -28,18 +28,27 @@
           
          
         </tbody>
-        
-      <button type="button" style="border-radius:7rem;margin-right:1rem;margin-top:1rem;" class="btn btn-primary position-absolute top-0 end-0" style="margin-bottom:1rem;" data-bs-toggle="modal" data-bs-target="#myModal">Yeni Kullanıcı</button>
-  
-      <button type="button" style="border-radius:7rem;margin-right:1rem;margin-top:1rem;" class="btn btn-primary position-absolute bot-0 end-0" style="margin-bottom:1rem;" data-bs-toggle="modal" data-bs-target="#myModal1">Yeni Rol</button>
-    
+       
       </table>
     </div>
   </div>
-        <button type="button" style="border-radius:7rem;margin-right:1rem;margin-top:1rem;" class="btn btn-primary position-absolute bottom-0 end-0">+</button>  @*Upside dropdown butonu*@
+  
+     @*   <button type="button" style="border-radius:7rem;margin-right:1rem;margin-top:1rem;" class="btn btn-primary position-absolute bottom-0 end-0">+</button>  Upside dropdown butonu*@
 </div>
+ <div class="dropup-center dropup">
+            <button class="btn btn-primary " style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;"type="button" id="dropupCenterBtn" data-bs-toggle="dropdown" aria-expanded="false">
+              +
+            </button>
+            <ul class="dropdown-menu text-center" style="background-color:transparent;"aria-labelledby="dropupCenterBtn">
+              <li><button type="button" class="btn btn-primary"   style="border-radius:7rem;"data-bs-toggle="modal" data-bs-target="#myModal">Yeni Kullanıcı</button> </li>
+              <li><button type="button"  style="border-radius:7rem;" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal1">Yeni Rol</button></li>
+            </ul>
+          </div>
     @using (Html.BeginForm("AddUser","Admin",FormMethod.Post))
 {
+  @* <button type="button" style="border-radius:7rem;" class="dropdown-item btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Yeni Kullanıcı</button>
+    <button type="button" style="border-radius:7rem;" class="dropdown-item btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal1">Yeni Rol</button></li>
+  *@
 <div class="container mt-2"> @*mt kapatılabilir*@
 
         <div class="modal" id="myModal">
@@ -101,8 +110,9 @@
             </div>
         </div>
     </div>
-
-
+       }
+    @using (Html.BeginForm("AddNewRole", "Admin", FormMethod.Post))
+    {
     <div class="container mt-2"> @*mt kapatılabilir*@
 
         <div class="modal" id="myModal1">
@@ -133,11 +143,15 @@
                 </div>
             </div>
         </div>
+        
     </div>
    }<script>
        function writeName() {
     var temp = document.getElementById("Selects").value
     document.getElementById("inputNameChange").setAttribute("value", temp)
+}
+function openDrop(dropdownOpen) {
+    document.getElementById("dropdownOpen").classList.toggle("show");
 }
 
    </script>

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "USU/R5lSgBE4iKwMviXZ5eYf4vRV+qy4Ojh0I+N2IQIgAtWBfgbh4TgKkZvYRn1gghEQTzmAjuV6mtPPJgLXGw==",
+  "dgSpecHash": "hPlaDcaEWOdlw1Eyr62jDbgTakeL+uSrEqJBqjNeSwvo7lKHBItZeVsyflpepUZEuC4WY0mOChl1NVzMAVgQ1A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\merts\\OneDrive\\Masaüstü\\Remake\\Remake.csproj",
+  "projectFilePath": "C:\\Users\\merts\\OneDrive\\Masaüstü\\PrtlyRemake\\Remake.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\merts\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\merts\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",

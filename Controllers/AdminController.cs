@@ -11,6 +11,7 @@ namespace Remake.Controllers
         Roles AutRoles = new Roles();
         kullanıcı k = new kullanıcı();
         kesifdbContext Db = new kesifdbContext();
+        Roller roller = new Roller(); 
         public IActionResult Index()
         {
             try
@@ -45,6 +46,29 @@ namespace Remake.Controllers
                 throw ex;
             }
       
+        }
+        public IActionResult AddNewRole(string RoleName)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(RoleName))
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
+                else
+                {
+                    roller.RolAdi = RoleName;
+                    Db.Rollers.Add(roller);
+                    Db.SaveChanges();
+                    return RedirectToAction("Index", "Admin");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return RedirectToAction("Index", "Admin");
         }
     }
 }
