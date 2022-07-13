@@ -6,35 +6,30 @@
 }
 
 
-<div class="col-auto grid-margin stretch-card justify-content-center">
-  <div class="card">
-    <div class="card-body">
-      <h2 class="card-title text-center">Kullanıcılar</h2>
-      <table class="table table-hover ">
-        <thead class="space">
-          <tr class="d-flex justify-content-around">
-            <th>Adı</th>
-            <th>Rolü</th>
-          </tr>
-        </thead>
-        <tbody>
-            @foreach(var item in Model)
-            {
-                <tr class="d-flex justify-content-around">        
+<div class="col-lg-12 stretch-card">
+                <div class="table-responsive card">
+                  <div class="card-body">
+                    <h4 class="card-title text-center">Kullanıcılar</h4>
+                    <table class="table table-bordered text-center ">
+                      <thead>
+                        <tr>
+            <th> Adı</th>
+             <th>Rolü</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                         @foreach(var item in Model)
+                             {
+                    <tr class="table-info">
                 <td>@item.Ad</td>
-                <td>@item.Rol.RolAdi</td>
-                </tr>
-            }
-          
-         
-        </tbody>
-       
-      </table>
-    </div>
-  </div>
-  
-     @*   <button type="button" style="border-radius:7rem;margin-right:1rem;margin-top:1rem;" class="btn btn-primary position-absolute bottom-0 end-0">+</button>  Upside dropdown butonu*@
-</div>
+                  <td>@item.Rol.RolAdi</td>
+                        </tr>
+                        }
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
  <div class="dropup-center dropup">
             <button class="btn btn-primary " style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;"type="button" id="dropupCenterBtn" data-bs-toggle="dropdown" aria-expanded="false">
               +
@@ -46,9 +41,6 @@
           </div>
     @using (Html.BeginForm("AddUser","Admin",FormMethod.Post))
 {
-  @* <button type="button" style="border-radius:7rem;" class="dropdown-item btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Yeni Kullanıcı</button>
-    <button type="button" style="border-radius:7rem;" class="dropdown-item btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal1">Yeni Rol</button></li>
-  *@
 <div class="container mt-2"> @*mt kapatılabilir*@
 
         <div class="modal" id="myModal">
@@ -149,9 +141,6 @@
        function writeName() {
     var temp = document.getElementById("Selects").value
     document.getElementById("inputNameChange").setAttribute("value", temp)
-}
-function openDrop(dropdownOpen) {
-    document.getElementById("dropdownOpen").classList.toggle("show");
 }
 
    </script>
