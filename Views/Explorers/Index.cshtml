@@ -1,8 +1,69 @@
-﻿
+﻿@model IEnumerable<Remake.Models.Kesifler>
+@using Remake.Models;
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/layout.cshtml";
 }
 
+  <h2 class="card-title text-center">Aktif Keşifler</h2>
+    <button type="button" style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;" class="btn btn-primary " style="margin-bottom:1rem;" data-bs-toggle="modal" data-bs-target="#myModal">+</button>
+@using (Html.BeginForm("AddExplore","Explorers",FormMethod.Post))
+{
+    <div class="container mt-2"> @*mt kapatılabilir*@
+        <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Keşif Ekle</h4>
+                    <div class="modal-body">
+                        <div class="col-12 grid-margin stretch-card">
+                <div class="card " style="height:100%; margin-bottom:-3rem;">
+                  <div class="card-body">
+                    <form class="forms-sample">
+                      <div class="form-group">
+                        <label for="exampleInputName1">Keşif Adı</label>
+                        <input type="text" class="form-control" id="exampleInputName1" name="ExpName"  required placeholder="Keşif Adı">
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+                    </div>
+                    <div class="modal-footer">
+                         <button type="submit" class="btn btn-gradient-primary me-2">Onayla</button>
+                      <button type="submit" class="btn btn-light" data-bs-dismiss="modal">İptal Et</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+    <div class="col-lg-12 stretch-card">
+                <div class="table-responsive card">
+                  <div class="card-body">
+                    <table class="table table-bordered text-center ">
+                      <tbody>
+                         @foreach(var item in Model)
+                             {
+                        <tr class="table-info" data-toggle="modal" data-target="#orderModal" cursor="pointer">
+                            <td id="getInfo"onclick="getResponse()" value="@item.Id"> @item.Ad</td>
+                     
+                        </tr>
+                        }
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+               @* <script>
+       function getResponse() {
+          alert("alo")
+                 var temp = document.getElementById("getInfo").attributes
+                 alert(temp)
+                 //sorun td'den value almak gerekiyor.'
+}*@
 
-<h1>EXPLORERS Index</h1>
+   </script>
+  
