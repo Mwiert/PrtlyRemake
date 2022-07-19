@@ -16,6 +16,10 @@ namespace Remake.Controllers
             db.SaveChanges();
             return View(db.Kesiflers);
         }
+        public IActionResult MekanIndex(int RowId)
+        {
+            return View("~/Views/Explorers/MekanIndex.cshtml");
+        }
         public IActionResult DeleteExpolore(int RowId)
         {
             try

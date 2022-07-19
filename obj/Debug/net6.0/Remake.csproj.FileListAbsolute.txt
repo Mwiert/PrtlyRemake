@@ -1209,8 +1209,6 @@ C:\Users\merts\OneDrive\Masaüstü\PrtlyRemake\bin\Debug\net6.0\ru\Microsoft.Cod
 C:\Users\merts\OneDrive\Masaüstü\PrtlyRemake\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
 C:\Users\merts\OneDrive\Masaüstü\PrtlyRemake\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
 C:\Users\merts\OneDrive\Masaüstü\PrtlyRemake\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
-C:\Users\merts\OneDrive\Masaüstü\PrtlyRemake\bin\Debug\net6.0\runtimes\win-arm\lib\net6.0\dotnet-aspnet-codegenerator-design.exe
-C:\Users\merts\OneDrive\Masaüstü\PrtlyRemake\bin\Debug\net6.0\runtimes\win-arm64\lib\net6.0\dotnet-aspnet-codegenerator-design.exe
 C:\Users\merts\OneDrive\Masaüstü\PrtlyRemake\bin\Debug\net6.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
 C:\Users\merts\OneDrive\Masaüstü\PrtlyRemake\bin\Debug\net6.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
 C:\Users\merts\OneDrive\Masaüstü\PrtlyRemake\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll

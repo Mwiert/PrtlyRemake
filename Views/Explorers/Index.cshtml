@@ -16,7 +16,7 @@
                     <div class="modal-header">
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
-                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Keşif Bilgisi</h4>
+                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Keşif Ekle</h4>
                      <input value="" id="RowsValue" type="text" style="visibility:hidden" name="ExploreId">
                      <h1 id="changeText"></h1>
                     <div class="modal-body">
@@ -49,7 +49,7 @@
                          @foreach(var item in Model)
                              {
                         <tr class="table-info" data-toggle="modal" data-target="#orderModal" cursor="pointer">
-                            <td class="col-9"onclick="sendValue()" data-bs-toggle="modal" data-bs-target="#myModal" onclick="getRowId()"> @item.Ad</td>
+                            <td><a  style="width:100%;height:100%" class="col-9 btn" onclick="location.href='@Url.Action("MekanIndex","Explorers",new {RowId = @item.Id})'"> @item.Ad</a></td>
                             <td><a type="submit" href="@Url.Action("DeleteExpolore","Explorers",new { RowId = @item.Id})" class="btn btn-outline-danger btn-sm col-3">Sil</a></td>
                         </tr>
                         }
@@ -61,32 +61,18 @@
                 <button type="button" style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;" class="btn btn-primary " style="margin-bottom:1rem;" data-bs-toggle="modal" data-bs-target="#myModal">+</button>
 
                     <script type="text/javascript">
-        var getRowid = document.getElementById("table"), index,sendRowId
-        for (var i=0; i < table.rows.length; i++) {
-            for (var j = 0; j < table.rows[i].cells.length;j++){
-                table.rows[i].cells[j].onclick = function() {
-                index = this.parentElement.rowIndex;
-                    sendRowId = index + 1;
-                    document.getElementById("RowsValue").setAttribute("value",sendRowId)
-                    document.getElementById("changeText").textContent = sendRowId
-                }
-            }
-        }
-        function sendValue(){
-            f = {};
-                     f.url = '@Url.Action("Test","Explore")';
-                    f.type = "POST";
-                    f.dataType = "json";
-                    f.data = JSON.stringify({ id = sendRowId });
-                    f.contentType = "application/json";
-                    f.succes = function(response) {
-                        alert("başarılı");
-                    };
-                    f.error = function(response) {
-                        alert("failed");
-                    };
-                    $.ajax(f);
-        }
+        //var getRowid = document.getElementById("table"), index,sendRowId
+        //for (var i=0; i < table.rows.length; i++) {
+        //    for (var j = 0; j < table.rows[i].cells.length;j++){
+        //        table.rows[i].cells[j].onclick = function() {
+        //        index = this.parentElement.rowIndex;
+        //            sendRowId = index + 1;
+        //            document.getElementById("RowsValue").setAttribute("value",sendRowId)
+        //            document.getElementById("changeText").textContent = sendRowId
+        //        }
+        //    }
+        //}
+
 
    </script>
               
