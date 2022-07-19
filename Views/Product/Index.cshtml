@@ -61,7 +61,7 @@
                         <div class="input-group col-xs-12">
                           <input type="text" class="form-control file-upload-info" disabled placeholder="Resim Yükle ">
                           <span class="input-group-append">
-                            <button class="file-upload-browse btn btn-gradient-primary" type="button">Yükle</button>
+                            <button class="file-upload-browse btn btn-gradient-dark" type="button">Yükle</button>
                           </span>
                         </div>
                       </div>
@@ -71,14 +71,14 @@
               </div>
                     </div>
                     <div class="modal-footer">
-                         <button type="submit" onclick="writeName()" class="btn btn-gradient-primary me-2">Onayla</button>
+                         <button type="submit" onclick="writeName()" class="btn btn-gradient-dark me-2">Onayla</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
        }
-<button type="button" style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;" class="btn btn-primary " style="margin-bottom:1rem;" data-bs-toggle="modal" data-bs-target="#myModal">Ürün Ekle</button>
+<button type="button" style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;" class="btn btn-gradient-dark " style="margin-bottom:1rem;" data-bs-toggle="modal" data-bs-target="#myModal">Ürün Ekle</button>
 
                     <h2 class="card-title text-center">ÜRÜNLER</h2>
 <div class="col-lg-12 stretch-card">
@@ -93,7 +93,7 @@
                       <tbody>
                          @foreach(var item in Model)
                              {
-                    <tr class="table-info">
+                    <tr class="table-primary">
                 <td>@item.UrunAdi</td>
                  
                         </tr>

@@ -18,7 +18,9 @@ namespace Remake.Controllers
         }
         public IActionResult MekanIndex(int RowId)
         {
-            return View("~/Views/Explorers/MekanIndex.cshtml");
+            Kesiflers= db.Kesiflers.Where(x => x.Id == RowId).ToList();
+            
+            return View("~/Views/Explorers/MekanIndex.cshtml",Kesiflers);
         }
         public IActionResult DeleteExpolore(int RowId)
         {
@@ -37,7 +39,6 @@ namespace Remake.Controllers
 
                 throw ex;
             }
-            return RedirectToAction("Index");
         }
         public IActionResult AddExplore(string ExpName)
         {
@@ -46,7 +47,7 @@ namespace Remake.Controllers
                 if (!string.IsNullOrEmpty(ExpName))
                 {
                     Kesiflers = db.Kesiflers.Where(x => x.Ad == ExpName).ToList();
-                    if (Kesiflers == null)
+                    if (Kesiflers.Count == 0)
                     {
                         explorers.Ad = ExpName;
                         db.Kesiflers.Add(explorers);

@@ -37,7 +37,7 @@ namespace Remake.Controllers
             try
             {
                 kategorilerList = db.Kategorilers.Where(x => x.KategoriAdi == CatName).ToList();
-                if(kategorilerList == null)
+                if(kategorilerList.Count ==0)
                 {
                     kategoriler.KategoriAdi = CatName;
                     db.Kategorilers.Add(kategoriler);

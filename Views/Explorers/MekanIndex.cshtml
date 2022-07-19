@@ -1,8 +1,47 @@
-﻿
+﻿@model IEnumerable<Remake.Models.Kesifler>
+@using Remake.Models;
 @{
     ViewData["Title"] = "MekanIndex";
     Layout = "~/Views/Shared/layout.cshtml";
+
 }
-
-<h1>MekanIndex</h1>
-
+                
+    @foreach(var item in Model)
+    {
+            <h3 class="card-title text-center " style="margin-top:-1rem;padding:1rem;">@item.Ad</h3>
+    }
+<div class="row">
+  <div class="col-lg-6 grid-margin stretch-card">
+    <div class="card">
+        <h1 class="card-title text-center mt-2">Genel Mekan</h1>
+      <div class="card-body">
+        <table class="table">
+          <tbody> 
+            <tr>
+              <td>Jacob</td>
+              <td>53275531</td>
+              <td>12 May 2017</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6 grid-margin stretch-card">
+    <div class="card">
+            <h1 class="card-title text-center mt-2">Dış Mekan</h1>
+      <div class="card-body">
+        <table class="table table-hover">
+          <tbody>
+            <tr>
+              <td>Jacob</td>
+              <td>Photoshop</td>
+              <td class="text-danger"> 28.76% <i class="mdi mdi-arrow-down"></i></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+                <button type="button" style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;" class="btn btn-gradient-dark " style="margin-bottom:1rem;" data-bs-toggle="modal" data-bs-target="#myModal">+</button>

@@ -32,7 +32,7 @@ namespace Remake.Controllers
                 if (!string.IsNullOrEmpty(UrunKodu) && !string.IsNullOrEmpty(UrunAdi) && !string.IsNullOrEmpty(Marka) && !string.IsNullOrEmpty(Kategori) && !string.IsNullOrEmpty(satisFiyati.ToString()) && !string.IsNullOrEmpty(fiyat.ToString()))
                 {
                     urunlers = db.Urunlers.Where(x => x.UrunAdi == UrunAdi && x.Marka == Marka).ToList();
-                    if(urunlers == null)
+                    if(urunlers.Count == 0)
                     {
                         prodct.UrunKodu = UrunKodu;
                         prodct.UrunAdi = UrunAdi;

@@ -29,12 +29,30 @@ namespace Remake.Controllers
                 throw ex;
             }
         }
+        public IActionResult DeleteUser(int RowId)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(RowId.ToString()))
+                {
+                    k = Db.Kullanıcıs.Find(RowId);
+                    Db.Kullanıcıs.Remove(k);
+                    Db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return RedirectToAction("Index");
+        }
         public IActionResult AddUser(string UsersName, string UsersEmail, string UsersPassword, int RoleId /*,string UsersImg*/)
         {
             try
             {
                 kullanıcıs = Db.Kullanıcıs.Where(x => x.Email == UsersEmail).ToList();
-                if(kullanıcıs == null)
+                if(kullanıcıs.Count ==0 )
                 {
                     k.Ad = UsersName;
                     k.Email = UsersEmail;

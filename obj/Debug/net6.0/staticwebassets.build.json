@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "865olYx+eJ1K397BbwMYC7NYYgWVm6V5uqBaix6VmVE=",
+  "Hash": "DSg2q1NK4s5s31ASwTC2fzfRoam7mL5cEoO1s5HRng4=",
   "Source": "Remake",
   "BasePath": "_content/Remake",
   "Mode": "Default",
@@ -16,23 +16,6 @@
     }
   ],
   "Assets": [
-    {
-      "Identity": "C:\\Users\\merts\\OneDrive\\Masaüstü\\PrtlyRemake\\wwwroot\\assests\\bw.jpg",
-      "SourceId": "Remake",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\merts\\OneDrive\\Masaüstü\\PrtlyRemake\\wwwroot\\",
-      "BasePath": "_content/Remake",
-      "RelativePath": "assests/bw.jpg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\assests\\bw.jpg"
-    },
     {
       "Identity": "C:\\Users\\merts\\OneDrive\\Masaüstü\\PrtlyRemake\\wwwroot\\bootstrap-icons\\bootstrap-icons.svg",
       "SourceId": "Remake",
@@ -28594,6 +28577,40 @@
       "OriginalItemSpec": "wwwroot\\jquery\\jquery.slim.min.map"
     },
     {
+      "Identity": "C:\\Users\\merts\\OneDrive\\Masaüstü\\PrtlyRemake\\wwwroot\\js\\css\\style.css",
+      "SourceId": "Remake",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\merts\\OneDrive\\Masaüstü\\PrtlyRemake\\wwwroot\\",
+      "BasePath": "_content/Remake",
+      "RelativePath": "js/css/style.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\css\\style.css"
+    },
+    {
+      "Identity": "C:\\Users\\merts\\OneDrive\\Masaüstü\\PrtlyRemake\\wwwroot\\js\\css\\style.css.map",
+      "SourceId": "Remake",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\merts\\OneDrive\\Masaüstü\\PrtlyRemake\\wwwroot\\",
+      "BasePath": "_content/Remake",
+      "RelativePath": "js/css/style.css.map",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\css\\style.css.map"
+    },
+    {
       "Identity": "C:\\Users\\merts\\OneDrive\\Masaüstü\\PrtlyRemake\\wwwroot\\js\\script.js",
       "SourceId": "Remake",
       "SourceType": "Discovered",
@@ -28609,40 +28626,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\script.js"
-    },
-    {
-      "Identity": "C:\\Users\\merts\\OneDrive\\Masaüstü\\PrtlyRemake\\wwwroot\\TemplateL\\assets\\css\\style.css",
-      "SourceId": "Remake",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\merts\\OneDrive\\Masaüstü\\PrtlyRemake\\wwwroot\\",
-      "BasePath": "_content/Remake",
-      "RelativePath": "TemplateL/assets/css/style.css",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\TemplateL\\assets\\css\\style.css"
-    },
-    {
-      "Identity": "C:\\Users\\merts\\OneDrive\\Masaüstü\\PrtlyRemake\\wwwroot\\TemplateL\\assets\\css\\style.css.map",
-      "SourceId": "Remake",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\merts\\OneDrive\\Masaüstü\\PrtlyRemake\\wwwroot\\",
-      "BasePath": "_content/Remake",
-      "RelativePath": "TemplateL/assets/css/style.css.map",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\TemplateL\\assets\\css\\style.css.map"
     },
     {
       "Identity": "C:\\Users\\merts\\OneDrive\\Masaüstü\\PrtlyRemake\\wwwroot\\TemplateL\\assets\\fonts\\Ubuntu\\Ubuntu-Bold.eot",
