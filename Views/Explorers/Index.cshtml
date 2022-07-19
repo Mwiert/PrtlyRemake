@@ -6,7 +6,7 @@
 }
 
   <h2 class="card-title text-center">Aktif Keşifler</h2>
-    <button type="button" style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;" class="btn btn-primary " style="margin-bottom:1rem;" data-bs-toggle="modal" data-bs-target="#myModal">+</button>
+  
 @using (Html.BeginForm("AddExplore","Explorers",FormMethod.Post))
 {
     <div class="container mt-2"> @*mt kapatılabilir*@
@@ -16,7 +16,9 @@
                     <div class="modal-header">
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
-                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Keşif Ekle</h4>
+                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Keşif Bilgisi</h4>
+                     <input value="" id="RowsValue" type="text" style="visibility:hidden" name="ExploreId">
+                     <h1 id="changeText"></h1>
                     <div class="modal-body">
                         <div class="col-12 grid-margin stretch-card">
                 <div class="card " style="height:100%; margin-bottom:-3rem;">
@@ -33,7 +35,6 @@
                     </div>
                     <div class="modal-footer">
                          <button type="submit" class="btn btn-gradient-primary me-2">Onayla</button>
-                      <button type="submit" class="btn btn-light" data-bs-dismiss="modal">İptal Et</button>
                     </div>
                 </div>
             </div>
@@ -43,13 +44,13 @@
     <div class="col-lg-12 stretch-card">
                 <div class="table-responsive card">
                   <div class="card-body">
-                    <table class="table table-bordered text-center ">
+                    <table id="table" class="table table-bordered text-center ">
                       <tbody>
                          @foreach(var item in Model)
                              {
                         <tr class="table-info" data-toggle="modal" data-target="#orderModal" cursor="pointer">
-                            <td id="getInfo"onclick="getResponse()" value="@item.Id"> @item.Ad</td>
-                     
+                            <td class="col-9"onclick="sendValue()" data-bs-toggle="modal" data-bs-target="#myModal" onclick="getRowId()"> @item.Ad</td>
+                            <td><a type="submit" href="@Url.Action("DeleteExpolore","Explorers",new { RowId = @item.Id})" class="btn btn-outline-danger btn-sm col-3">Sil</a></td>
                         </tr>
                         }
                       </tbody>
@@ -57,13 +58,36 @@
                   </div>
                 </div>
               </div>
-               @* <script>
-       function getResponse() {
-          alert("alo")
-                 var temp = document.getElementById("getInfo").attributes
-                 alert(temp)
-                 //sorun td'den value almak gerekiyor.'
-}*@
+                <button type="button" style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;" class="btn btn-primary " style="margin-bottom:1rem;" data-bs-toggle="modal" data-bs-target="#myModal">+</button>
+
+                    <script type="text/javascript">
+        var getRowid = document.getElementById("table"), index,sendRowId
+        for (var i=0; i < table.rows.length; i++) {
+            for (var j = 0; j < table.rows[i].cells.length;j++){
+                table.rows[i].cells[j].onclick = function() {
+                index = this.parentElement.rowIndex;
+                    sendRowId = index + 1;
+                    document.getElementById("RowsValue").setAttribute("value",sendRowId)
+                    document.getElementById("changeText").textContent = sendRowId
+                }
+            }
+        }
+        function sendValue(){
+            f = {};
+                     f.url = '@Url.Action("Test","Explore")';
+                    f.type = "POST";
+                    f.dataType = "json";
+                    f.data = JSON.stringify({ id = sendRowId });
+                    f.contentType = "application/json";
+                    f.succes = function(response) {
+                        alert("başarılı");
+                    };
+                    f.error = function(response) {
+                        alert("failed");
+                    };
+                    $.ajax(f);
+        }
 
    </script>
+              
   

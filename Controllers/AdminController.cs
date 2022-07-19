@@ -11,7 +11,8 @@ namespace Remake.Controllers
         Roles AutRoles = new Roles();
         kullanıcı k = new kullanıcı();
         kesifdbContext Db = new kesifdbContext();
-        Roller roller = new Roller(); 
+        Roller roller = new Roller();
+        List<kullanıcı> kullanıcıs = new List<kullanıcı>();
         public IActionResult Index()
         {
             try
@@ -32,12 +33,17 @@ namespace Remake.Controllers
         {
             try
             {
-                k.Ad = UsersName;
-                k.Email = UsersEmail;
-                k.Psswrd = UsersPassword;
-                k.RolId = RoleId;
-                Db.Kullanıcıs.Add(k);
-                Db.SaveChanges();
+                kullanıcıs = Db.Kullanıcıs.Where(x => x.Email == UsersEmail).ToList();
+                if(kullanıcıs == null)
+                {
+                    k.Ad = UsersName;
+                    k.Email = UsersEmail;
+                    k.Psswrd = UsersPassword;
+                    k.RolId = RoleId;
+                    Db.Kullanıcıs.Add(k);
+                    Db.SaveChanges();
+                }
+              
                 return RedirectToAction("Index", "Admin");
             }
             catch (Exception ex) 

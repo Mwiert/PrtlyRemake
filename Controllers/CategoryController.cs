@@ -9,26 +9,48 @@ namespace Remake.Controllers
     {
         Kategoriler kategoriler = new Kategoriler();
         kesifdbContext db = new kesifdbContext();
+        List<Kategoriler> kategorilerList = new List<Kategoriler>();
         public IActionResult Index()
         {
             db.Kategorilers.ToList();
             db.SaveChanges();
             return View(db.Kategorilers);
         }
-        public IActionResult AddCategory(string CatName)
+        public IActionResult DeleteCat(int RowId)
         {
             try
             {
-                kategoriler.KategoriAdi = CatName;
-                db.Kategorilers.Add(kategoriler);
+                kategoriler = db.Kategorilers.Find(RowId);
+                db.Kategorilers.Remove(kategoriler);
                 db.SaveChanges();
+                
+                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
 
                 throw ex;
             }
-            return RedirectToAction("Index");
+        }
+        public IActionResult AddCategory(string CatName)
+        {
+            try
+            {
+                kategorilerList = db.Kategorilers.Where(x => x.KategoriAdi == CatName).ToList();
+                if(kategorilerList == null)
+                {
+                    kategoriler.KategoriAdi = CatName;
+                    db.Kategorilers.Add(kategoriler);
+                    db.SaveChanges();
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+           
         }
     }
 }

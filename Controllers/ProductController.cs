@@ -10,6 +10,7 @@ namespace Remake.Controllers
         kesifdbContext db = new kesifdbContext();
         Urunler prodct = new Urunler();
         Kategoriler category = new Kategoriler();
+        List<Urunler> urunlers = new List<Urunler>();
         public IActionResult Index()
         {
             try
@@ -30,15 +31,20 @@ namespace Remake.Controllers
             {
                 if (!string.IsNullOrEmpty(UrunKodu) && !string.IsNullOrEmpty(UrunAdi) && !string.IsNullOrEmpty(Marka) && !string.IsNullOrEmpty(Kategori) && !string.IsNullOrEmpty(satisFiyati.ToString()) && !string.IsNullOrEmpty(fiyat.ToString()))
                 {
-                    prodct.UrunKodu = UrunKodu;
-                    prodct.UrunAdi = UrunAdi;
-                    prodct.Marka = Marka;
-                    prodct.UrunKategorisi = Kategori;
-                    prodct.SatisFiyati = satisFiyati;
-                    prodct.UrunFiyati = fiyat;
+                    urunlers = db.Urunlers.Where(x => x.UrunAdi == UrunAdi && x.Marka == Marka).ToList();
+                    if(urunlers == null)
+                    {
+                        prodct.UrunKodu = UrunKodu;
+                        prodct.UrunAdi = UrunAdi;
+                        prodct.Marka = Marka;
+                        prodct.UrunKategorisi = Kategori;
+                        prodct.SatisFiyati = satisFiyati;
+                        prodct.UrunFiyati = fiyat;
+                        db.Urunlers.Add(prodct);
+                        db.SaveChanges();
+                    }
                 }
-                db.Urunlers.Add(prodct);
-                db.SaveChanges();
+
 
                 return RedirectToAction("Index", "Product");
             }
