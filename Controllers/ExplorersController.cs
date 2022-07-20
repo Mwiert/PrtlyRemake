@@ -22,17 +22,25 @@ namespace Remake.Controllers
             
             return View("~/Views/Explorers/MekanIndex.cshtml",Kesiflers);
         }
-        public IActionResult DeleteExpolore(int RowId)
+        public IActionResult DeleteExpolore(string rowAdi)
         {
             try
             {
-                if (!string.IsNullOrEmpty(RowId.ToString()))
+                if (!string.IsNullOrEmpty(rowAdi))
                 {
-                    explorers = db.Kesiflers.Find(RowId);
-                    db.Kesiflers.Remove(explorers);
-                    db.SaveChanges();
+                    string temp = rowAdi.TrimStart();
+                    //var kesifs = from item in db.Kesiflers
+                    //             where item.Ad.Contains(temp)
+                    //             select item;
+                    explorers = db.Kesiflers.FirstOrDefault(x => x.Ad == temp);
+                    if (explorers != null)
+                    {
+                        db.Kesiflers.Remove(explorers);
+                        db.SaveChanges();
+                    }
+                   
                 }
-                return RedirectToAction("Index");
+            return RedirectToAction("Index");
             }
             catch (Exception ex)
             {

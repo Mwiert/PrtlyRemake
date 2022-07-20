@@ -26,7 +26,7 @@
                         @using (Html.BeginForm("DeleteExpolore","Explorers",FormMethod.Post))
 {
                                      <button type="submit" class="btn btn-gradient-dark me-2">Sil</button>
-                                                   <input value="" id="RowsValue" type="text" style="visibility:hidden" name="RowId">
+                                                   <input value="" id="RowsValue" type="text" style="visibility:hidden" name="rowAdi"> //değişecek
 
 }
                             <button type="submit" data-bs-dismiss="modal"  class="btn btn-gradient-red me-2">İptal Et</button>
@@ -71,6 +71,7 @@
         </div>
     </div>
     }
+    
     <div class="col-lg-12 stretch-card">
                 <div class="table-responsive card">
                   <div class="card-body">
@@ -78,31 +79,33 @@
                       <tbody>
                          @foreach(var item in Model)
                              {
+
                         <tr class="table-primary" data-toggle="modal" data-target="#orderModal" cursor="pointer">
-                            <td><a style="width:100%;height:100%" class="col-9 btn" onclick="location.href='@Url.Action("MekanIndex","Explorers",new {RowId = @item.Id})'"> @item.Ad</a></td>
-                            <td><a type="submit"  data-bs-toggle="modal" data-bs-target="#myModalOK" class="btn btn-gradient-dark btn-sm col-3">Sil</a></td>
+                            <td><a style="width:100%;height:100%" class="col-lg-9 col-sm-6 btn" value="@item.Id" onclick="location.href='@Url.Action("MekanIndex","Explorers",new {RowId = @item.Id})'"> @item.Ad</a></td>
+                            <td><a type="submit"  data-bs-toggle="modal" data-bs-target="#myModalOK" class="btn btn-gradient-dark btn-sm col-lg-3 col-sm-6">Sil</a></td>
                         </tr>
                         }
+                         <input value="" id="putValue" type="text" style="visibility:hidden" name="MekanAdi">
                       </tbody>
                     </table>
                   </div>
                 </div>
               </div>
+              <input value="" id="deneme" type="text"/>
 <button type="button" style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;" class="btn btn-gradient-dark " style="margin-bottom:1rem;" data-bs-toggle="modal" data-bs-target="#myModal">+</button>
 
    <script type="text/javascript">
-       var getRowid = document.getElementById("table"), index,sendRowId
-        for (var i=0; i < table.rows.length; i++) {
-            for (var j = 0; j < table.rows[i].cells.length;j++){
-                table.rows[i].cells[j].onclick = function() {
-                index = this.parentElement.rowIndex;
-                    sendRowId = index+1;
-                    alert(sendRowId)
-                     document.getElementById("RowsValue").setAttribute("value",sendRowId)
-                }
-            }
-        }
+            
+        var table = document.getElementById("table"),indexy
 
+    for (var i = 0; i < table.rows.length;i++)
+    {
+        table.rows[i].onclick = function() 
+        {
+            indexy = this.rowIndex;
+            document.getElementById("RowsValue").value =this.cells[0].textContent;
+        };
+}
 
    </script>
               
