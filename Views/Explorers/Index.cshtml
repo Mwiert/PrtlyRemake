@@ -17,7 +17,7 @@
                         <div class="col-12 grid-margin stretch-card">
                 <div class="card " style="height:100%; margin-bottom:-3rem;">
                   <div class="card-body">
-                              <h1 class="card-title text-center mt-2">Kişiyi silmek istediğinize emin misiniz?</h1>
+                              <h1 class="card-title text-center mt-2">Kategoriyi silmek istediğinize emin misiniz?</h1>
                   </div>
                 </div>
               </div>
@@ -26,7 +26,7 @@
                         @using (Html.BeginForm("DeleteExpolore","Explorers",FormMethod.Post))
 {
                                      <button type="submit" class="btn btn-gradient-dark me-2">Sil</button>
-                                                   <input value="" id="RowsValue" type="text" style="visibility:hidden" name="rowAdi"> //değişecek
+                                                   <input value="" id="RowsValue" type="text" style="visibility:hidden" name="rowAdi"> 
 
 }
                             <button type="submit" data-bs-dismiss="modal"  class="btn btn-gradient-red me-2">İptal Et</button>
@@ -64,7 +64,7 @@
               </div>
                     </div>
                     <div class="modal-footer">
-                         <button type="submit" class="btn btn-gradient-primary me-2">Onayla</button>
+                         <button type="submit" class="btn btn-gradient-dark me-2">Onayla</button>
                     </div>
                 </div>
             </div>
@@ -91,7 +91,6 @@
                   </div>
                 </div>
               </div>
-              <input value="" id="deneme" type="text"/>
 <button type="button" style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;" class="btn btn-gradient-dark " style="margin-bottom:1rem;" data-bs-toggle="modal" data-bs-target="#myModal">+</button>
 
    <script type="text/javascript">

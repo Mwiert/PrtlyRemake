@@ -29,9 +29,6 @@ namespace Remake.Controllers
                 if (!string.IsNullOrEmpty(rowAdi))
                 {
                     string temp = rowAdi.TrimStart();
-                    //var kesifs = from item in db.Kesiflers
-                    //             where item.Ad.Contains(temp)
-                    //             select item;
                     explorers = db.Kesiflers.FirstOrDefault(x => x.Ad == temp);
                     if (explorers != null)
                     {

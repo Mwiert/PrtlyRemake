@@ -29,13 +29,14 @@ namespace Remake.Controllers
                 throw ex;
             }
         }
-        public IActionResult DeleteUser(int RowId)
+        public IActionResult DeleteUser(string UserEmail)
         {
             try
             {
-                if (!string.IsNullOrEmpty(RowId.ToString()))
+                if (!string.IsNullOrEmpty(UserEmail.ToString()))
                 {
-                    k = Db.Kullanıcıs.Find(RowId);
+                    string temp = UserEmail.TrimStart();
+                    k = Db.Kullanıcıs.FirstOrDefault(x => x.Email == UserEmail);
                     Db.Kullanıcıs.Remove(k);
                     Db.SaveChanges();
                 }

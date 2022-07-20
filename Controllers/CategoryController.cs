@@ -16,14 +16,19 @@ namespace Remake.Controllers
             db.SaveChanges();
             return View(db.Kategorilers);
         }
-        public IActionResult DeleteCat(int RowId)
+        public IActionResult DeleteCat(string RowAdi)
         {
             try
             {
-                kategoriler = db.Kategorilers.Find(RowId);
-                db.Kategorilers.Remove(kategoriler);
-                db.SaveChanges();
-                
+                string temp = RowAdi.TrimStart();
+                kategoriler = db.Kategorilers.FirstOrDefault(x => x.KategoriAdi == temp);
+                if (kategoriler != null)
+                {
+                    db.Kategorilers.Remove(kategoriler);
+                    db.SaveChanges();
+                }
+
+
                 return RedirectToAction("Index");
             }
             catch (Exception ex)

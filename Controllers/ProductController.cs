@@ -25,6 +25,29 @@ namespace Remake.Controllers
                 throw ex;
             }
         }
+        public IActionResult DeleteProduct(string ProductName)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(ProductName))
+                {
+
+                string temp = ProductName.TrimStart();
+                prodct = db.Urunlers.FirstOrDefault(x => x.UrunAdi == temp);
+                if(prodct != null)
+                    {
+                        db.Urunlers.Remove(prodct);
+                        db.SaveChanges();
+                    }
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
         public IActionResult AddNewProduct(string UrunKodu, string UrunAdi, string Marka, string Kategori, float satisFiyati, float fiyat/*,string foto*/)
         {
             try

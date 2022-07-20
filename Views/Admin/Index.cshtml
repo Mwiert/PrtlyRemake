@@ -26,7 +26,7 @@
                         @using (Html.BeginForm("DeleteUser","Admin",FormMethod.Post))
 {
                                      <button type="submit" class="btn btn-gradient-dark me-2">Sil</button>
-                                                   <input value="" id="RowsValue" type="text" style="visibility:hidden" name="RowId">
+                                                   <input value="" id="RowsValue" type="text" style="visibility:hidden" name="UserEmail">
 
 }
                             <button type="submit" data-bs-dismiss="modal"  class="btn btn-gradient-red me-2">İptal Et</button>
@@ -37,13 +37,14 @@
     </div>
   <h2 class="card-title text-center">Kullanıcılar</h2>
 
-<div class="col-lg-12 stretch-card">
+<div class="col-md-12">
                 <div class="table-responsive card">
                   <div class="card-body">
                     <table id="table" class="table table-bordered text-center ">
                       <thead>
                         <tr>
             <th> Adı</th>
+            <th>Email</th>
              <th>Rolü</th>
                         </tr>
                       </thead>
@@ -52,9 +53,10 @@
                              {
                     <tr class="table-primary">
                   <td >@item.Ad</td>
-                  <td>@item.Rol.RolAdi</td>
+                  <td >@item.Email</td>
+                  <td >@item.Rol.RolAdi</td>
 
-                   <td><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" class="btn btn-gradient-dark btn-sm col-sm-3">Sil</a></td>
+                   <td><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" class="btn btn-gradient-dark btn-sm">Sil</a></td>
                  
                         </tr>
                         }
@@ -122,13 +124,13 @@
                           </span>
                         </div>
                       </div>
-                      <button type="submit" class="btn btn-light" data-bs-dismiss="modal">İptal Et</button>
                     </form>
                   </div>
                 </div>
               </div>
                     </div>
                     <div class="modal-footer">
+                      <button type="submit" class="btn btn-gradient-light" data-bs-dismiss="modal">İptal Et</button>
                          <button type="submit" onclick="writeName()" class="btn btn-gradient-dark me-2">Onayla</button>
                     </div>
                 </div>
@@ -172,18 +174,16 @@
    }
 
                     <script type="text/javascript">
-        var getRowid = document.getElementById("table"), index,sendRowId,temp
-        for (var i=0; i < table.rows.length; i++) {
-            for (var j = 0; j < table.rows[i].cells.length;j++){
-                table.rows[i].cells[j].onclick = function() {
-                index = this.parentElement.rowIndex;
-                    sendRowId = index;
-                    temp = parseInt(table.rows[i].cells[j].innerHTML)
-                    alert(Temp)
-                     document.getElementById("RowsValue").setAttribute("value",sendRowId)
-                }
-            }
-        }
+       var table = document.getElementById("table"),indexy
+
+    for (var i = 0; i < table.rows.length;i++)
+    {
+        table.rows[i].onclick = function() 
+        {
+            indexy = this.rowIndex;
+            document.getElementById("RowsValue").value =this.cells[1].textContent;
+        };
+}
                function writeName() {
     var temp = document.getElementById("Selects").value
     document.getElementById("inputNameChange").setAttribute("value", temp)
