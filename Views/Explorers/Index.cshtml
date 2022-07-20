@@ -81,7 +81,7 @@
                              {
 
                         <tr class="table-primary" data-toggle="modal" data-target="#orderModal" cursor="pointer">
-                            <td><a style="width:100%;height:100%" class="col-lg-9 col-sm-6 btn" value="@item.Id" onclick="location.href='@Url.Action("MekanIndex","Explorers",new {RowId = @item.Id})'"> @item.Ad</a></td>
+                            <td><a style="width:100%;height:100%;" class="col-lg-9 col-sm-6 btn" value="@item.Id" onclick="location.href='@Url.Action("MekanIndex","Explorers",new {RowId = @item.Id})'"> @item.Ad</a></td>
                             <td><a type="submit"  data-bs-toggle="modal" data-bs-target="#myModalOK" class="btn btn-gradient-dark btn-sm col-lg-3 col-sm-6">Sil</a></td>
                         </tr>
                         }
@@ -93,6 +93,12 @@
               </div>
 <button type="button" style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;" class="btn btn-gradient-dark " style="margin-bottom:1rem;" data-bs-toggle="modal" data-bs-target="#myModal">+</button>
 
+<style>
+    td:hover{
+       background-color:#5f9ea0;
+       transition:0.5s;
+    }
+</style>
    <script type="text/javascript">
             
         var table = document.getElementById("table"),indexy

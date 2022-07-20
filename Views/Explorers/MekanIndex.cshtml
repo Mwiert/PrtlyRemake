@@ -5,6 +5,41 @@
     Layout = "~/Views/Shared/layout.cshtml";
 
 }
+@using (Html.BeginForm("AddMekan","Explorers",FormMethod.Post))
+{
+    <div class="container mt-2"> @*mt kapatılabilir*@
+        <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Mekan Ekle</h4>
+                     <input value="" id="RowsValue" type="text" style="visibility:hidden" name="ExploreId">
+                     <h1 id="changeText"></h1>
+                    <div class="modal-body">
+                        <div class="col-12 grid-margin stretch-card">
+                <div class="card " style="height:100%; margin-bottom:-3rem;">
+                  <div class="card-body">
+                    <form class="forms-sample">
+                      <div class="form-group">
+                        <label for="exampleInputName1">Mekan Adı</label>
+                        <input type="text" class="form-control" id="exampleInputName1" name="ExpName"  required placeholder="Mekan Adı">
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+                    </div>
+                    <div class="modal-footer">
+                         <button type="submit" class="btn btn-gradient-dark me-2">Onayla</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+    
                 
     @foreach(var item in Model)
     {

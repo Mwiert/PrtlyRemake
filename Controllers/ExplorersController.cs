@@ -16,6 +16,10 @@ namespace Remake.Controllers
             db.SaveChanges();
             return View(db.Kesiflers);
         }
+        public IActionResult AddMekan()
+        {
+            return RedirectToAction("MekanIndex");
+        }
         public IActionResult MekanIndex(int RowId)
         {
             Kesiflers= db.Kesiflers.Where(x => x.Id == RowId).ToList();
