@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Remake.Models;
 using Remake.Security.Authorization;
+using Remake.Security.Validations.ResetPassword;
 using System.Security.Claims;
 
 namespace Remake.Controllers
@@ -11,9 +13,40 @@ namespace Remake.Controllers
     {
         //Roles AutRoles = new Roles();
         //List<Roller> KeepRoles = new List<Roller>();
+        kesifdbContext kesifdb = new kesifdbContext();
+        kullanıcı kul = new kullanıcı();
+        List<kullanıcı> kuls = new List<kullanıcı>();
+        rePassword rePass = new rePassword();
         public IActionResult Index()
         {
-            return View("~/Views/Login/Login.cshtml");
+            return View("~/Views/Login/Login.cshtml",kesifdb.Kullanıcıs);
+        }
+        public JsonResult CheckEmail(string userEmail)
+        {
+            bool isExits = kesifdb.Kullanıcıs.ToList().Exists(x => x.Email.Equals(userEmail, StringComparison.CurrentCultureIgnoreCase));
+            if(isExits == true)
+            {
+                rePass.SendVerifyMail(userEmail);
+            }
+            return Json(isExits);
+        }
+        public JsonResult updatePassword(string passwordFirst, string redirectEmail)
+        {
+            kul = kesifdb.Kullanıcıs.FirstOrDefault(x => x.Email == redirectEmail);
+            kul.Psswrd = passwordFirst;
+            kesifdb.Entry(kul).State = EntityState.Modified;
+            kesifdb.SaveChanges();
+            return Json(true);
+        }
+        public JsonResult CheckVerifyCode(int verifyCode)
+        {
+            bool temp = false;
+            if (rePass.CheckVerifyCode(verifyCode) == true)
+            {
+                temp = true;
+                return Json(temp);
+            }
+            else { return Json(temp); }
         }
         public async Task<IActionResult> check(string username, string password)
         {
@@ -21,8 +54,7 @@ namespace Remake.Controllers
             {
                 var claims = new List<Claim>();
                 bool check = false;
-                kesifdbContext kesifdb = new kesifdbContext();
-                kullanıcı kul = new kullanıcı();
+
                 if (string.IsNullOrEmpty(username) && string.IsNullOrEmpty(password))
                 {
                     return View("~/Views/Login/Login.cshtml");

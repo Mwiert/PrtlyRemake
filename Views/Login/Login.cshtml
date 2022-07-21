@@ -1,8 +1,100 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Login";
     Layout = "~/Views/Shared/LoginLayout.cshtml";
 }
+<div class="container mt-2"> @*mt kapatılabilir*@
+        <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Parolanızı Sıfırlayın</h4>
+                    <div class="modal-body">
+                        <div class="col-12 grid-margin stretch-card">
+                <div class="card " style="height:100%; margin-bottom:-3rem;">
+                  <div class="card-body">
+                    <form class="forms-sample">
+                      <div class="form-group">
+                        <label for="exampleInputName1">Email Adresi</label>
+                        <input type="text" class="form-control" id="inputEmail" onkeyup="checkEmail()" name="Email"  required placeholder="Email Adresi">
+                    </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+                    </div>
+                    <div class="modal-footer">
+                         <button type="submit" id="OnaylaBtn" class="btn btn-gradient-dark me-2">Gönder</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-2"> @*mt kapatılabilir*@
+        <div class="modal" id="myModalVerify">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Parolanızı Sıfırlayın</h4>
+                    <div class="modal-body">
+                        <div class="col-12 grid-margin stretch-card">
+                <div class="card " style="height:100%; margin-bottom:-3rem;">
+                  <div class="card-body">
+                    <form class="forms-sample">
+                      <div class="form-group">
+                        <label for="exampleInputName1">Doğrulama Kodu</label>
+                        <input type="text" class="form-control" id="verifyCode" name="VerifyCode"  required placeholder="Doğrulama Kodu">
+                    </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+                    </div>
+                    <div class="modal-footer">
+                         <button type="submit" id="verifyCodeBtn" class="btn btn-gradient-dark me-2">Gönder</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-2"> @*mt kapatılabilir*@
+        <div class="modal" id="myModalPassword">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Parolanızı Sıfırlayın</h4>
+                    <div class="modal-body">
+                        <div class="col-12 grid-margin stretch-card">
+                <div class="card " style="height:100%; margin-bottom:-3rem;">
+                  <div class="card-body">
+                    <form class="forms-sample">
+                      <div class="form-group">
+                        <label for="exampleInputName1">Yeni Şifreniz</label>
+                        <input type="text" class="form-control" id="passwordFirst" name="password"  required placeholder="Yeni Şifreniz">
+                    </div>
+                     <div class="form-group">
+                        <label for="exampleInputName1">Yeni Şifrenizi Tekrar Giriniz</label>
+                        <input type="text" class="form-control" id="passwordAgain" name="passwordAgain"  required placeholder="Yeni Şifrenizi Tekrar Giriniz ">
+                    </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+                    </div>
+                    <div class="modal-footer">
+                         <button type="submit" id="PasswordOnayla" class="btn btn-gradient-dark me-2">Gönder</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 @using(Html.BeginForm("check","Login",FormMethod.Post))
 {
@@ -28,7 +120,7 @@
                     <button class="btn btn-block btn-gradient-dark btn-lg font-weight-medium auth-form-btn" type="submit">GİRİŞ YAP</button>
                   </div>
                   <div class="my-2 d-flex justify-content-between align-items-center">
-                    <a href="#" class="auth-link text-black">Parolanızı mı unuttunuz?</a>
+                    <a data-bs-toggle="modal" data-bs-target="#myModal" class="auth-link text-black" style="cursor:pointer">Parolanızı mı unuttunuz?</a>
                   </div>
                 </form>
               </div>
@@ -63,3 +155,76 @@
     </div>
   </div>
 }
+<script type="text/javascript">
+
+    $("#PasswordOnayla").click(function() {
+    var passwordFirst = $("#passwordFirst").val();
+    var passwordAgain = $("#passwordAgain").val();
+    alert(passwordFirst +" ile "+ passwordAgain)
+ $.ajax({
+            url: "@Url.Action("updatePassword","Login")",
+            type: 'POST',
+            data: {passwordFirst : passwordFirst, redirectEmail:redirectEmail},
+            dataType: 'json',
+            success: function(data) {
+                swal("Doğrulandı","Şifreniz güncellenmiştir.Giriş Yapabilirsiniz.","success")
+                $("#myModalPassword").modal('hide');
+            },
+            error: function(err) {
+                swal("Hatalı Şifre","Girdiğiniz yeni şifreniz uyuşmuyor. Lütfen Kontrol ediniz.","warning")
+            }
+        });
+        
+});
+var redirectEmail;
+$("#OnaylaBtn").click(function() {
+    var userEmail = $("#inputEmail").val();
+    redirectEmail = userEmail;
+                $.ajax({
+            url: "@Url.Action("CheckEmail","Login")",
+            type: 'POST',
+            data: {userEmail : userEmail },
+            dataType: 'json',
+            success: function(data) {
+                swal("Doğrulandı","Doğrulama kodu E-Postanıza gönderilmiştir","success")
+                $("#myModal").modal('hide');
+                $("#myModalVerify").modal('show');
+            },
+            error: function(err) {
+             swal("Hata Oluştu","Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.","warning")
+            }
+        });
+});
+$("#verifyCodeBtn").click(function() {
+    var verifyCode = $("#verifyCode").val();
+                $.ajax({
+            url: "@Url.Action("CheckVerifyCode","Login")",
+            type: 'POST',
+            data: {verifyCode : verifyCode},
+            dataType: 'json',
+            success: function(data) {
+                swal("Doğrulandı","Yeni Şifrenizi Oluşturabilirsiniz.","success")
+                $("#myModalVerify").modal('hide');
+                   $("#myModalPassword").modal('show');
+            },
+            error: function(err) {
+                 swal("Hata Oluştu","Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.","warning")
+            }
+        });
+});
+//function checkEmail() {
+//    var userEmail = $("#inputEmail").val();
+//                $.ajax({
+//            url: "@Url.Action("CheckEmail","Login")",
+//            type: 'POST',
+//            data: {userEmail : userEmail},
+//            dataType: 'json',
+//            success: function(data) {
+//                console.log(data);
+//            },
+//            error: function(err) {
+//                alert("no");
+//            }
+//        });
+//}
+</script>

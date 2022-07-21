@@ -61,6 +61,7 @@ namespace Remake.Controllers
                     db.Kategorilers.Add(kategoriler);
                     db.SaveChanges();
                 }
+               
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
