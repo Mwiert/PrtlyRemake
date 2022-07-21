@@ -99,9 +99,9 @@
                       <tbody>
                          @foreach(var item in Model)
                              {
-                    <tr class="table-primary">
-                  <td class="col-lg-2 col-md-2 col-sm-2" @*data-id="@item.UrunKodu" data-bs-toggle="modal" data-bs-target="#myModalProductInfo"*@ >@item.UrunKodu</td>
-                  <td @*data-id="@item.UrunKodu" data-bs-toggle="modal" data-bs-target="#myModalProductInfo"*@>@item.UrunAdi</td>
+                    <tr class="table-primary" style="cursor:pointer">
+                  <td class="col-lg-2 col-md-2 col-sm-2" style=" user-select: none;" @*data-id="@item.UrunKodu" data-bs-toggle="modal" data-bs-target="#myModalProductInfo"*@ >@item.UrunKodu</td>
+                  <td @*data-id="@item.UrunKodu" data-bs-toggle="modal" data-bs-target="#myModalProductInfo"*@ style=" user-select: none;">@item.UrunAdi</td>
                    <td><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" class="btn btn-gradient-dark btn-sm">Sil</a></td>
                  
                         </tr>
@@ -116,14 +116,10 @@
             
         var table = document.getElementById("table"),indexy,send,temp 
 
-    for (var i = 0; i < table.rows.length;i++)
-    {
-        table.rows[i].onclick = function() {
-            indexy = this.rowIndex;
-                       send = this.cells[0].textContent;
-            document.getElementById("RowsValue").value = send;
-        $("td").dblclick(function() {
-        $.ajax({
+   var table = document.getElementById("table"),indexy
+$("#table").on("click", "td", function(){
+    var send = $(this).parent("tr").find("td:first").text();
+            $.ajax({
             url: "@Url.Action("GetProductByCode","Product")",
             type: 'POST',
             data: {send : send},
@@ -143,9 +139,7 @@
                 alert("no");
             }
         });
-    });
-
-        };
-    }
+});
+  
 
  </script>

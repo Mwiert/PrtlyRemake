@@ -29,7 +29,7 @@
                         @using (Html.BeginForm("DeleteProduct","Product",FormMethod.Post))
 {
                                      <button type="submit" class="btn btn-gradient-dark me-2">Sil</button>
-                                                   <input value="" id="RowsValue" type="text" style="visibility:hidden" name="ProductName"> 
+                                                   <input value="" id="RowsValue" type="text" style="visibility:hidden" name="ProductCode"> 
 
 }
                             <button type="submit" data-bs-dismiss="modal"  class="btn btn-gradient-red me-2">İptal Et</button>
@@ -115,11 +115,11 @@
 <button type="button" style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;" class="btn btn-gradient-dark " style="margin-bottom:1rem;" data-bs-toggle="modal" data-bs-target="#myModal">Ürün Ekle</button>
 
                     <h2 class="card-title text-center">ÜRÜNLER</h2>
-<div class="col-lg-12 stretch-card">
+                    <div class="col-md-12">
                 <div class="table-responsive card">
                   <div class="card-body">
                     <table id="table" class="table table-bordered text-center ">
-                      <thead>
+        <thead>
                         <tr>
             <th>Ürün Adı</th>
                         </tr>
@@ -127,9 +127,10 @@
                       <tbody>
                          @foreach(var item in Model)
                              {
-                    <tr class="table-primary">
-                <td class="col-7">@item.UrunAdi</td>
-                                            <td><a type="submit"  data-bs-toggle="modal" data-bs-target="#myModalOK" class="btn btn-gradient-dark btn-sm col-5">Sil</a></td>
+                    <tr class="table-primary" style="cursor:pointer">
+                  <td class="col-lg-2 col-md-2 col-sm-2" style=" user-select: none;" @*data-id="@item.UrunKodu" data-bs-toggle="modal" data-bs-target="#myModalProductInfo"*@ >@item.UrunKodu</td>
+                  <td @*data-id="@item.UrunKodu" data-bs-toggle="modal" data-bs-target="#myModalProductInfo"*@ style=" user-select: none;">@item.UrunAdi</td>
+                   <td ><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" class="btn btn-gradient-dark btn-sm">Sil</a></td>
                  
                         </tr>
                         }
@@ -138,6 +139,63 @@
                   </div>
                 </div>
               </div>
+
+    <div class="container mt-2"> @*mt kapatılabilir*@
+
+        <div class="modal" id="myModalProductInfo">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Ürün Bilgileri</h4>
+                    <div class="modal-body">
+                        <div class="col-12 grid-margin stretch-card">
+                <div class="card " style="height:100%; margin-bottom:-3rem;">
+                  <div class="card-body">
+                    <form class="forms-sample">
+                        <label for="exampleInputName1" style="font-size:14px">Ürün Kodu</label>
+                      <div class="form-group" style="display:flex">
+                        <input type="text" class="form-control" id="UrunKodu" name="UrunKodu" value=""  required placeholder="Ürün Kodu" readonly>
+                      </div>
+                        <div class="form-group">
+                        <label for="exampleInputName1">Ürün Adı </label>
+                        <input type="text" class="form-control" id="UrunAdi" name="UrunAdi"  required placeholder="Ürün Adı" readonly>
+                      </div>
+                        <div class="form-group">
+                        <label for="exampleInputName1">Ürün Markası</label>
+                        <input type="text" class="form-control" id="UrunMarka" name="Marka"  required placeholder="Ürün Markası" readonly>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputName1">Ürün Kategorisi</label>
+                        <input type="text" class="form-control" id="UrunCat" name="Kategori"  required placeholder="Ürün Kategorisi" readonly>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputName1">Ürün'ün Kullanıldığı Keşif</label>
+                        <input type="text" class="form-control" id="UrunAitligi" name="Aitlik"  required placeholder="Ürün'ün Kullanıldığı Keşif'" readonly>
+                      </div>
+                    <div class="form-group">
+                        <label for="exampleInputName1">Ürün Fiyatı </label>
+                        <input type="number" class="form-control" id="UrunFiyat" name="fiyat"  required placeholder="Ürün Fiyatı" readonly>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputName1"> Satış Fiyatı</label>
+                        <input type="number" class="form-control" id="UrunSatisFiyat" name="satisFiyati"  required placeholder="Satış Fiyatı" readonly>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+                    </div>
+                    <div class="modal-footer">
+                          <button type="submit" data-bs-dismiss="modal"  class="btn btn-gradient-dark me-2">Kapat</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </style>
               <script type="text/javascript">
        function writeName() {
     var temp = document.getElementById("Selects").value
@@ -156,17 +214,31 @@ GenerateCode = function() {
 };
         
             
-        var table = document.getElementById("table"),indexy
-
-    for (var i = 0; i < table.rows.length;i++)
-    {
-        table.rows[i].onclick = function() 
-        {
-            indexy = this.rowIndex;
-            document.getElementById("RowsValue").value =this.cells[0].textContent;
-        };
-}
- 
+ var table = document.getElementById("table"),indexy
+$("#table").on("click", "td", function(){
+    var send = $(this).parent("tr").find("td:first").text();
+            $.ajax({
+            url: "@Url.Action("GetProductByCode","Product")",
+            type: 'POST',
+            data: {send : send},
+            dataType: 'json',
+            success: function(data) {
+                console.log(data);
+                $("#UrunKodu").val(data.urunKodu);
+                $("#UrunMarka").val(data.marka);
+                $("#UrunAitligi").val(data.kesifAitligi);
+                $("#UrunSatisFiyat").val(data.satisFiyati);
+                $("#UrunFiyat").val(data.urunFiyati);
+                $("#UrunCat").val(data.urunKategorisi);
+                $("#UrunAdi").val(data.urunAdi);
+                $("#myModalProductInfo").modal('show');
+            },
+            error: function(err) {
+                alert("no");
+            }
+        });
+});
+  
    </script>
   
-       .
+       

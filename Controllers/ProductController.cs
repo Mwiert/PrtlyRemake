@@ -25,21 +25,26 @@ namespace Remake.Controllers
                 throw ex;
             }
         }
-        public IActionResult DeleteProduct(string ProductName)
+        public IActionResult DeleteProduct(string ProductCode)
         {
             try
             {
-                if (!string.IsNullOrEmpty(ProductName))
+                if (!string.IsNullOrEmpty(ProductCode))
                 {
 
-                string temp = ProductName.TrimStart();
-                prodct = db.Urunlers.FirstOrDefault(x => x.UrunAdi == temp);
-                if(prodct != null)
+                string temp = ProductCode.TrimStart();
+                prodct = db.Urunlers.FirstOrDefault(x => x.UrunKodu == temp);
+                    if (prodct.KesifAitligi == null)
                     {
-                        db.Urunlers.Remove(prodct);
-                        db.SaveChanges();
+                        if (prodct != null)
+                        {
+                            db.Urunlers.Remove(prodct);
+                            db.SaveChanges();
+                            //kesif aitliği null değil ise silme işlemi olmayacak alert verdir.
+                        }
                     }
                 }
+               
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
