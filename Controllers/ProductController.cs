@@ -48,13 +48,19 @@ namespace Remake.Controllers
                 throw ex;
             }
         }
+        public JsonResult GetProductByCode(string Send)
+        {
+            Urunler urunler = new Urunler();
+            urunler = db.Urunlers.FirstOrDefault(x => x.UrunKodu == Send);
+            return Json(urunler);
+        }
         public IActionResult AddNewProduct(string UrunKodu, string UrunAdi, string Marka, string Kategori, float satisFiyati, float fiyat/*,string foto*/)
         {
             try
             {
                 if (!string.IsNullOrEmpty(UrunKodu) && !string.IsNullOrEmpty(UrunAdi) && !string.IsNullOrEmpty(Marka) && !string.IsNullOrEmpty(Kategori) && !string.IsNullOrEmpty(satisFiyati.ToString()) && !string.IsNullOrEmpty(fiyat.ToString()))
                 {
-                    urunlers = db.Urunlers.Where(x => x.UrunAdi == UrunAdi && x.Marka == Marka).ToList();
+                    urunlers = db.Urunlers.Where(x => x.UrunKodu == UrunKodu).ToList();
                     if(urunlers.Count == 0)
                     {
                         prodct.UrunKodu = UrunKodu;

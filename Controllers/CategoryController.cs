@@ -27,9 +27,22 @@ namespace Remake.Controllers
                     db.Kategorilers.Remove(kategoriler);
                     db.SaveChanges();
                 }
-
-
                 return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+        public IActionResult ListIndex(string CatName)
+        {
+            try
+            {
+                List<Urunler> urunlers = new List<Urunler>();
+                urunlers= db.Urunlers.Where(x => x.UrunKategorisi == CatName).ToList();
+                db.SaveChanges();
+                return View("ListIndex",urunlers);
             }
             catch (Exception ex)
             {

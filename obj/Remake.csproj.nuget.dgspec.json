@@ -57,6 +57,10 @@
             "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",
               "version": "[6.0.1, )"
+            },
+            "jQuery": {
+              "target": "Package",
+              "version": "[3.6.0, )"
             }
           },
           "imports": [

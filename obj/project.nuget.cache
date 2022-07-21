@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "a74BXJrkKbnfaQ00OnlrOTCsODRuP2p0qx9cr5DxlAozVtUUFOQMwOVLxrzpKv1vJp/aa6UV+cZWePcwfvMwPg==",
+  "dgSpecHash": "Ins1C3uweLYm5jribmzTsDKJrMu+bccXO2c8tlSrw7+IN1ssIn2DlcWA27FGBdf0Gkuycxn6PKezJ9fU1m9gaQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\merts\\OneDrive\\Masaüstü\\PrtlyRemake\\Remake.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\merts\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
+    "C:\\Users\\merts\\.nuget\\packages\\jquery\\3.6.0\\jquery.3.6.0.nupkg.sha512",
     "C:\\Users\\merts\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",
     "C:\\Users\\merts\\.nuget\\packages\\messagepack.annotations\\2.1.152\\messagepack.annotations.2.1.152.nupkg.sha512",
     "C:\\Users\\merts\\.nuget\\packages\\messagepackanalyzer\\2.1.152\\messagepackanalyzer.2.1.152.nupkg.sha512",

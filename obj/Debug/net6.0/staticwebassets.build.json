@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "DSg2q1NK4s5s31ASwTC2fzfRoam7mL5cEoO1s5HRng4=",
+  "Hash": "JLgFDpiBgm4oVEhOwVF/PWx+Ec55jb+UruU1fCwo50Q=",
   "Source": "Remake",
   "BasePath": "_content/Remake",
   "Mode": "Default",
@@ -28609,6 +28609,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\css\\style.css.map"
+    },
+    {
+      "Identity": "C:\\Users\\merts\\OneDrive\\Masaüstü\\PrtlyRemake\\wwwroot\\js\\jquery-3.6.0.min.js",
+      "SourceId": "Remake",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\merts\\OneDrive\\Masaüstü\\PrtlyRemake\\wwwroot\\",
+      "BasePath": "_content/Remake",
+      "RelativePath": "js/jquery-3.6.0.min.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\jquery-3.6.0.min.js"
     },
     {
       "Identity": "C:\\Users\\merts\\OneDrive\\Masaüstü\\PrtlyRemake\\wwwroot\\js\\script.js",
