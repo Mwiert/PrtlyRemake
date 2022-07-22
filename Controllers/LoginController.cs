@@ -14,8 +14,8 @@ namespace Remake.Controllers
         //Roles AutRoles = new Roles();
         //List<Roller> KeepRoles = new List<Roller>();
         kesifdbContext kesifdb = new kesifdbContext();
-        kullanıcı kul = new kullanıcı();
-        List<kullanıcı> kuls = new List<kullanıcı>();
+        Kullanıcı kul = new Kullanıcı();
+        List<Kullanıcı> kuls = new List<Kullanıcı>();
         rePassword rePass = new rePassword();
         public IActionResult Index()
         {

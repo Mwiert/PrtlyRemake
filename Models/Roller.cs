@@ -7,12 +7,12 @@ namespace Remake.Models
     {
         public Roller()
         {
-            Kullanıcıs = new HashSet<kullanıcı>();
+            Kullanıcıs = new HashSet<Kullanıcı>();
         }
 
         public int RolId { get; set; }
         public string? RolAdi { get; set; }
 
-        public virtual ICollection<kullanıcı> Kullanıcıs { get; set; }
+        public virtual ICollection<Kullanıcı> Kullanıcıs { get; set; }
     }
 }

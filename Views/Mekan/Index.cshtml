@@ -1,4 +1,5 @@
-﻿
+﻿@model IEnumerable<Remake.Models.Mekantürleri>
+@using Remake.Models;
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/layout.cshtml";
@@ -6,12 +7,15 @@
 <div class="form-group text-center">
                      <h3>Mekanlar</h3>
                       <select class="form-control form-control-sm" id="mekanAdi" name="MekanAdi">
-                        <option class="text-center" style="font-size:1rem">1</option>
+        @foreach(var item in Model)
+        {
+                   <option class="text-center" style="font-size:1rem">@item.MekanAdi</option> 
+        }
                       </select>
                     </div>
 
 
-                    @using (Html.BeginForm("AddCategory","Category",FormMethod.Post))
+                    @using (Html.BeginForm("AddNewMekan","Mekan",FormMethod.Post))
 {
 <div class="container mt-2"> @*mt kapatılabilir*@
         <div class="modal" id="myModal">

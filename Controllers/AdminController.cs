@@ -9,10 +9,10 @@ namespace Remake.Controllers
     public class AdminController : Controller
     {
         Roles AutRoles = new Roles();
-        kullanıcı k = new kullanıcı();
+        Kullanıcı k = new Kullanıcı();
         kesifdbContext Db = new kesifdbContext();
         Roller roller = new Roller();
-        List<kullanıcı> kullanıcıs = new List<kullanıcı>();
+        List<Kullanıcı> kullanıcıs = new List<Kullanıcı>();
         public IActionResult Index()
         {
             try

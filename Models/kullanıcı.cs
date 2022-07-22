@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Remake.Models
 {
-    public partial class kullanıcı
+    public partial class Kullanıcı
     {
         public int Id { get; set; }
         public string? Ad { get; set; }

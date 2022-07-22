@@ -18,8 +18,9 @@ namespace Remake.Models
 
         public virtual DbSet<Kategoriler> Kategorilers { get; set; } = null!;
         public virtual DbSet<Kesifler> Kesiflers { get; set; } = null!;
-        public virtual DbSet<kullanıcı> Kullanıcıs { get; set; } = null!;
+        public virtual DbSet<Kullanıcı> Kullanıcıs { get; set; } = null!;
         public virtual DbSet<Mekan> Mekans { get; set; } = null!;
+        public virtual DbSet<Mekantürleri> Mekantürleris { get; set; } = null!;
         public virtual DbSet<Roller> Rollers { get; set; } = null!;
         public virtual DbSet<Urunler> Urunlers { get; set; } = null!;
 
@@ -28,7 +29,7 @@ namespace Remake.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseMySql("server=localhost;database=kesifdb;uid=root;pwd=998569", ServerVersion.Parse("8.0.28-mysql"));
+                optionsBuilder.UseMySql("server=localhost;database=kesifdb;uid=root;pwd=998569", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.28-mysql"));
             }
         }
 
@@ -53,13 +54,15 @@ namespace Remake.Models
                     .HasColumnName("ad");
             });
 
-            modelBuilder.Entity<kullanıcı>(entity =>
+            modelBuilder.Entity<Kullanıcı>(entity =>
             {
                 entity.ToTable("kullanıcı");
 
                 entity.HasIndex(e => e.RolId, "fk_roller");
 
                 entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Ad).HasMaxLength(40);
 
                 entity.Property(e => e.Email).HasMaxLength(50);
 
@@ -85,6 +88,15 @@ namespace Remake.Models
                     .WithMany(p => p.Mekans)
                     .HasForeignKey(d => d.UstId)
                     .HasConstraintName("fk_Kesifler");
+            });
+
+            modelBuilder.Entity<Mekantürleri>(entity =>
+            {
+                entity.ToTable("mekantürleri");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.MekanAdi).HasMaxLength(50);
             });
 
             modelBuilder.Entity<Roller>(entity =>
