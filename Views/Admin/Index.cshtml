@@ -138,6 +138,48 @@
         </div>
     </div>
        }
+       <div class="container mt-2"> @*mt kapatılabilir*@
+
+        <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Kullanıcı Bilgileri</h4>
+                    <div class="modal-body">
+                        <div class="col-12 grid-margin stretch-card">
+                <div class="card " style="height:100%; margin-bottom:-3rem;">
+                  <div class="card-body">
+                    <form class="forms-sample">
+                      <div class="form-group">
+                        <label for="exampleInputName1">Kullanıcı Adı</label>
+                        <input type="text" class="form-control" id="UsersName" name="UsersName"  required placeholder="Kullanıcı Adı">
+                      </div>
+                        <div class="form-group">
+                        <label for="exampleInputName1">Kullanıcı Email </label>
+                        <input type="text" class="form-control" id="UsersEmail" name="UsersEmail"  required placeholder="Kullanıcı Email Adresi">
+                      </div>
+                        <div class="form-group">
+                        <label for="exampleInputName1">Kullanıcı Şifresi</label>
+                        <input type="password" class="form-control" id="UsersPassword" name="UsersPassword"  required placeholder="Kullanıcı Şifresi">
+                      </div>
+                       <div class="form-group">
+                        <label for="exampleInputName1">Kullanıcı Rolü</label>
+                        <input type="password" class="form-control" id="UserRole" name="UserRole"  required placeholder="Kullanıcı Rolü">
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-gradient-light" data-bs-dismiss="modal">Kapat</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     @using (Html.BeginForm("AddNewRole", "Admin", FormMethod.Post))
     {
     <div class="container mt-2"> @*mt kapatılabilir*@
@@ -173,7 +215,32 @@
     </div>
    }
 
-                    <script type="text/javascript">
+       <script type="text/javascript">
+           $("#table").on("click", "td", function(){
+    var send = $(this).parent("tr").find("td:first").text();
+            $.ajax({
+            url: "@Url.Action("GetProductByCode","Product")",
+            type: 'POST',
+            data: {send : send},
+            dataType: 'json',
+            success: function(data) {
+                console.log(data);
+                $("#UrunKodu").val(data.urunKodu);
+                $("#UrunMarka").val(data.marka);
+                $("#UrunAitligi").val(data.kesifAitligi);
+                $("#UrunSatisFiyat").val(data.satisFiyati);
+                $("#UrunFiyat").val(data.urunFiyati);
+                $("#UrunCat").val(data.urunKategorisi);
+                $("#UrunAdi").val(data.urunAdi);
+                $("#myModalProductInfo").modal('show');
+            },
+            error: function(err) {
+                alert("no");
+            }
+        });
+});
+
+
        var table = document.getElementById("table"),indexy
 
     for (var i = 0; i < table.rows.length;i++)
@@ -181,10 +248,11 @@
         table.rows[i].onclick = function() 
         {
             indexy = this.rowIndex;
+            alert(this.cells[1].textContent);
             document.getElementById("RowsValue").value =this.cells[1].textContent;
         };
 }
-               function writeName() {
+    function writeName() {
     var temp = document.getElementById("Selects").value
     document.getElementById("inputNameChange").setAttribute("value", temp)
 }

@@ -117,7 +117,7 @@
         var table = document.getElementById("table"),indexy,send,temp 
 
    var table = document.getElementById("table"),indexy
-$("#table").on("click", "td", function(){
+$("#table").on("dblclick", "td", function(){
     var send = $(this).parent("tr").find("td:first").text();
             $.ajax({
             url: "@Url.Action("GetProductByCode","Product")",

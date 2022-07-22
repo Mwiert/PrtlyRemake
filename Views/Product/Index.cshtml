@@ -121,6 +121,7 @@
                     <table id="table" class="table table-bordered text-center ">
         <thead>
                         <tr>
+                            <th>Ürün Kodu</th>
             <th>Ürün Adı</th>
                         </tr>
                       </thead>
@@ -130,7 +131,7 @@
                     <tr class="table-primary" style="cursor:pointer">
                   <td class="col-lg-2 col-md-2 col-sm-2" style=" user-select: none;" @*data-id="@item.UrunKodu" data-bs-toggle="modal" data-bs-target="#myModalProductInfo"*@ >@item.UrunKodu</td>
                   <td @*data-id="@item.UrunKodu" data-bs-toggle="modal" data-bs-target="#myModalProductInfo"*@ style=" user-select: none;">@item.UrunAdi</td>
-                   <td ><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" class="btn btn-gradient-dark btn-sm">Sil</a></td>
+                   <td ><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" style=" user-select: none;"class="btn btn-gradient-dark btn-sm">Sil</a></td>
                  
                         </tr>
                         }
@@ -215,7 +216,7 @@ GenerateCode = function() {
         
             
  var table = document.getElementById("table"),indexy
-$("#table").on("click", "td", function(){
+$("#table").on("dblclick", "td", function(){
     var send = $(this).parent("tr").find("td:first").text();
             $.ajax({
             url: "@Url.Action("GetProductByCode","Product")",
@@ -223,7 +224,6 @@ $("#table").on("click", "td", function(){
             data: {send : send},
             dataType: 'json',
             success: function(data) {
-                console.log(data);
                 $("#UrunKodu").val(data.urunKodu);
                 $("#UrunMarka").val(data.marka);
                 $("#UrunAitligi").val(data.kesifAitligi);
@@ -231,6 +231,7 @@ $("#table").on("click", "td", function(){
                 $("#UrunFiyat").val(data.urunFiyati);
                 $("#UrunCat").val(data.urunKategorisi);
                 $("#UrunAdi").val(data.urunAdi);
+                $("#RowsValue").val(data.urunKodu);
                 $("#myModalProductInfo").modal('show');
             },
             error: function(err) {
