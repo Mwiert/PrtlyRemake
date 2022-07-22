@@ -82,22 +82,32 @@
                       </select>
                     </div>
                     <div class="form-group">
+                      <label for="exampleFormControlSelect3">Urun Adedi</label>
+                      <select class="form-control form-control-sm" id="UrunAdet" name="UrunAdet">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                        <option>13</option>
+                        <option>14</option>
+                        <option>15</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
                         <label for="exampleInputName1">Ürün Fiyatı </label>
                         <input type="number" class="form-control" id="exampleInputName1" name="fiyat"  required placeholder="Ürün Fiyatı">
                       </div>
                       <div class="form-group">
                         <label for="exampleInputName1"> Satış Fiyatı</label>
                         <input type="number" class="form-control" id="exampleInputName1" name="satisFiyati"  required placeholder="Satış Fiyatı">
-                      </div>
-                      <div class="form-group">
-                        <label>File upload</label>
-                        <input type="file" name="UsersImg" class="file-upload-default">
-                        <div class="input-group col-xs-12">
-                          <input type="text" class="form-control file-upload-info" disabled placeholder="Resim Yükle ">
-                          <span class="input-group-append">
-                            <button class="file-upload-browse btn btn-gradient-dark" type="button">Yükle</button>
-                          </span>
-                        </div>
                       </div>
                     </form>
                   </div>
@@ -171,6 +181,10 @@
                         <label for="exampleInputName1">Ürün Kategorisi</label>
                         <input type="text" class="form-control" id="UrunCat" name="Kategori"  required placeholder="Ürün Kategorisi" readonly>
                       </div>
+                       <div class="form-group">
+                        <label for="exampleInputName1">Ürün Adedi</label>
+                        <input type="text" class="form-control" id="UrunAdeti" name="UrunAdet"  required placeholder="Ürün Adedi" readonly>
+                      </div>
                       <div class="form-group">
                         <label for="exampleInputName1">Ürün'ün Kullanıldığı Keşif</label>
                         <input type="text" class="form-control" id="UrunAitligi" name="Aitlik"  required placeholder="Ürün'ün Kullanıldığı Keşif'" readonly>
@@ -228,6 +242,7 @@ $("#table").on("dblclick", "td", function(){
                 $("#UrunMarka").val(data.marka);
                 $("#UrunAitligi").val(data.kesifAitligi);
                 $("#UrunSatisFiyat").val(data.satisFiyati);
+                $("#UrunAdeti").val(data.urunAdet);
                 $("#UrunFiyat").val(data.urunFiyati);
                 $("#UrunCat").val(data.urunKategorisi);
                 $("#UrunAdi").val(data.urunAdi);
@@ -235,7 +250,7 @@ $("#table").on("dblclick", "td", function(){
                 $("#myModalProductInfo").modal('show');
             },
             error: function(err) {
-                alert("no");
+               swal("Hata Oluştu","Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.","warning")
             }
         });
 });

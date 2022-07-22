@@ -101,8 +101,6 @@ namespace Remake.Models
             {
                 entity.ToTable("urunler");
 
-                entity.Property(e => e.Fotograf).HasMaxLength(300);
-
                 entity.Property(e => e.KesifAitligi).HasMaxLength(150);
 
                 entity.Property(e => e.Marka).HasMaxLength(50);

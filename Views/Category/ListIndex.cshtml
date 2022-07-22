@@ -65,6 +65,10 @@
                         <label for="exampleInputName1">Ürün Kategorisi</label>
                         <input type="text" class="form-control" id="UrunCat" name="Kategori"  required placeholder="Ürün Kategorisi" readonly>
                       </div>
+                        <div class="form-group">
+                        <label for="exampleInputName1">Ürün Adedi</label>
+                        <input type="text" class="form-control" id="UrunAdeti" name="UrunAdet"  required placeholder="Ürün Adedi" readonly>
+                      </div>
                       <div class="form-group">
                         <label for="exampleInputName1">Ürün'ün Kullanıldığı Keşif</label>
                         <input type="text" class="form-control" id="UrunAitligi" name="Aitlik"  required placeholder="Ürün'ün Kullanıldığı Keşif'" readonly>
@@ -100,8 +104,8 @@
                          @foreach(var item in Model)
                              {
                     <tr class="table-primary" style="cursor:pointer">
-                  <td class="col-lg-2 col-md-2 col-sm-2" style=" user-select: none;" @*data-id="@item.UrunKodu" data-bs-toggle="modal" data-bs-target="#myModalProductInfo"*@ >@item.UrunKodu</td>
-                  <td @*data-id="@item.UrunKodu" data-bs-toggle="modal" data-bs-target="#myModalProductInfo"*@ style=" user-select: none;">@item.UrunAdi</td>
+                  <td class="col-lg-2 col-md-2 col-sm-2" style=" user-select: none;" >@item.UrunKodu</td>
+                  <td  style=" user-select: none;">@item.UrunAdi</td>
                    <td><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" class="btn btn-gradient-dark btn-sm">Sil</a></td>
                  
                         </tr>
@@ -125,18 +129,18 @@ $("#table").on("dblclick", "td", function(){
             data: {send : send},
             dataType: 'json',
             success: function(data) {
-                console.log(data);
                 $("#UrunKoduId").val(data.urunKodu);
                 $("#UrunMarka").val(data.marka);
                 $("#UrunAitligi").val(data.kesifAitligi);
                 $("#UrunSatisFiyat").val(data.satisFiyati);
+                $("#UrunAdeti").val(data.urunAdet);
                 $("#UrunFiyat").val(data.urunFiyati);
                 $("#UrunCat").val(data.urunKategorisi);
                 $("#UrunAdi").val(data.urunAdi);
                 $("#myModalProductInfo").modal('show');
             },
             error: function(err) {
-                alert("no");
+                 swal("Hata Oluştu","Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.","warning")
             }
         });
 });

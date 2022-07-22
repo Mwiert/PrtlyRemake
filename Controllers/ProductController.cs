@@ -59,7 +59,7 @@ namespace Remake.Controllers
             urunler = db.Urunlers.FirstOrDefault(x => x.UrunKodu == Send);
             return Json(urunler);
         }
-        public IActionResult AddNewProduct(string UrunKodu, string UrunAdi, string Marka, string Kategori, float satisFiyati, float fiyat/*,string foto*/)
+        public IActionResult AddNewProduct(string UrunKodu, string UrunAdi, string Marka, string Kategori, float satisFiyati, float fiyat,int UrunAdet)
         {
             try
             {
@@ -74,6 +74,7 @@ namespace Remake.Controllers
                         prodct.UrunKategorisi = Kategori;
                         prodct.SatisFiyati = satisFiyati;
                         prodct.UrunFiyati = fiyat;
+                        prodct.UrunAdet = UrunAdet;
                         db.Urunlers.Add(prodct);
                         db.SaveChanges();
                     }

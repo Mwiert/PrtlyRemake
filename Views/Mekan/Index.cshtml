@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/layout.cshtml";
+}
+<div class="form-group text-center">
+                     <h3>Mekanlar</h3>
+                      <select class="form-control form-control-sm" id="mekanAdi" name="MekanAdi">
+                        <option class="text-center" style="font-size:1rem">1</option>
+                      </select>
+                    </div>
+
+
+                    @using (Html.BeginForm("AddCategory","Category",FormMethod.Post))
+{
+<div class="container mt-2"> @*mt kapatılabilir*@
+        <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Yeni Mekan Ekle</h4>
+                    <div class="modal-body">
+                        <div class="col-12 grid-margin stretch-card">
+                <div class="card " style="height:100%; margin-bottom:-3rem;">
+                  <div class="card-body">
+                    <form class="forms-sample">
+                      <div class="form-group">
+                        <label for="exampleInputName1">Mekan Adı</label>
+                        <input type="text" class="form-control" id="exampleInputName1" name="MekanAdi"  required placeholder="Mekan Adı">
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+                    </div>
+                    <div class="modal-footer">
+                         <button type="submit" class="btn btn-gradient-dark me-2">Onayla</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+
+
+
+
+
+            <button class="btn btn-gradient-dark " style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;"type="button" id="dropupCenterBtn" data-bs-toggle="modal" data-bs-target="#myModal" aria-expanded="false">
+              +
+            </button>
+

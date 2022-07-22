@@ -11,7 +11,7 @@ namespace Remake.Models
         public string? Marka { get; set; }
         public float? UrunFiyati { get; set; }
         public float? SatisFiyati { get; set; }
-        public string? Fotograf { get; set; }
+        public int? UrunAdet { get; set; }
         public string? UrunKategorisi { get; set; }
         public string? KesifAitligi { get; set; }
     }
