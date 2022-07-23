@@ -10,6 +10,9 @@ namespace Remake.Controllers
         kesifdbContext db = new kesifdbContext();
         Kesifler explorers = new Kesifler();
         List<Kesifler> Kesiflers = new List<Kesifler>();
+        Kesifmekanholder kesifmekanholder = new Kesifmekanholder();
+        Kesifler kesifler = new Kesifler();
+        Mekantürleri mekanturleri = new Mekantürleri();
         public IActionResult Index()
         {
             db.Kesiflers.ToList();
@@ -48,6 +51,17 @@ namespace Remake.Controllers
 
                 throw ex;
             }
+        }
+        public IActionResult AddMekanToExplorer(string MekanAdi, string KesifAdi)
+        {
+            kesifler = db.Kesiflers.FirstOrDefault(x => x.Ad == KesifAdi);
+            int RowId = kesifler.Id;
+            mekanturleri = db.Mekantürleris.FirstOrDefault(x => x.MekanAdi == MekanAdi);
+            kesifmekanholder.MekanId = mekanturleri.Id;
+            kesifmekanholder.OtelId = kesifler.Id;
+            db.Kesifmekanholders.Add(kesifmekanholder);
+            db.SaveChanges();
+            return RedirectToAction("MekanIndex", new { RowId = RowId });
         }
         public IActionResult AddProductToMekan()
         {

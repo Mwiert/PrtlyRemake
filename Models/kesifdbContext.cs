@@ -18,6 +18,7 @@ namespace Remake.Models
 
         public virtual DbSet<Kategoriler> Kategorilers { get; set; } = null!;
         public virtual DbSet<Kesifler> Kesiflers { get; set; } = null!;
+        public virtual DbSet<Kesifmekanholder> Kesifmekanholders { get; set; } = null!;
         public virtual DbSet<Kullanıcı> Kullanıcıs { get; set; } = null!;
         public virtual DbSet<Mekan> Mekans { get; set; } = null!;
         public virtual DbSet<Mekantürleri> Mekantürleris { get; set; } = null!;
@@ -52,6 +53,13 @@ namespace Remake.Models
                 entity.Property(e => e.Ad)
                     .HasMaxLength(150)
                     .HasColumnName("ad");
+            });
+
+            modelBuilder.Entity<Kesifmekanholder>(entity =>
+            {
+                entity.ToTable("kesifmekanholder");
+
+                entity.Property(e => e.Id).HasColumnName("id");
             });
 
             modelBuilder.Entity<Kullanıcı>(entity =>

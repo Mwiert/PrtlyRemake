@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/layout.cshtml";
 
 }
-@using (Html.BeginForm("AddProductToMekan","Explorers",FormMethod.Post))
+@using (Html.BeginForm("AddMekanToExplorer","Explorers",FormMethod.Post))
 {
     <div class="container mt-2"> @*mt kapatılabilir*@
         <div class="modal" id="myModal">
@@ -14,7 +14,7 @@
                     <div class="modal-header">
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
-                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Ürünü Ekle</h4>
+                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Mekan Ekle</h4>
                      <input value="" id="RowsValue" type="text" style="visibility:hidden" name="ExploreId">
                      <h1 id="changeText"></h1>
                     <div class="modal-body">
@@ -22,16 +22,20 @@
                 <div class="card " style="height:100%; margin-bottom:-3rem;">
                   <div class="card-body">
                     <form class="forms-sample">
-                      <div class="form-group">
-                        <label for="exampleInputName1">Mekan Adı</label>
-                        <input type="text" class="form-control" id="exampleInputName1" name="ExpName"  required placeholder="Mekan Adı">
-                      </div>
+                      <select class="form-control form-control-sm" id="mekanAdi" name="MekanAdi">
+                        <option class="text-center" style="font-size:1rem" >--</option> 
+        @foreach(var item in (List<Mekantürleri>)ViewBag.List)
+        {
+                   <option class="text-center" style="font-size:1rem">@item.MekanAdi</option>                               // BURADA KALDIM. BURADAN CONTROLLERA MEKANADI GONDERILECEK
+        }
+                      </select>
                     </form>
                   </div>
                 </div>
               </div>
                     </div>
                     <div class="modal-footer">
+                         <input value="@ViewBag.KesifAdi" id="RowsValue" type="text" style="visibility:hidden" name="KesifAdi">
                          <button type="submit" class="btn btn-gradient-dark me-2">Onayla</button>
                     </div>
                 </div>
@@ -40,7 +44,7 @@
     </div>
     }
 
-            <h3 class="card-title text-center " style="margin-top:-1rem;padding:1rem;">@ViewBag.KesifAdi</h3>
+            <h3 class="card-title text-center "  style="margin-top:-1rem;padding:1rem;">@ViewBag.KesifAdi</h3>
 
             <div class="form-group text-center">
                      <h3>Mekanlar</h3>
@@ -67,8 +71,8 @@
                          @foreach(var item in Model)
                              {
                     <tr class="table-primary" style="cursor:pointer">
-                  <td class="col-lg-2 col-md-2 col-sm-2" style=" user-select: none;" @*data-id="@item.UrunKodu" data-bs-toggle="modal" data-bs-target="#myModalProductInfo"*@ >@item.UrunKodu</td>
-                  <td @*data-id="@item.UrunKodu" data-bs-toggle="modal" data-bs-target="#myModalProductInfo"*@ style=" user-select: none;">@item.UrunAdi</td>
+                  <td class="col-lg-2 col-md-2 col-sm-2" style=" user-select: none;" >@item.UrunKodu</td>
+                  <td style=" user-select: none;">@item.UrunAdi</td>
                    <td ><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" style=" user-select: none;"class="btn btn-gradient-dark btn-sm">@item.UrunAdet</a></td>  @* kesifteki adetini yazdır*@
                  
                         </tr>
@@ -82,11 +86,12 @@
 
 
 <script type="text/javascript">
-
+    
     	$("#mekanAdi").change(function() {
 
 		var selectedVal = $("#mekanAdi option:selected").val();
-		alert(selectedVal);
+         
+   
 
 	});
 </script>
