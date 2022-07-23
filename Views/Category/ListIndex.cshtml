@@ -116,9 +116,97 @@
                 </div>
               </div>
 
+              @using (Html.BeginForm("AddNewProduct","Category",FormMethod.Post))
+{
+<div class="container mt-2">
+
+        <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Yeni Ürün Ekle</h4>
+                    <div class="modal-body">
+                        <div class="col-12 grid-margin stretch-card">
+                <div class="card " style="height:100%; margin-bottom:-3rem;">
+                  <div class="card-body">
+                    <form class="forms-sample">
+                        <label for="exampleInputName1" style="font-size:14px">Ürün Kodu</label>
+                      <div class="form-group" style="display:flex">
+                        <input type="text" class="form-control" id="UrunKodu" name="UrunKodu"   required placeholder="Ürün Kodu">
+                        <a type="button" onclick="GenerateCode()" class="btn btn-gradient-dark">Kod üret</a>
+                      </div>
+                        <div class="form-group">
+                        <label for="exampleInputName1">Ürün Adı </label>
+                        <input type="text" class="form-control" id="exampleInputName1" name="UrunAdi"  required placeholder="Ürün Adı">
+                      </div>
+                        <div class="form-group">
+                        <label for="exampleInputName1">Ürün Markası</label>
+                        <input type="text" class="form-control" id="exampleInputName1" name="Marka"  required placeholder="Ürün Markası">
+                      </div>
+                        <div class="form-group">
+                        <label for="exampleInputName1">Ürün Kategorisi</label>
+                        <input type="text" class="form-control" value="@ViewBag.CatName" name="Kategori"  required placeholder="Ürün Markası" readonly>
+                      </div>
+                    <div class="form-group">
+                      <label for="exampleFormControlSelect3">Urun Adedi</label>
+                      <select class="form-control form-control-sm" id="UrunAdet" name="UrunAdet">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                        <option>13</option>
+                        <option>14</option>
+                        <option>15</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputName1">Ürün Fiyatı </label>
+                        <input type="number" class="form-control" id="exampleInputName1" name="fiyat"  required placeholder="Ürün Fiyatı">
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputName1"> Satış Fiyatı</label>
+                        <input type="number" class="form-control" id="exampleInputName1" name="satisFiyati"  required placeholder="Satış Fiyatı">
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+                    </div>
+                    <div class="modal-footer">
+                         <button type="submit" onclick="writeName()" class="btn btn-gradient-dark me-2">Onayla</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+       }
+
+              <button type="button" style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;" class="btn btn-gradient-dark " style="margin-bottom:1rem;" data-bs-toggle="modal" data-bs-target="#myModal">Ürün Ekle</button>
+
+
  <script type="text/javascript">
             
-        var table = document.getElementById("table"),indexy,send,temp 
+GenerateCode = function() {
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < 10; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+
+    }
+    document.getElementById("UrunKodu").setAttribute("value", result)
+};
+         
 
    var table = document.getElementById("table"),indexy
 $("#table").on("dblclick", "td", function(){

@@ -18,12 +18,13 @@ namespace Remake.Controllers
         }
         public IActionResult MekanIndex(int RowId)
         {
-            db.Mekantürleris.ToList();
+            db.Urunlers.ToList();
+            ViewBag.List= db.Mekantürleris.ToList();
             explorers= db.Kesiflers.Find(RowId);
             ViewBag.KesifAdi = explorers.Ad;
             db.Mekantürleris.ToList();
-
-            return View("~/Views/Explorers/MekanIndex.cshtml",db.Mekantürleris);  // MekanIndex'te seçilen select'in değerine göre ürünler listelenecek.
+          
+            return View("~/Views/Explorers/MekanIndex.cshtml",db.Urunlers);  // MekanIndex'te seçilen select'in değerine göre ürünler listelenecek.
         }
         public IActionResult DeleteExpolore(string rowAdi)
         {
@@ -47,6 +48,10 @@ namespace Remake.Controllers
 
                 throw ex;
             }
+        }
+        public IActionResult AddProductToMekan()
+        {
+            return RedirectToAction("MekanIndex");
         }
         public List<Mekantürleri> getProductsForMekan(string MekanAdi)
         {

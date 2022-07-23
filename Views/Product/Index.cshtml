@@ -59,7 +59,7 @@
                         <label for="exampleInputName1" style="font-size:14px">Ürün Kodu</label>
                       <div class="form-group" style="display:flex">
                         <input type="text" class="form-control" id="UrunKoduId" name="UrunKodu"   required placeholder="Ürün Kodu">
-                        <a type="button" onclick="GenerateCode()" class="btn btn-gradient-dark">Kod üret</a>
+                        <a type="button" onclick="GenerateCode( )"class="btn btn-gradient-dark">Kod üret</a>
                       </div>
                         <div class="form-group">
                         <label for="exampleInputName1">Ürün Adı </label>
@@ -131,6 +131,7 @@
                     <table id="table" class="table table-bordered text-center ">
         <thead>
                         <tr>
+                            <th>Ürün Adedi</th>
                             <th>Ürün Kodu</th>
             <th>Ürün Adı</th>
                         </tr>
@@ -139,6 +140,7 @@
                          @foreach(var item in Model)
                              {
                     <tr class="table-primary" style="cursor:pointer">
+ <td class="col-lg-1 col-md-1 col-sm-1" ><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" style=" user-select: none;"class="btn btn-gradient-dark btn-sm">@item.UrunAdet</a></td>
                   <td class="col-lg-2 col-md-2 col-sm-2" style=" user-select: none;" @*data-id="@item.UrunKodu" data-bs-toggle="modal" data-bs-target="#myModalProductInfo"*@ >@item.UrunKodu</td>
                   <td @*data-id="@item.UrunKodu" data-bs-toggle="modal" data-bs-target="#myModalProductInfo"*@ style=" user-select: none;">@item.UrunAdi</td>
                    <td ><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" style=" user-select: none;"class="btn btn-gradient-dark btn-sm">Sil</a></td>
@@ -210,28 +212,30 @@
         </div>
     </div>
 
-    </style>
               <script type="text/javascript">
-       function writeName() {
-    var temp = document.getElementById("Selects").value
-    document.getElementById("inputNameChange").setAttribute("value", temp)
-       }
 
-GenerateCode = function() {
+                  GenerateCode = function() {
+
     var result = '';
     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     var charactersLength = characters.length;
     for (var i = 0; i < 10; i++) {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
-
     }
     document.getElementById("UrunKoduId").setAttribute("value", result)
 };
-        
+    
+
+
+    function writeName() {
+    var temp = document.getElementById("Selects").value
+    document.getElementById("inputNameChange").setAttribute("value", temp)
+       }
+           
             
  var table = document.getElementById("table"),indexy
 $("#table").on("dblclick", "td", function(){
-    var send = $(this).parent("tr").find("td:first").text();
+    var send = $(this).parent("tr").find("td:nth-child(2)").text();
             $.ajax({
             url: "@Url.Action("GetProductByCode","Product")",
             type: 'POST',

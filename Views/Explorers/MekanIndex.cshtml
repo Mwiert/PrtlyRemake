@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Remake.Models.Mekantürleri>
+﻿@model IEnumerable<Remake.Models.Urunler>
 @using Remake.Models;
 @{
     ViewData["Title"] = "MekanIndex";
@@ -46,33 +46,38 @@
                      <h3>Mekanlar</h3>
                       <select class="form-control form-control-sm" id="mekanAdi" name="MekanAdi">
                         <option class="text-center" style="font-size:1rem" >--</option> 
-        @foreach(var item in Model)
+        @foreach(var item in (List<Mekantürleri>)ViewBag.List)
         {
                    <option class="text-center" style="font-size:1rem">@item.MekanAdi</option>                               // BURADA KALDIM. BURADAN CONTROLLERA MEKANADI GONDERILECEK
         }
                       </select>
       </div>
 
-
-    
-<div class="row">
-  <div class="col-lg-12 grid-margin stretch-card">
-    <div class="card">
-        <h1 class="card-title text-center mt-2"></h1>
-      <div class="card-body">
-        <table class="table">
-          <tbody> 
-            <tr>
-              <td>Jacob</td>
-              <td>53275531</td>
-              <td>12 May 2017</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
+         <div class="col-md-12">
+                <div class="table-responsive card">
+                  <div class="card-body">
+                    <table id="table" class="table table-bordered text-center ">
+        <thead>
+                        <tr>
+                            <th>Ürün Kodu</th>
+            <th>Ürün Adı</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                         @foreach(var item in Model)
+                             {
+                    <tr class="table-primary" style="cursor:pointer">
+                  <td class="col-lg-2 col-md-2 col-sm-2" style=" user-select: none;" @*data-id="@item.UrunKodu" data-bs-toggle="modal" data-bs-target="#myModalProductInfo"*@ >@item.UrunKodu</td>
+                  <td @*data-id="@item.UrunKodu" data-bs-toggle="modal" data-bs-target="#myModalProductInfo"*@ style=" user-select: none;">@item.UrunAdi</td>
+                   <td ><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" style=" user-select: none;"class="btn btn-gradient-dark btn-sm">@item.UrunAdet</a></td>  @* kesifteki adetini yazdır*@
+                 
+                        </tr>
+                        }
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
                 <button type="button" style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;" class="btn btn-gradient-dark " style="margin-bottom:1rem;" data-bs-toggle="modal" data-bs-target="#myModal">+</button>
 
 
