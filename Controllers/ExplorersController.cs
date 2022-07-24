@@ -58,6 +58,15 @@ namespace Remake.Controllers
                 throw ex;
             }
         }
+        public IActionResult AlanIndex(int RowId)
+        {
+            alanHolder = db.Alanholders.FirstOrDefault(x => x.Id == RowId);
+            ViewBag.AlanAdi = alanHolder.AlanAdi;
+            ViewBag.RowId = alanHolder.Id ;
+            ViewBag.UrunList =db.Urunholders.ToList();
+            db.Urunlers.ToList();
+            return View("AlanIndex", db.Urunlers);
+        }
         public IActionResult AddAlanToExplorer(string AlanAdi, string KesifAdi,string MekanAdi, string Konum, string Not, string BaglantiNoktasi)
         {
             kesifler = db.Kesiflers.FirstOrDefault(x => x.Ad == KesifAdi.ToUpper());
@@ -88,15 +97,17 @@ namespace Remake.Controllers
 
             return RedirectToAction("MekanIndex", new { RowId = RowId });
         }
-        public IActionResult AddProductToMekan()
+        public IActionResult AddProductToAlan(string UrunKodu, int UrunAdedi, int RowId)
         {
-            return RedirectToAction("MekanIndex");
-        }
-        public List<Mekantürleri> getProductsForMekan(string MekanAdi)
-        {
-            List<Mekantürleri> alls = new List<Mekantürleri>();
-            alls = db.Mekantürleris.Where(x => x.MekanAdi == MekanAdi.ToUpper()).ToList();
-            return alls;
+            Urunler urunler = new Urunler();
+            Urunholder urunholder = new Urunholder();
+            urunler = db.Urunlers.FirstOrDefault(x => x.UrunKodu == UrunKodu);
+            urunholder.UrunAdet = UrunAdedi;
+            urunholder.AlanId = RowId;
+            urunholder.UrunId = urunler.Id;
+            db.Urunholders.Add(urunholder);
+            db.SaveChanges();
+            return RedirectToAction("AlanIndex", new { RowId = RowId });
         }
         public IActionResult AddExplore(string ExpName)
         {

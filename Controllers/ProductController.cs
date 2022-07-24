@@ -34,7 +34,8 @@ namespace Remake.Controllers
 
                 string temp = ProductCode.TrimStart().ToUpper();
                 prodct = db.Urunlers.FirstOrDefault(x => x.UrunKodu == temp);
-                    if (prodct.KesifAitligi == null)
+                   ;
+                    if (db.Urunholders.Where(x => x.UrunId == prodct.Id).ToList().Count() == 0)
                     {
                         if (prodct != null)
                         {

@@ -1,0 +1,99 @@
+﻿@model IEnumerable<Remake.Models.Urunler>
+@using Remake.Models;
+@{
+    ViewData["Title"] = "AlanIndex";
+    Layout = "~/Views/Shared/layout.cshtml";
+}
+
+ <h3 class="card-title text-center "  style="margin-top:-1rem;padding:1rem;">@ViewBag.AlanAdi</h3>
+
+@using (Html.BeginForm("AddProductToAlan","Explorers",FormMethod.Post))
+{
+    <div class="container mt-2"> @*mt kapatılabilir*@
+        <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Ürün Ekle</h4>
+                    <div class="modal-body">
+                        <div class="col-12 grid-margin stretch-card">
+                <div class="card " style="height:100%; margin-bottom:-3rem;">
+                  <div class="card-body">
+                    <form class="forms-sample">
+                         <div class="form-group">
+                        <label for="exampleInputName1">Ürün Seçiniz</label>
+                         <select class="form-control form-control-sm" id="odaAdi" name="UrunKodu">
+                        <option class="text-center" style="font-size:1rem" >--</option> 
+        @foreach(var item in Model)
+        { 
+                   <option class="text-center" value="@item.UrunKodu" style="font-size:1rem">@item.UrunAdi</option>                              
+        }
+                      </select>
+                      </div>
+                                            <div class="form-group">
+                        <label for="exampleInputName1">Ürün Seçiniz</label>
+                         <select class="form-control form-control-sm" id="UrunAdet" name="UrunAdedi">
+                        <option class="text-center" style="font-size:1rem" >-Ürün Adedi Seçiniz-</option> 
+
+                   <option class="text-center" style="font-size:1rem">1</option>                              
+         <option class="text-center" style="font-size:1rem">2</option>          
+          <option class="text-center" style="font-size:1rem">3</option>          
+           <option class="text-center" style="font-size:1rem">4</option>          
+           <option class="text-center" style="font-size:1rem">5</option>          
+           <option class="text-center" style="font-size:1rem">6</option>          
+                      </select>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input value="@ViewBag.RowId" name="RowId" style="visibility:hidden">
+                         <button type="submit" class="btn btn-gradient-dark me-2">Onayla</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+     <div class="col-md-12">
+                <div class="table-responsive card">
+                  <div class="card-body">
+                    <table id="table" class="table table-bordered text-center ">
+        <thead>
+                        <tr>
+            <th>Ürün Adedi</th>
+            <th>Ürün Adı</th>
+            <th>Ürün Kodu</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+
+                             @foreach(var item in Model)
+                             {
+                        foreach(var selecteditem in (List<Urunholder>)ViewBag.UrunList)
+                        {
+                            if(item.Id == selecteditem.UrunId && ViewBag.RowId== selecteditem.AlanId)
+                            {
+                               <tr class="table-primary" style="cursor:pointer">
+                   <td class="col-lg-1 col-md-1 col-sm-1" ><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" style=" user-select: none;"class="btn btn-gradient-dark btn-sm">@selecteditem.UrunAdet</a></td>
+                  <td class="col-lg-2 col-md-2 col-sm-2" style=" user-select: none;" @*data-id="@item.UrunKodu" data-bs-toggle="modal" data-bs-target="#myModalProductInfo"*@ >@item.UrunKodu</td>
+                  <td @*data-id="@item.UrunKodu" data-bs-toggle="modal" data-bs-target="#myModalProductInfo"*@ style=" user-select: none;">@item.UrunAdi</td>
+
+                   </tr> 
+                            }
+                        }
+                        
+                             }
+                    
+                        
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+<button type="button" style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;" class="btn btn-gradient-dark " style="margin-bottom:1rem;" data-bs-toggle="modal" data-bs-target="#myModal">+</button>

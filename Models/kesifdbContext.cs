@@ -23,6 +23,7 @@ namespace Remake.Models
         public virtual DbSet<Kullanıcı> Kullanıcıs { get; set; } = null!;
         public virtual DbSet<Mekantürleri> Mekantürleris { get; set; } = null!;
         public virtual DbSet<Roller> Rollers { get; set; } = null!;
+        public virtual DbSet<Urunholder> Urunholders { get; set; } = null!;
         public virtual DbSet<Urunler> Urunlers { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -114,6 +115,13 @@ namespace Remake.Models
                 entity.ToTable("roller");
 
                 entity.Property(e => e.RolAdi).HasMaxLength(30);
+            });
+
+            modelBuilder.Entity<Urunholder>(entity =>
+            {
+                entity.ToTable("urunholder");
+
+                entity.Property(e => e.Id).HasColumnName("id");
             });
 
             modelBuilder.Entity<Urunler>(entity =>

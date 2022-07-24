@@ -25,8 +25,8 @@
                          <select class="form-control form-control-sm" id="odaAdi" name="MekanAdi">
                         <option class="text-center" style="font-size:1rem" >--</option> 
         @foreach(var item in (List<Mekantürleri>)ViewBag.List)
-        {
-                   <option class="text-center" style="font-size:1rem">@item.MekanAdi</option>                               // BURADA KALDIM. BURADAN CONTROLLERA MEKANADI GONDERILECEK
+        { 
+                   <option class="text-center" style="font-size:1rem">@item.MekanAdi</option>                              
         }
                       </select>
                       </div>
@@ -78,9 +78,11 @@
                         <option class="text-center" style="font-size:1rem" >--</option> 
         @foreach(var item in (List<Mekantürleri>)ViewBag.List)
         {
+            
                    <option class="text-center" style="font-size:1rem">@item.MekanAdi</option>                               // BURADA KALDIM. BURADAN CONTROLLERA MEKANADI GONDERILECEK
         }
                       </select>
+
       </div>
 
          <div class="col-md-12">
@@ -97,10 +99,8 @@
                              {
                         if(@item.KesifId == @ViewBag.KesifId)
                         {
-                            
-                       
                         <tr class="table-primary" style="cursor:pointer">
-                  <td class="col-lg-2 col-md-2 col-sm-2" style=" user-select: none;" >@item.AlanAdi</td>
+                  <td class="col-lg-2 col-md-2 col-sm-2" onclick="location.href='@Url.Action("AlanIndex","Explorers",new {RowId = @item.Id})'" >@item.AlanAdi</td>
                    </tr>
                     }
                         }
@@ -113,6 +113,8 @@
 
 
 <script type="text/javascript">
+
+
 
    function makedisable(){
         document.getElementById("BaglantiNoktasi").disabled = true;
@@ -129,8 +131,7 @@
     	$("#mekanAdi").change(function() {
 
 		var selectedVal = $("#mekanAdi option:selected").val();
-         
-   
-
 	});
+
+
 </script>
