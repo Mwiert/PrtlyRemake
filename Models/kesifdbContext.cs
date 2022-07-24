@@ -16,11 +16,11 @@ namespace Remake.Models
         {
         }
 
+        public virtual DbSet<Alanholder> Alanholders { get; set; } = null!;
         public virtual DbSet<Kategoriler> Kategorilers { get; set; } = null!;
         public virtual DbSet<Kesifler> Kesiflers { get; set; } = null!;
         public virtual DbSet<Kesifmekanholder> Kesifmekanholders { get; set; } = null!;
         public virtual DbSet<Kullanıcı> Kullanıcıs { get; set; } = null!;
-        public virtual DbSet<Mekan> Mekans { get; set; } = null!;
         public virtual DbSet<Mekantürleri> Mekantürleris { get; set; } = null!;
         public virtual DbSet<Roller> Rollers { get; set; } = null!;
         public virtual DbSet<Urunler> Urunlers { get; set; } = null!;
@@ -38,6 +38,19 @@ namespace Remake.Models
         {
             modelBuilder.UseCollation("utf8mb4_0900_ai_ci")
                 .HasCharSet("utf8mb4");
+
+            modelBuilder.Entity<Alanholder>(entity =>
+            {
+                entity.ToTable("alanholder");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.AlanAdi).HasMaxLength(80);
+
+                entity.Property(e => e.Konum).HasMaxLength(200);
+
+                entity.Property(e => e.Not).HasMaxLength(200);
+            });
 
             modelBuilder.Entity<Kategoriler>(entity =>
             {
@@ -82,20 +95,6 @@ namespace Remake.Models
                     .WithMany(p => p.Kullanıcıs)
                     .HasForeignKey(d => d.RolId)
                     .HasConstraintName("fk_roller");
-            });
-
-            modelBuilder.Entity<Mekan>(entity =>
-            {
-                entity.ToTable("mekan");
-
-                entity.HasIndex(e => e.UstId, "fk_Kesifler");
-
-                entity.Property(e => e.MekanTuru).HasMaxLength(5);
-
-                entity.HasOne(d => d.Ust)
-                    .WithMany(p => p.Mekans)
-                    .HasForeignKey(d => d.UstId)
-                    .HasConstraintName("fk_Kesifler");
             });
 
             modelBuilder.Entity<Mekantürleri>(entity =>

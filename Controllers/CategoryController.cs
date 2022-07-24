@@ -22,7 +22,7 @@ namespace Remake.Controllers
         {
             try
             {
-                string temp = RowAdi.TrimStart();
+                string temp = RowAdi.TrimStart().ToUpper();
                 kategoriler = db.Kategorilers.FirstOrDefault(x => x.KategoriAdi == temp);
                 if (kategoriler != null)
                 {
@@ -42,7 +42,7 @@ namespace Remake.Controllers
             try
             {
                 List<Urunler> urunlers = new List<Urunler>();
-                urunlers= db.Urunlers.Where(x => x.UrunKategorisi == CatName).ToList();
+                urunlers= db.Urunlers.Where(x => x.UrunKategorisi == CatName.ToUpper()).ToList();
                 ViewBag.CatName = CatName;
                 db.SaveChanges();
                 return View("ListIndex",urunlers);
@@ -57,16 +57,16 @@ namespace Remake.Controllers
         {
             try
             {
-                if (!string.IsNullOrEmpty(UrunKodu) && !string.IsNullOrEmpty(UrunAdi) && !string.IsNullOrEmpty(Marka) && !string.IsNullOrEmpty(Kategori) && !string.IsNullOrEmpty(satisFiyati.ToString()) && !string.IsNullOrEmpty(fiyat.ToString()))
+                if (!string.IsNullOrEmpty(UrunKodu.ToUpper()) && !string.IsNullOrEmpty(UrunAdi.ToUpper()) && !string.IsNullOrEmpty(Marka.ToUpper()) && !string.IsNullOrEmpty(Kategori.ToUpper()) && !string.IsNullOrEmpty(satisFiyati.ToString()) && !string.IsNullOrEmpty(fiyat.ToString()))
                 {
                     
-                    urunlers = db.Urunlers.Where(x => x.UrunKodu == UrunKodu).ToList();
+                    urunlers = db.Urunlers.Where(x => x.UrunKodu == UrunKodu.ToUpper()).ToList();
                     if (urunlers.Count == 0)
                     {
-                        prodct.UrunKodu = UrunKodu;
-                        prodct.UrunAdi = UrunAdi;
-                        prodct.Marka = Marka;
-                        prodct.UrunKategorisi = Kategori;
+                        prodct.UrunKodu = UrunKodu.ToUpper();
+                        prodct.UrunAdi = UrunAdi.ToUpper();
+                        prodct.Marka = Marka.ToUpper();
+                        prodct.UrunKategorisi = Kategori.ToUpper();
                         prodct.SatisFiyati = satisFiyati;
                         prodct.UrunFiyati = fiyat;
                         prodct.UrunAdet = UrunAdet;
@@ -88,10 +88,10 @@ namespace Remake.Controllers
         {
             try
             {
-                kategorilerList = db.Kategorilers.Where(x => x.KategoriAdi == CatName).ToList();
+                kategorilerList = db.Kategorilers.Where(x => x.KategoriAdi == CatName.ToUpper()).ToList();
                 if(kategorilerList.Count ==0)
                 {
-                    kategoriler.KategoriAdi = CatName;
+                    kategoriler.KategoriAdi = CatName.ToUpper();
                     db.Kategorilers.Add(kategoriler);
                     db.SaveChanges();
                 }

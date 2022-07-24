@@ -1,11 +1,11 @@
-﻿@model IEnumerable<Remake.Models.Urunler>
+﻿@model IEnumerable<Remake.Models.Alanholder>
 @using Remake.Models;
 @{
     ViewData["Title"] = "MekanIndex";
     Layout = "~/Views/Shared/layout.cshtml";
 
 }
-@using (Html.BeginForm("AddMekanToExplorer","Explorers",FormMethod.Post))
+@using (Html.BeginForm("AddAlanToExplorer","Explorers",FormMethod.Post))
 {
     <div class="container mt-2"> @*mt kapatılabilir*@
         <div class="modal" id="myModal">
@@ -14,21 +14,47 @@
                     <div class="modal-header">
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
-                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Mekan Ekle</h4>
-                     <input value="" id="RowsValue" type="text" style="visibility:hidden" name="ExploreId">
-                     <h1 id="changeText"></h1>
+                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Oda Alanı Ekle</h4>
                     <div class="modal-body">
                         <div class="col-12 grid-margin stretch-card">
                 <div class="card " style="height:100%; margin-bottom:-3rem;">
                   <div class="card-body">
                     <form class="forms-sample">
-                      <select class="form-control form-control-sm" id="mekanAdi" name="MekanAdi">
+                         <div class="form-group">
+                        <label for="exampleInputName1">Mekan Tipi</label>
+                         <select class="form-control form-control-sm" id="odaAdi" name="MekanAdi">
                         <option class="text-center" style="font-size:1rem" >--</option> 
         @foreach(var item in (List<Mekantürleri>)ViewBag.List)
         {
                    <option class="text-center" style="font-size:1rem">@item.MekanAdi</option>                               // BURADA KALDIM. BURADAN CONTROLLERA MEKANADI GONDERILECEK
         }
                       </select>
+                      </div>
+                        <div class="form-group">
+                        <label for="exampleInputName1">Alan Adı</label>
+                        <input type="text" class="form-control"  id="exampleInputName1" name="AlanAdi"  required placeholder="Alan Adı">
+                      </div>
+                       <div class="form-group">
+                        <label for="exampleInputName1">Bağlantılı Toplama Noktası</label>
+                         <input id="checkboxValue" style="margin-left:12.3rem;width:1.25rem;height:1.25rem;" onclick="test()" type="checkbox" > 
+                         <select class="form-control form-control-sm" id="BaglantiNoktasi" name="BaglantiNoktasi" disabled>
+                        <option class="text-center" style="font-size:1rem" >Seçiniz</option> 
+                   <option class="text-center">1</option> 
+                     <option class="text-center">1</option>  
+                       <option class="text-center">1</option>  
+                         <option class="text-center">1</option>  
+                      </select>
+                                                      
+
+                      </div>
+                        <div class="form-group">
+                        <label for="exampleInputName1">Konum(Opsiyonel)</label>
+                        <input type="text" class="form-control" id="exampleInputName1" name="Konum"  placeholder="Konum(Opsiyonel)">
+                      </div>
+                        <div class="form-group">
+                        <label for="exampleInputName1">Not(Opsiyonel)</label>
+                        <input type="text" class="form-control" id="exampleInputName1" name="Not"  placeholder="Not(Opsiyonel)">
+                      </div>
                     </form>
                   </div>
                 </div>
@@ -63,30 +89,43 @@
                     <table id="table" class="table table-bordered text-center ">
         <thead>
                         <tr>
-                            <th>Ürün Kodu</th>
-            <th>Ürün Adı</th>
+            <th>Alan Adı</th>
                         </tr>
                       </thead>
                       <tbody>
                          @foreach(var item in Model)
                              {
-                    <tr class="table-primary" style="cursor:pointer">
-                  <td class="col-lg-2 col-md-2 col-sm-2" style=" user-select: none;" >@item.UrunKodu</td>
-                  <td style=" user-select: none;">@item.UrunAdi</td>
-                   <td ><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" style=" user-select: none;"class="btn btn-gradient-dark btn-sm">@item.UrunAdet</a></td>  @* kesifteki adetini yazdır*@
-                 
-                        </tr>
+                        if(@item.KesifId == @ViewBag.KesifId)
+                        {
+                            
+                       
+                        <tr class="table-primary" style="cursor:pointer">
+                  <td class="col-lg-2 col-md-2 col-sm-2" style=" user-select: none;" >@item.AlanAdi</td>
+                   </tr>
+                    }
                         }
                       </tbody>
                     </table>
                   </div>
                 </div>
               </div>
-                <button type="button" style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;" class="btn btn-gradient-dark " style="margin-bottom:1rem;" data-bs-toggle="modal" data-bs-target="#myModal">+</button>
+                <button onclick=" makedisable()" type="button" style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;" class="btn btn-gradient-dark " style="margin-bottom:1rem;" data-bs-toggle="modal" data-bs-target="#myModal">+</button>
 
 
 <script type="text/javascript">
-    
+
+   function makedisable(){
+        document.getElementById("BaglantiNoktasi").disabled = true;
+    }
+    function test(){
+     var check= document.getElementById("checkboxValue").checked;
+        if (check == true) {
+            document.getElementById("BaglantiNoktasi").disabled = false;
+        }
+        else {
+             document.getElementById("BaglantiNoktasi").disabled = true;
+        }
+}
     	$("#mekanAdi").change(function() {
 
 		var selectedVal = $("#mekanAdi option:selected").val();

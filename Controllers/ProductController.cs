@@ -32,7 +32,7 @@ namespace Remake.Controllers
                 if (!string.IsNullOrEmpty(ProductCode))
                 {
 
-                string temp = ProductCode.TrimStart();
+                string temp = ProductCode.TrimStart().ToUpper();
                 prodct = db.Urunlers.FirstOrDefault(x => x.UrunKodu == temp);
                     if (prodct.KesifAitligi == null)
                     {
@@ -56,22 +56,22 @@ namespace Remake.Controllers
         public JsonResult GetProductByCode(string Send)
         {
             Urunler urunler = new Urunler();
-            urunler = db.Urunlers.FirstOrDefault(x => x.UrunKodu == Send);
+            urunler = db.Urunlers.FirstOrDefault(x => x.UrunKodu == Send.ToUpper());
             return Json(urunler);
         }
         public IActionResult AddNewProduct(string UrunKodu, string UrunAdi, string Marka, string Kategori, float satisFiyati, float fiyat,int UrunAdet)
         {
             try
             {
-                if (!string.IsNullOrEmpty(UrunKodu) && !string.IsNullOrEmpty(UrunAdi) && !string.IsNullOrEmpty(Marka) && !string.IsNullOrEmpty(Kategori) && !string.IsNullOrEmpty(satisFiyati.ToString()) && !string.IsNullOrEmpty(fiyat.ToString()))
+                if (!string.IsNullOrEmpty(UrunKodu.ToUpper()) && !string.IsNullOrEmpty(UrunAdi.ToUpper()) && !string.IsNullOrEmpty(Marka.ToUpper()) && !string.IsNullOrEmpty(Kategori.ToUpper()) && !string.IsNullOrEmpty(satisFiyati.ToString()) && !string.IsNullOrEmpty(fiyat.ToString()))
                 {
-                    urunlers = db.Urunlers.Where(x => x.UrunKodu == UrunKodu).ToList();
+                    urunlers = db.Urunlers.Where(x => x.UrunKodu == UrunKodu.ToUpper()).ToList();
                     if(urunlers.Count == 0)
                     {
-                        prodct.UrunKodu = UrunKodu;
-                        prodct.UrunAdi = UrunAdi;
-                        prodct.Marka = Marka;
-                        prodct.UrunKategorisi = Kategori;
+                        prodct.UrunKodu = UrunKodu.ToUpper();
+                        prodct.UrunAdi = UrunAdi.ToUpper();
+                        prodct.Marka = Marka.ToUpper();
+                        prodct.UrunKategorisi = Kategori.ToUpper();
                         prodct.SatisFiyati = satisFiyati;
                         prodct.UrunFiyati = fiyat;
                         prodct.UrunAdet = UrunAdet;

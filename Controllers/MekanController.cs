@@ -14,7 +14,7 @@ namespace Remake.Controllers
         }
         public IActionResult AddNewMekan(string MekanAdi)
         {
-            mkn.MekanAdi = MekanAdi;
+            mkn.MekanAdi = MekanAdi.ToUpper();
             db.Mekantürleris.Add(mkn);
             db.SaveChanges();
             return RedirectToAction("Index");

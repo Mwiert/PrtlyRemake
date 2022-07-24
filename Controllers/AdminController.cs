@@ -55,8 +55,8 @@ namespace Remake.Controllers
                 kullanıcıs = Db.Kullanıcıs.Where(x => x.Email == UsersEmail).ToList();
                 if(kullanıcıs.Count ==0 )
                 {
-                    k.Ad = UsersName;
-                    k.Email = UsersEmail;
+                    k.Ad = UsersName.ToUpper();
+                    k.Email = UsersEmail.ToLower();
                     k.Psswrd = UsersPassword;
                     k.RolId = RoleId;
                     Db.Kullanıcıs.Add(k);
@@ -82,7 +82,7 @@ namespace Remake.Controllers
                 }
                 else
                 {
-                    roller.RolAdi = RoleName;
+                    roller.RolAdi = RoleName.ToUpper();
                     Db.Rollers.Add(roller);
                     Db.SaveChanges();
                     return RedirectToAction("Index", "Admin");
