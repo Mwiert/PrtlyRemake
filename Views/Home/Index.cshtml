@@ -1,32 +1,38 @@
-﻿
+﻿@using Remake.Models;
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/layout.cshtml";
 }
 
 
- <div class="col-md-12">
-                <div class="card">
-                  <div class="card-body">
-                    <h4 class="card-title text-center">Bilgiler</h4>
+
+               <div class="col-md-12">
+                <div class=" card">
+                  <div class="table-responsive card-body">
+                    <h4 class="card-title">Son Siparişler text-center</h4>
                     <table class="table table-hover">
                       <thead>
                         <tr>
-                          <th>Keşif Sayısı</th>
-                          <th>Ürün Sayısı</th>
-                          <th>Kategori</th>
-                          <th>Kullanıcı</th>
+                                                      <th class="col-lg-3 col-md-3 col-sm-3 text-center" >Keşif Sayısı</th>
+                          <th class="col-lg-3 col-md-3 col-sm-3 text-center">Ürün Sayısı</th>
+                          <th class="col-lg-3 col-md-3 col-sm-3 text-center">Toplam Ürün Adedi</th>
+                          <th class="col-lg-3 col-md-3 col-sm-3 text-center">Kategori</th>
+                          <th class="col-lg-3 col-md-3 col-sm-3 text-center">Kullanıcı</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>Jacob</td>
-                          <td>Photoshop</td>
-                          <td class="text-danger"> 28.76% <i class="mdi mdi-arrow-down"></i></td>
-                          <td><label class="badge badge-danger">Pending</label></td>
+                                                    @foreach(var item in (List<HomeExportEntites>)ViewBag.Entities){
+                          <tr>
+                               <td class="col-lg-3 col-md-3 col-sm-3 text-center" ><a type="submit" style=" user-select: none;"class="btn btn-gradient-info btn">@item.KesifSayisi</a></td>
+                                <td class="col-lg-3 col-md-3 col-sm-3 text-center" ><a type="submit" style=" user-select: none;"class="btn btn-gradient-info btn">@item.UrunSayisi</a></td>
+                                 <td class="col-lg-2 col-md-2 col-sm-2 text-center" ><a type="submit" style=" user-select: none;"class="btn btn-gradient-info btn">@item.SumUrunAdedi</a></td>
+                                  <td class="col-lg-2 col-md-2 col-sm-2 text-center" ><a type="submit"  style=" user-select: none;"class="btn btn-gradient-info btn">@item.KategoriSayisi</a></td>
+                                   <td class="col-lg-2 col-md-2 col-sm-2 text-center" ><a type="submit"  style=" user-select: none;"class="btn btn-gradient-info btn">@item.KullanıcıSayisi</a></td>
+                          <td></td>
                         </tr>
+                    }
                       </tbody>
                     </table>
                   </div>
                 </div>
- </div>
+              </div>
