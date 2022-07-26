@@ -69,9 +69,9 @@ namespace Remake.Controllers
                     urunlers = db.Urunlers.Where(x => x.UrunKodu == UrunKodu.ToUpper()).ToList();
                     if(urunlers.Count == 0)
                     {
-                        prodct.UrunKodu = UrunKodu.ToUpper();
-                        prodct.UrunAdi = UrunAdi.ToUpper();
-                        prodct.Marka = Marka.ToUpper();
+                        prodct.UrunKodu = UrunKodu.ToUpper().Trim();
+                        prodct.UrunAdi = UrunAdi.ToUpper().Trim();
+                        prodct.Marka = Marka.ToUpper().Trim();
                         prodct.UrunKategorisi = Kategori.ToUpper();
                         prodct.SatisFiyati = satisFiyati;
                         prodct.UrunFiyati = fiyat;
@@ -79,6 +79,7 @@ namespace Remake.Controllers
                         db.Urunlers.Add(prodct);
                         db.SaveChanges();
                     }
+
                 }
 
 

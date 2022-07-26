@@ -29,7 +29,7 @@ namespace Remake.Controllers
             Mekantürleri jsnmt = new Mekantürleri();
             if (p == "--")
             {
-                alanHolders = db.Alanholders.ToList();
+                alanHolders = db.Alanholders.Where(x => x.KesifId == KesifIdInt).ToList();
             }
             else { 
             jsnmt = db.Mekantürleris.FirstOrDefault(x => x.MekanAdi == p);
@@ -106,7 +106,7 @@ namespace Remake.Controllers
             {
             alanHolder.MekanId = mekanturleri.Id;
             alanHolder.KesifId = RowId;
-            alanHolder.AlanAdi = AlanAdi.ToUpper();
+            alanHolder.AlanAdi = AlanAdi.ToUpper().Trim();
             alanHolder.Konum = Konum;
             alanHolder.Not = Not;
             db.Alanholders.Add(alanHolder);

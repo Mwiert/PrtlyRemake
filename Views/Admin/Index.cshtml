@@ -35,7 +35,7 @@
             </div>
         </div>
     </div>
-  <h2 class="card-title text-center">Kullanıcılar</h2>
+  <h2 class="card-title text-center" style="margin-top:-2rem;">Kullanıcılar</h2>
 
 <div class="col-md-12">
                 <div class="table-responsive card">
@@ -51,12 +51,12 @@
                       <tbody>
                          @foreach(var item in Model)
                              {
-                    <tr class="table-primary">
+                    <tr class="table" style="cursor:pointer;background-color:#e9e9f7">
                   <td style=" user-select: none;" >@item.Ad</td>
                   <td style=" user-select: none;" >@item.Email</td>
                   <td style=" user-select: none;" >@item.Rol.RolAdi</td>
 
-                   <td><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" class="btn btn-gradient-dark btn-sm">Sil</a></td>
+                   <td><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" class="btn btn-gradient-danger btn-sm">Sil</a></td>
                  
                         </tr>
                         }

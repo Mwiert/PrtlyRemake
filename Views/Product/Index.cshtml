@@ -122,7 +122,7 @@
     </div>
        }
 
-                    <h2 class="card-title text-center">ÜRÜNLER</h2>
+                    <h2 class="card-title text-center"style="margin-top:-2rem;">ÜRÜNLER</h2>
                     <div class="col-md-12">
                 <div class="table-responsive card">
                   <div class="card-body">
@@ -137,11 +137,11 @@
                       <tbody>
                          @foreach(var item in Model)
                              {
-                    <tr class="table-primary" style="cursor:pointer">
- <td class="col-lg-1 col-md-1 col-sm-1" ><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" style=" user-select: none;"class="btn btn-gradient-dark btn-sm">@item.UrunAdet</a></td>
+                    <tr class="table" style="cursor:pointer;background-color:#e9e9f7">
+ <td class="col-lg-1 col-md-1 col-sm-1" ><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" style=" user-select: none;"class="btn btn-gradient-info btn-sm">@item.UrunAdet</a></td>
                   <td class="col-lg-2 col-md-2 col-sm-2" style=" user-select: none;" @*data-id="@item.UrunKodu" data-bs-toggle="modal" data-bs-target="#myModalProductInfo"*@ >@item.UrunKodu</td>
                   <td @*data-id="@item.UrunKodu" data-bs-toggle="modal" data-bs-target="#myModalProductInfo"*@ style=" user-select: none;">@item.UrunAdi</td>
-                   <td ><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" style=" user-select: none;"class="btn btn-gradient-dark btn-sm">Sil</a></td>
+                   <td ><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" style=" user-select: none;"class="btn btn-gradient-danger btn-sm">Sil</a></td>
                  
                         </tr>
                         }

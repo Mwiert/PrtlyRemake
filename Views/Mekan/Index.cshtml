@@ -4,8 +4,8 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/layout.cshtml";
 }
+                     <h2 class="text-center" style="margin-top:-2rem;">Mekanlar</h2>
 <div class="form-group text-center">
-                     <h3>Mekanlar</h3>
                       <select class="form-control form-control-sm" id="mekanAdi" name="MekanAdi">
                               <option class="text-center" style="font-size:1rem" >--</option> 
         @foreach(var item in Model)
@@ -52,7 +52,25 @@
 
 
 
+ <div class="col-md-12">
+                <div class="table-responsive card">
+                  <div class="card-body">
+                    <table id="table" class="table table-bordered text-center ">
+        <thead>
+                        <tr>
+            <th>Ürün Kodu</th>
+            <th>Ürün Adı</th>
+                        </tr>
+                      </thead>
+                      <tbody>
 
+                        
+                         
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
 
 
 
@@ -61,3 +79,35 @@
               +
             </button>
 
+<script type="text/javascript">
+ var table =document.getElementById("table");
+    $("#mekanAdi").on("change", function(){
+        var p = $('#mekanAdi').val();
+        $.ajax({
+            url: "@Url.Action("getProductForSelected","Mekan")",
+            type: 'POST',
+            data: {p : p},
+            dataType: 'JSON',
+            success: function(data) {
+                 $('#table tbody').empty();
+                console.log(data);
+                if (data.length != 0) {
+                    for (var i = 0; i < data.length; i++) {
+                        markup = "<tr class='table' style='cursor:pointer;background-color:#e9e9f7'><td style='cursor:pointer'>"
+                      + data[i].urunAdi + "</td><td style='cursor:pointer'>"
+                      + data[i].urunKodu + "</td></tr>";
+                        tableBody = $("#table tbody");
+                        tableBody.append(markup);
+                    }
+                }
+                else {
+                       swal("Boş Mekan","Bu mekana henüz alan eklemediniz.","warning")
+                }
+            },
+            error: function(err) {
+                 swal("Hata Oluştu","Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.","warning")
+            }
+        });
+       });
+     
+</script>

@@ -35,7 +35,7 @@
             </div>
         </div>
     </div>
-  <h2 class="card-title text-center">Aktif Keşifler</h2>
+  <h2 class="card-title text-center" style="margin-top:-2rem;">Aktif Keşifler</h2>
   
 @using (Html.BeginForm("AddExplore","Explorers",FormMethod.Post))
 {
@@ -81,7 +81,7 @@
                              {
 
                         <tr class="table-primary" cursor="pointer">
-                            <td class="gethover"><a style="width:100%;height:100%;" class="col-lg-9 col-sm-6 btn" value="@item.Id" onclick="location.href='@Url.Action("MekanIndex","Explorers",new {RowId = @item.Id})'"> @item.Ad</a></td>
+                            <td class="gethover"><a class="col-lg-9 col-sm-6 btn" value="@item.Id" onclick="location.href='@Url.Action("MekanIndex","Explorers",new {RowId = @item.Id})'"> @item.Ad</a></td>
                             <td><a type="submit"  data-bs-toggle="modal" data-bs-target="#myModalOK" class="btn btn-gradient-dark btn-sm col-lg-3 col-sm-6">Sil</a></td>
                         </tr>
                         }

@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/layout.cshtml";
 }
 
- <h3 class="card-title text-center "  style="margin-top:-1rem;padding:1rem;">@ViewBag.AlanAdi</h3>
+ <h3 class="card-title text-center "  style="margin-top:-2rem;padding:1rem;">@ViewBag.AlanAdi</h3>
 
 @using (Html.BeginForm("AddProductToAlan","Explorers",FormMethod.Post))
 {
@@ -33,7 +33,7 @@
                       </select>
                       </div>
                                             <div class="form-group">
-                        <label for="exampleInputName1">Ürün Seçiniz</label>
+                        <label for="exampleInputName1">Ürün Adedi Seçiniz</label>
                          <select class="form-control form-control-sm" id="UrunAdet" name="UrunAdedi">
                         <option class="text-center" style="font-size:1rem" >-Ürün Adedi Seçiniz-</option> 
 
@@ -66,8 +66,8 @@
         <thead>
                         <tr>
             <th>Ürün Adedi</th>
-            <th>Ürün Adı</th>
             <th>Ürün Kodu</th>
+            <th>Ürün Adı</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -79,7 +79,7 @@
                             if(item.Id == selecteditem.UrunId && ViewBag.RowId== selecteditem.AlanId)
                             {
                                <tr class="table-primary" style="cursor:pointer">
-                   <td class="col-lg-1 col-md-1 col-sm-1" ><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" style=" user-select: none;"class="btn btn-gradient-dark btn-sm">@selecteditem.UrunAdet</a></td>
+                   <td class="col-lg-1 col-md-1 col-sm-1" ><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" style=" user-select: none;"class="btn btn-gradient-info btn-sm">@selecteditem.UrunAdet</a></td>
                   <td class="col-lg-2 col-md-2 col-sm-2" style=" user-select: none;" @*data-id="@item.UrunKodu" data-bs-toggle="modal" data-bs-target="#myModalProductInfo"*@ >@item.UrunKodu</td>
                   <td @*data-id="@item.UrunKodu" data-bs-toggle="modal" data-bs-target="#myModalProductInfo"*@ style=" user-select: none;">@item.UrunAdi</td>
 

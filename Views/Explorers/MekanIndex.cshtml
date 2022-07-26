@@ -70,7 +70,7 @@
     </div>
     }
 
-            <h3 class="card-title text-center "  style="margin-top:-1rem;padding:1rem;">@ViewBag.KesifAdi</h3>
+            <h3 class="card-title text-center "  style="margin-top:-2rem;padding:1rem;">@ViewBag.KesifAdi</h3>
 
             <div class="form-group text-center">
                      <h3>Mekanlar</h3>
@@ -100,7 +100,7 @@
                         if(@item.KesifId == @ViewBag.KesifId)
                         {
                         <tr class="table-primary" id="ListAlans"style="cursor:pointer">
-                  <td class="col-lg-2 col-md-2 col-sm-2">@item.AlanAdi</td>
+                  <td class="col-lg-2 col-md-2 col-sm-2" onclick="location.href='@Url.Action("AlanIndex","Explorers",new {RowId = @item.Id})'">@item.AlanAdi</td>
                    </tr>
                     }
                         }

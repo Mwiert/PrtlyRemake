@@ -55,8 +55,8 @@ namespace Remake.Controllers
                 kullanıcıs = Db.Kullanıcıs.Where(x => x.Email == UsersEmail).ToList();
                 if(kullanıcıs.Count ==0 )
                 {
-                    k.Ad = UsersName.ToUpper();
-                    k.Email = UsersEmail.ToLower();
+                    k.Ad = UsersName.ToUpper().Trim();
+                    k.Email = UsersEmail.ToLower().Trim();
                     k.Psswrd = UsersPassword;
                     k.RolId = RoleId;
                     Db.Kullanıcıs.Add(k);
