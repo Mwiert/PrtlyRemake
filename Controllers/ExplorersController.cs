@@ -17,11 +17,28 @@ namespace Remake.Controllers
         Kesifler kesifler = new Kesifler();
         Mekantürleri mekanturleri = new Mekantürleri();
         Alanholder alanHolder = new Alanholder();
+        public static int KesifIdInt;
         public IActionResult Index()
         {
             db.Kesiflers.ToList();
             db.SaveChanges();
             return View(db.Kesiflers);
+        }
+        public JsonResult mekangetir(string p)
+        {
+            Mekantürleri jsnmt = new Mekantürleri();
+            if (p == "--")
+            {
+                alanHolders = db.Alanholders.ToList();
+            }
+            else { 
+            jsnmt = db.Mekantürleris.FirstOrDefault(x => x.MekanAdi == p);
+            if(jsnmt != null)
+            {
+                alanHolders = db.Alanholders.Where(x => x.MekanId == jsnmt.Id && x.KesifId ==KesifIdInt).ToList();
+            }
+            }
+            return Json(alanHolders);
         }
         public IActionResult MekanIndex(int RowId)
         {
@@ -29,6 +46,7 @@ namespace Remake.Controllers
             db.Alanholders.ToList();
             ViewBag.List = db.Mekantürleris.ToList();
             explorers = db.Kesiflers.Find(RowId);
+            KesifIdInt = RowId;
             ViewBag.KesifId = RowId;
             ViewBag.KesifAdi = explorers.Ad;
             db.Mekantürleris.ToList();
