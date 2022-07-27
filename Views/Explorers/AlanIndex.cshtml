@@ -4,7 +4,36 @@
     ViewData["Title"] = "AlanIndex";
     Layout = "~/Views/Shared/layout.cshtml";
 }
+<div class="container mt-2"> @*mt kapatılabilir*@
+        <div class="modal" id="myModalDelete">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Emin Misiniz?</h4>
+                    <div class="modal-body">
+                        <div class="col-12 grid-margin stretch-card">
+                <div class="card " style="height:100%; margin-bottom:-3rem;">
+                  <div class="card-body">
+                              <h1 class="card-title text-center mt-2">Ürünü silmek istediğinize emin misiniz?</h1>
+                  </div>
+                </div>
+              </div>
+                    </div>
+                    <div class="modal-footer">
+                        @using (Html.BeginForm("DeleteProductFromAlan","Explorers",FormMethod.Post))
+{
+                                     <button type="submit" class="btn btn-gradient-dark me-2">Sil</button>
+                                                   <input value="" id="RowsValue" type="text" style="visibility:hidden" name="UserEmail">
 
+}
+                            <button type="submit" data-bs-dismiss="modal"  class="btn btn-gradient-red me-2">İptal Et</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
  <h3 class="card-title text-center "  style="margin-top:-2rem;padding:1rem;">@ViewBag.AlanAdi</h3>
 
 @using (Html.BeginForm("AddProductToAlan","Explorers",FormMethod.Post))
@@ -22,6 +51,16 @@
                 <div class="card " style="height:100%; margin-bottom:-3rem;">
                   <div class="card-body">
                     <form class="forms-sample">
+                        <div class="form-group">
+                        <label for="exampleInputName1">Kategori Seçiniz</label>
+                         <select class="form-control form-control-sm" id="catName" name="CatName">
+                        <option class="text-center" style="font-size:1rem" >--</option> 
+        @foreach(var item in (List<Kategoriler>)ViewBag.CatList)
+        { 
+                   <option class="text-center" value="@item.KategoriAdi" style="font-size:1rem">@item.KategoriAdi</option>                              
+        }
+                      </select>
+                      </div>
                          <div class="form-group">
                         <label for="exampleInputName1">Ürün Seçiniz</label>
                          <select class="form-control form-control-sm" id="odaAdi" name="UrunKodu">
@@ -32,18 +71,9 @@
         }
                       </select>
                       </div>
-                                            <div class="form-group">
-                        <label for="exampleInputName1">Ürün Adedi Seçiniz</label>
-                         <select class="form-control form-control-sm" id="UrunAdet" name="UrunAdedi">
-                        <option class="text-center" style="font-size:1rem" >-Ürün Adedi Seçiniz-</option> 
-
-                   <option class="text-center" style="font-size:1rem">1</option>                              
-         <option class="text-center" style="font-size:1rem">2</option>          
-          <option class="text-center" style="font-size:1rem">3</option>          
-           <option class="text-center" style="font-size:1rem">4</option>          
-           <option class="text-center" style="font-size:1rem">5</option>          
-           <option class="text-center" style="font-size:1rem">6</option>          
-                      </select>
+                      <div class="form-group">
+                        <label for="exampleInputName1">Ürün Adedi </label>
+                        <input type="number" class="form-control" id="UrunAdet" name="UrunAdedi"  required placeholder="Ürün Adedi">
                       </div>
                     </form>
                   </div>
@@ -78,11 +108,11 @@
                         {
                             if(item.Id == selecteditem.UrunId && ViewBag.RowId== selecteditem.AlanId)
                             {
-                               <tr class="table-primary" style="cursor:pointer">
+                               <tr class="table-info" style="cursor:pointer">
                    <td class="col-lg-1 col-md-1 col-sm-1" ><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" style=" user-select: none;"class="btn btn-gradient-info btn-sm">@selecteditem.UrunAdet</a></td>
                   <td class="col-lg-2 col-md-2 col-sm-2" style=" user-select: none;" @*data-id="@item.UrunKodu" data-bs-toggle="modal" data-bs-target="#myModalProductInfo"*@ >@item.UrunKodu</td>
-                  <td @*data-id="@item.UrunKodu" data-bs-toggle="modal" data-bs-target="#myModalProductInfo"*@ style=" user-select: none;">@item.UrunAdi</td>
-
+                  <td style=" user-select: none;">@item.UrunAdi</td>
+                  <td class="col-lg-2 col-md-2 col-sm-2" style=" user-select: none;"><a type="submit" onclick="location.href='@Url.Action("DeleteProductFromAlan","Explorers", new { Urunid = @selecteditem.UrunId, alanid =@selecteditem.AlanId})'" class="btn btn-gradient-warning btn-sm">Sil</a></td>
                    </tr> 
                             }
                         }
@@ -96,4 +126,53 @@
                 </div>
               </div>
 
-<button type="button" style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;" class="btn btn-gradient-dark " style="margin-bottom:1rem;" data-bs-toggle="modal" data-bs-target="#myModal">+</button>
+<button type="button" style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;" class="btn btn-gradient-info " style="margin-bottom:1rem;" data-bs-toggle="modal" data-bs-target="#myModal">+</button>
+
+                        <script type="text/javascript">
+                            $('#catName').change(function () {
+                        var id = $('#catName').val();
+                        $.ajax({
+                               url: "@Url.Action("GetUrunForSelected","Explorers")",
+                        data: { p: id },
+                        type: "POST",
+                        dataType: "Json",
+                        success: function (data) {
+                            $('#odaAdi').empty();
+                            
+                                $('#odaAdi').append("<option value='" +" --" + "'>" + "--" + "</Option>");
+                                for (var i = 0; i < data.length; i++) {
+                                $('#odaAdi').append("<option value='" + data[i].urunKodu + "'>" + data[i].urunAdi + "</Option>");
+                                        }
+                                        }
+                                        });
+                                });
+
+                                 $('#odaAdi').change(function () {
+                        var id = $('#odaAdi').val();
+                        $.ajax({
+                               url: "@Url.Action("getProductAdetLeft","Explorers")",
+                        data: { p: id },
+                        type: "POST",
+                        dataType: "Json",
+                        success: function (data) {
+                            if (data == "Ürün Seçiniz") {
+                                swal({
+                                    title: "HATIRLATMA!",
+                                    text: "Lütfen Ürün Seçiniz",
+                                    type: "warning",
+                                    confirmButtonText: "Cool"
+                                });
+                            }
+                            else {
+
+                            swal({
+  title: "HATIRLATMA!",
+  text: "Bu üründen en fazla " + data+" Adet Ekleyebilirsiniz",
+  type: "warning",
+  confirmButtonText: "Cool" 
+ });
+                            }
+                                        }
+                                        });
+                                });
+</script>

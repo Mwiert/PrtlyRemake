@@ -34,7 +34,7 @@ namespace Remake.Controllers
 
                 string temp = ProductCode.TrimStart().ToUpper();
                 prodct = db.Urunlers.FirstOrDefault(x => x.UrunKodu == temp);
-                   ;
+                   
                     if (db.Urunholders.Where(x => x.UrunId == prodct.Id).ToList().Count() == 0)
                     {
                         if (prodct != null)
@@ -69,6 +69,7 @@ namespace Remake.Controllers
                     urunlers = db.Urunlers.Where(x => x.UrunKodu == UrunKodu.ToUpper()).ToList();
                     if(urunlers.Count == 0)
                     {
+                        prodct.KullanilanUrunAdet = 0;
                         prodct.UrunKodu = UrunKodu.ToUpper().Trim();
                         prodct.UrunAdi = UrunAdi.ToUpper().Trim();
                         prodct.Marka = Marka.ToUpper().Trim();

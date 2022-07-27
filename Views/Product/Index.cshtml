@@ -20,6 +20,7 @@
                 <div class="card " style="height:100%; margin-bottom:-3rem;">
                   <div class="card-body">
                               <h1 class="card-title text-center mt-2">Ürünü silmek istediğinize emin misiniz?</h1>
+                              <p class="text-center mt-2">Ürün Kullanılıyor ise silinmeyecektir.</p>
                   </div>
                 </div>
               </div>
@@ -81,25 +82,9 @@
                       </select>
                     </div>
                     <div class="form-group">
-                      <label for="exampleFormControlSelect3">Urun Adedi</label>
-                      <select class="form-control form-control-sm" id="UrunAdet" name="UrunAdet">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                        <option>6</option>
-                        <option>7</option>
-                        <option>8</option>
-                        <option>9</option>
-                        <option>10</option>
-                        <option>11</option>
-                        <option>12</option>
-                        <option>13</option>
-                        <option>14</option>
-                        <option>15</option>
-                      </select>
-                    </div>
+                        <label for="exampleInputName1">Ürün Adedi </label>
+                        <input type="number" class="form-control" id="exampleInputName1" name="UrunAdet"  required placeholder="Ürün Adedi">
+                      </div>
                     <div class="form-group">
                         <label for="exampleInputName1">Ürün Fiyatı </label>
                         <input type="number" class="form-control" id="exampleInputName1" name="fiyat"  required placeholder="Ürün Fiyatı">
@@ -210,7 +195,7 @@
         </div>
     </div>
 
-    <button type="button" style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;" class="btn btn-gradient-dark " style="margin-bottom:1rem;" data-bs-toggle="modal" data-bs-target="#myModal">Ürün Ekle</button>
+    <button type="button" style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;" class="btn btn-gradient-info " style="margin-bottom:1rem;" data-bs-toggle="modal" data-bs-target="#myModal">Ürün Ekle</button>
 
 
               <script type="text/javascript">
@@ -225,8 +210,16 @@
     }
     document.getElementById("UrunKoduId").setAttribute("value", result)
 };
-    
+           var table = document.getElementById("table"),indexy
 
+    for (var i = 0; i < table.rows.length;i++)
+    {
+        table.rows[i].onclick = function() 
+        {
+            indexy = this.rowIndex;
+            document.getElementById("RowsValue").value =this.cells[1].textContent;
+        };
+    }
 
     function writeName() {
     var temp = document.getElementById("Selects").value
@@ -234,7 +227,6 @@
        }
            
             
- var table = document.getElementById("table"),indexy
 $("#table").on("dblclick", "td", function(){
     var send = $(this).parent("tr").find("td:nth-child(2)").text();
             $.ajax({

@@ -18,6 +18,33 @@ namespace Remake.Controllers
             db.SaveChanges();
             return View(db.Kategorilers);
         }
+        public IActionResult DeleteProduct(string RowAdi, string redirectName)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(RowAdi))
+                {
+                    prodct = db.Urunlers.FirstOrDefault(x => x.UrunKodu == RowAdi.ToUpper().Trim());
+                    ;
+                    if (db.Urunholders.Where(x => x.UrunId == prodct.Id).ToList().Count() == 0)
+                    {
+                        if (prodct != null)
+                        {
+                            db.Urunlers.Remove(prodct);
+                            db.SaveChanges();
+                            //kesif aitliği null değil ise silme işlemi olmayacak alert verdir.
+                        }
+                    }
+                }
+
+                return RedirectToAction("ListIndex", new {CatName = redirectName});
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
         public IActionResult DeleteCat(string RowAdi)
         {
             try
@@ -53,7 +80,7 @@ namespace Remake.Controllers
                 throw ex;
             }
         }
-        public IActionResult AddNewProduct(string UrunKodu, string UrunAdi, string Marka, string Kategori, float satisFiyati, float fiyat, int UrunAdet)
+        public IActionResult AddNewProduct(string UrunKodu, string UrunAdi, string Marka, string Kategori, float satisFiyati, float fiyat, int UrunAdet, string redirectName)
         {
             try
             {
@@ -63,6 +90,7 @@ namespace Remake.Controllers
                     urunlers = db.Urunlers.Where(x => x.UrunKodu == UrunKodu.ToUpper()).ToList();
                     if (urunlers.Count == 0)
                     {
+                        
                         prodct.UrunKodu = UrunKodu.ToUpper().Trim();
                         prodct.UrunAdi = UrunAdi.ToUpper().Trim();
                         prodct.Marka = Marka.ToUpper().Trim();
@@ -76,7 +104,7 @@ namespace Remake.Controllers
                 }
 
 
-                return RedirectToAction("Index", "Product");
+                return RedirectToAction("ListIndex", new {CatName = redirectName });
             }
             catch (Exception ex)
             {

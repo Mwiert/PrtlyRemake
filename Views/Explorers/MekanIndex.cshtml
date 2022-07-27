@@ -99,8 +99,9 @@
                              {
                         if(@item.KesifId == @ViewBag.KesifId)
                         {
-                        <tr class="table-primary" id="ListAlans"style="cursor:pointer">
-                  <td class="col-lg-2 col-md-2 col-sm-2" onclick="location.href='@Url.Action("AlanIndex","Explorers",new {RowId = @item.Id})'">@item.AlanAdi</td>
+                        <tr class="table-info" style="cursor:pointer;">
+                  <td onclick="location.href='@Url.Action("AlanIndex","Explorers",new {RowId = @item.Id})'">@item.AlanAdi</td>
+                  <td><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" style=" user-select: none;" class="btn btn-gradient-warning btn-sm col-sm-4">Sil</a></td>
                    </tr>
                     }
                         }
@@ -110,12 +111,51 @@
                   </div>
                 </div>
               </div>
-                <button onclick=" makedisable()" type="button" style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;" class="btn btn-gradient-dark " style="margin-bottom:1rem;" data-bs-toggle="modal" data-bs-target="#myModal">+</button>
+                <button onclick=" makedisable()" type="button" style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;" class="btn btn-gradient-info " style="margin-bottom:1rem;" data-bs-toggle="modal" data-bs-target="#myModal">+</button>
+                <div class="container mt-2"> @*mt kapatılabilir*@
+        <div class="modal" id="myModalOK">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Emin Misiniz?</h4>
+                    <div class="modal-body">
+                        <div class="col-12 grid-margin stretch-card">
+                <div class="card " style="height:100%; margin-bottom:-3rem;">
+                  <div class="card-body">
+                              <h1 class="card-title text-center mt-2">Alan'ı' silmek istediğinize emin misiniz?</h1>
+                               <p class=" text-center mt-2">Eğer alanın içerisinde ürün ekli ise silme işlemi gerçekleşmeyecektir!</p>
 
+                  </div>
+                </div>
+              </div>
+                    </div>
+                    <div class="modal-footer">
+                        @using (Html.BeginForm("DeleteAlan","Explorers",FormMethod.Post))
+{
+                                     <button type="submit" class="btn btn-gradient-dark me-2">Sil</button>
+                                                   <input value="" id="RowsValues" type="text" style="visibility:hidden" name="RowAdi">
+
+}
+                            <button type="submit" data-bs-dismiss="modal"  class="btn btn-gradient-red me-2">İptal Et</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <script type="text/javascript">
                              
  var table =document.getElementById("table");
+      for (var i = 0; i < table.rows.length;i++)
+    {
+        table.rows[i].onclick = function() 
+        {
+            indexy = this.rowIndex;
+            document.getElementById("RowsValues").value =this.cells[0].textContent;
+        };
+}
     $("#mekanAdi").on("change", function(){
         var p = $('#mekanAdi').val();
         $.ajax({
@@ -130,8 +170,8 @@
 
                     for (var i = 0; i < data.length; i++) {
                         var url = "location.href='@Url.Action("AlanIndex","Explorers")?RowId=" + data[i].id + "'";
-                        markup = "<tr class='table-primary'><td style='cursor:pointer'><a  onclick="+url+" >"
-                      + data[i].alanAdi + "</a></td></tr>";
+                        markup = "<tr class='table-info'><td style='cursor:pointer'><a  onclick="+url+" >"
+                      + data[i].alanAdi + "</a></td><td style='cursor:pointer'><a data-bs-toggle='modal' data-bs-target='#myModalOK' class='btn btn-gradient-warning btn-sm col-sm-4'>Sil</a></td></tr>";
                         tableBody = $("#table tbody");
                         tableBody.append(markup);
                     }
@@ -145,7 +185,8 @@
             }
         });
        });
- 
+
+
 
 
    function makedisable(){

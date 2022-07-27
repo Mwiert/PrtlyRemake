@@ -13,6 +13,6 @@ namespace Remake.Models
         public float? SatisFiyati { get; set; }
         public int? UrunAdet { get; set; }
         public string? UrunKategorisi { get; set; }
-        public string? KesifAitligi { get; set; }
+        public int? KullanilanUrunAdet { get; set; }
     }
 }

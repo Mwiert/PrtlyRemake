@@ -115,9 +115,18 @@
                 </div>
               </div>
 
-              <button type="button" style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;" class="btn btn-gradient-dark " style="margin-bottom:1rem;" data-bs-toggle="modal" data-bs-target="#myModal">Kategori Ekle</button>
+              <button type="button" style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;" class="btn btn-gradient-info " style="margin-bottom:1rem;" data-bs-toggle="modal" data-bs-target="#myModal">Kategori Ekle</button>
 
  <script type="text/javascript">
+            var table = document.getElementById("table"),indexy
 
+    for (var i = 0; i < table.rows.length;i++)
+    {
+        table.rows[i].onclick = function() 
+        {
+            indexy = this.rowIndex;
+            document.getElementById("RowsValue").value =this.cells[0].textContent;
+        };
+}
  </script>
 
