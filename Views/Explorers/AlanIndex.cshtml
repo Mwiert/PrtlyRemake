@@ -34,7 +34,7 @@
             </div>
         </div>
     </div>
- <h3 class="card-title text-center "  style="margin-top:-2rem;padding:1rem;">@ViewBag.AlanAdi</h3>
+ <h3 class="card-title text-center " id="alanAdiGet" style="margin-top:-2rem;padding:1rem;">@ViewBag.AlanAdi</h3>
 
 @using (Html.BeginForm("AddProductToAlan","Explorers",FormMethod.Post))
 {
@@ -112,7 +112,7 @@
                    <td class="col-lg-1 col-md-1 col-sm-1" ><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" style=" user-select: none;"class="btn btn-gradient-info btn-sm">@selecteditem.UrunAdet</a></td>
                   <td class="col-lg-2 col-md-2 col-sm-2" style=" user-select: none;" @*data-id="@item.UrunKodu" data-bs-toggle="modal" data-bs-target="#myModalProductInfo"*@ >@item.UrunKodu</td>
                   <td style=" user-select: none;">@item.UrunAdi</td>
-                  <td class="col-lg-2 col-md-2 col-sm-2" style=" user-select: none;"><a type="submit" onclick="location.href='@Url.Action("DeleteProductFromAlan","Explorers", new { Urunid = @selecteditem.UrunId, alanid =@selecteditem.AlanId})'" class="btn btn-gradient-warning btn-sm">Sil</a></td>
+                  <td class="col-lg-2 col-md-2 col-sm-2" style=" user-select: none;" data-bs-toggle="modal" data-bs-target="#myModalDelProduct"><a type="submit"  class="btn btn-gradient-warning btn-sm">Sil</a></td>
                    </tr> 
                             }
                         }
@@ -126,9 +126,178 @@
                 </div>
               </div>
 
+              <div class="container mt-2">
+        <div class="modal" id="myModalDelProduct">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Ürün Sil</h4>
+                    <div class="modal-body">
+                        <div class="col-12 grid-margin stretch-card">
+                <div class="card " style="height:100%; margin-bottom:-3rem;">
+                  <div class="card-body">
+                    <form class="forms-sample">
+                      <div class="form-group">
+                        <label for="exampleInputName1">Ürün Adedine Göre Sil</label>
+                         <input id="checkboxValue" style="margin-left:12.3rem;width:1.25rem;height:1.25rem;" onclick="test()" type="checkbox" > 
+                          <div class="form-group">
+                        <input type="text" class="form-control" id="urunAdet" name="UrunAdedi"  placeholder="Ürün Adedi Giriniz" disabled> 
+                      </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+                    </div>
+                    <div class="modal-footer">
+                         <button type="submit" id="DeleteAll" data-bs-toggle="modal" data-bs-target="#myModalAll" class="btn btn-gradient-dark me-2" style="float:left"> Hepsini Sil</button>
+                         <button type="submit" id="delbyAdet" data-bs-toggle="modal" data-bs-target="#myModalAdet"class="btn btn-gradient-dark me-2">Adede Göre Sil</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-2"> @*mt kapatılabilir*@
+        <div class="modal" id="myModalAdet">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Emin Misiniz?</h4>
+                    <div class="modal-body">
+                        <div class="col-12 grid-margin stretch-card">
+                <div class="card " style="height:100%; margin-bottom:-3rem;">
+                  <div class="card-body">
+                              <h1 class="card-title text-center mt-2">Ürünü silmek istediğinize emin misiniz?</h1>
+
+                  </div>
+                </div>
+              </div>
+                    </div>
+                    <div class="modal-footer">
+                                     <button type="submit" id="SureAdet" class="btn btn-gradient-dark me-2">Sil</button>
+
+                            <button type="submit" data-bs-dismiss="modal"  class="btn btn-gradient-red me-2">İptal Et</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-2"> @*mt kapatılabilir*@
+        <div class="modal" id="myModalAll">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Emin Misiniz?</h4>
+                    <div class="modal-body">
+                        <div class="col-12 grid-margin stretch-card">
+                <div class="card " style="height:100%; margin-bottom:-3rem;">
+                  <div class="card-body">
+                              <h1 class="card-title text-center mt-2">Ürünlerin tamamını silmek istediğinize emin misiniz?</h1>
+
+                  </div>
+                </div>
+              </div>
+                    </div>
+                    <div class="modal-footer">
+                                     <button type="submit" id="SureAll" class="btn btn-gradient-dark me-2">Sil</button>
+
+                            <button type="submit" data-bs-dismiss="modal"  class="btn btn-gradient-red me-2">İptal Et</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 <button type="button" style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;" class="btn btn-gradient-info " style="margin-bottom:1rem;" data-bs-toggle="modal" data-bs-target="#myModal">+</button>
 
                         <script type="text/javascript">
+                                function test(){
+     var check= document.getElementById("checkboxValue").checked;
+        if (check == true) {
+            document.getElementById("urunAdet").disabled = false;
+        }
+        else {
+             document.getElementById("urunAdet").disabled = true;
+        }
+}
+var adet 
+$("#SureAdet").on("click", function(){
+     adet = $("#urunAdet").val();
+    AlanAdi = $("#alanAdiGet").text();
+     $.ajax({
+            url: "@Url.Action("deleteProductAdet","Explorers")",
+            type: 'POST',
+            data: {UrunKodu : UrunKodu, AlanAdi:AlanAdi , adet:adet},
+            dataType: 'json',
+            success: function(data) {
+                $("#myModalAdet").modal('hide');
+                location.reload(true);
+            },
+            error: function(err) {
+               swal("Hata Oluştu","Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.","warning")
+            }
+        });
+});
+
+$("#SureAll").on("click", function(){
+        AlanAdi = $("#alanAdiGet").text();
+     $.ajax({
+            url: "@Url.Action("deleteProductAll","Explorers")",
+            type: 'POST',
+            data: {UrunKodu : UrunKodu, AlanAdi:AlanAdi},
+            dataType: 'json',
+            success: function(data) {
+                $("#myModalAll").modal('hide');
+                location.reload(true);
+            },
+            error: function(err) {
+               swal("Hata Oluştu","Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.","warning")
+            }
+        });
+});
+var UrunKodu;
+var AlanAdi;
+                            $("#table").on("click", "td", function(){
+     UrunKodu = $(this).parent("tr").find("td:nth-child(2)").text();
+        //    $.ajax({
+        //    url: "@Url.Action("deleteProductAdet","Explorers")",
+        //    type: 'POST',
+        //    data: {UrunKodu : UrunKodu, AlanAdi:AlanAdi},
+        //    dataType: 'json',
+        //    success: function(data) {
+        //        $("#UrunKodu").val(data.urunKodu);
+        //        $("#UrunMarka").val(data.marka);
+        //        $("#UrunAitligi").val(data.kesifAitligi);
+        //        $("#UrunSatisFiyat").val(data.satisFiyati);
+        //        $("#UrunAdeti").val(data.urunAdet);
+        //        $("#UrunFiyat").val(data.urunFiyati);
+        //        $("#UrunCat").val(data.urunKategorisi);
+        //        $("#UrunAdi").val(data.urunAdi);
+        //        $("#RowsValue").val(data.urunKodu);
+        //        $("#myModalProductInfo").modal('show');
+        //    },
+        //    error: function(err) {
+        //       swal("Hata Oluştu","Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.","warning")
+        //    }
+        //});
+});
+
+
+
+
+
+
+
+
+
+
                             $('#catName').change(function () {
                         var id = $('#catName').val();
                         $.ajax({

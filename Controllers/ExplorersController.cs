@@ -59,12 +59,51 @@ namespace Remake.Controllers
             }
             return Json(alanHolders);
         }
+
+        public JsonResult deleteProductAll(string UrunKodu, string AlanAdi)
+        {
+            int adet;
+            urun = db.Urunlers.FirstOrDefault(x => x.UrunKodu == UrunKodu);
+            alanHolder = db.Alanholders.FirstOrDefault(x => x.KesifId == KesifIdInt && x.AlanAdi == AlanAdi);
+            Urunholder = db.Urunholders.FirstOrDefault(x => x.UrunId == urun.Id && x.AlanId == alanHolder.Id);
+
+            urun.KullanilanUrunAdet -= Urunholder.UrunAdet;
+
+            db.Entry(urun).State = EntityState.Modified;
+            db.Urunholders.Remove(Urunholder);
+            db.SaveChanges();
+            return Json(0);
+        }
+        public JsonResult deleteProductAdet(string UrunKodu,string AlanAdi ,int adet)
+        {
+            urun = db.Urunlers.FirstOrDefault(x => x.UrunKodu == UrunKodu);
+            alanHolder = db.Alanholders.FirstOrDefault(x=> x.KesifId == KesifIdInt && x.AlanAdi == AlanAdi);
+            Urunholder = db.Urunholders.FirstOrDefault(x => x.UrunId == urun.Id && x.AlanId == alanHolder.Id);
+
+            urun.KullanilanUrunAdet -= adet;
+            if (urun.KullanilanUrunAdet <= 0)
+            {
+                db.Urunholders.Remove(Urunholder);
+                //db.Alanholders.Remove(alanHolder);
+                urun.KullanilanUrunAdet = 0;
+            }
+            else
+            {
+                Urunholder.UrunAdet -= adet;
+            db.Entry(Urunholder).State = EntityState.Modified;
+            }
+            db.Entry(urun).State = EntityState.Modified;
+            db.SaveChanges();
+            return Json(0);
+        }
         public IActionResult DeleteProductFromAlan(int Urunid, int alanid)
         {
             Urunholder = db.Urunholders.FirstOrDefault(x => x.UrunId == Urunid && x.AlanId == alanid);
-
-            alanHolder = db.Alanholders.FirstOrDefault(x => x.Id == alanid);
-            db.Alanholders.Remove(alanHolder);
+            urun = db.Urunlers.FirstOrDefault(x => x.Id== Urunholder.UrunId);
+            urun.KullanilanUrunAdet -= Urunholder.UrunAdet;
+            db.Entry(urun).State = EntityState.Modified;
+            db.Urunholders.Remove(Urunholder);
+            db.SaveChanges();
             return RedirectToAction("AlanIndex", new { RowId = alanid });
         }
         public IActionResult MekanIndex(int RowId)
@@ -187,12 +226,32 @@ namespace Remake.Controllers
         }
         public IActionResult AddProductToAlan(string UrunKodu, int UrunAdedi, int RowId)
         {
-            int Compare;
+            int Compare, cross;
             Urunler urunler = new Urunler();
             Urunholder urunholder = new Urunholder();
             urunler = db.Urunlers.FirstOrDefault(x => x.UrunKodu == UrunKodu);
             urunholder = db.Urunholders.FirstOrDefault(x => x.UrunId == urunler.Id && x.AlanId == RowId);
-            int cross = ((int)(urunler.UrunAdet - urunler.KullanilanUrunAdet));
+            if(urunholder == null)
+            {
+                urunholder = new Urunholder();
+                urunholder.AlanId = RowId;
+                urunholder.UrunId = urunler.Id;
+                if(urunler.KullanilanUrunAdet <= urunler.UrunAdet)
+                {
+                    urunholder.UrunAdet = UrunAdedi;
+                    urunler.KullanilanUrunAdet += UrunAdedi;
+                }
+                else
+                {
+                    urunholder.UrunAdet = urunler.UrunAdet;
+                }
+                db.Entry(urunler).State = EntityState.Modified;
+                db.Urunholders.Add(urunholder);
+                db.SaveChanges();
+            }
+            else
+            {
+             cross = ((int)(urunler.UrunAdet - urunler.KullanilanUrunAdet));
             if (urunler.KullanilanUrunAdet <= urunler.UrunAdet)
             {
                 if(UrunAdedi <= cross)
@@ -221,6 +280,7 @@ namespace Remake.Controllers
             db.Entry(urunholder).State = EntityState.Modified;
             db.Entry(urunler).State = EntityState.Modified;
             db.SaveChanges();
+            }
 
             return RedirectToAction("AlanIndex", new { RowId = RowId });
         }
