@@ -25,11 +25,11 @@
                     <div class="modal-footer">
                         @using (Html.BeginForm("DeleteExpolore","Explorers",FormMethod.Post))
 {
-                                     <button type="submit" class="btn btn-gradient-dark me-2">Sil</button>
+                                     <button type="submit" class="btn btn-gradient-info me-2">Sil</button>
                                                    <input value="" id="RowsValue" type="text" style="visibility:hidden" name="rowAdi"> 
 
 }
-                            <button type="submit" data-bs-dismiss="modal"  class="btn btn-gradient-red me-2">İptal Et</button>
+                            <button type="submit" data-bs-dismiss="modal"  class="btn btn-gradient-danger me-2">İptal Et</button>
                     </div>
                 </div>
             </div>
@@ -64,7 +64,7 @@
               </div>
                     </div>
                     <div class="modal-footer">
-                         <button type="submit" class="btn btn-gradient-dark me-2">Onayla</button>
+                         <button type="submit" class="btn btn-gradient-info me-2">Onayla</button>
                     </div>
                 </div>
             </div>
@@ -80,9 +80,9 @@
                          @foreach(var item in Model)
                              {
 
-                        <tr class="table-info" style="cursor:pointer">
+                        <tr class="table" style="cursor:pointer;background-color:#e9e9f7">
                             <td class="gethover"><a class="col-lg-9 col-sm-6 btn" value="@item.Id" onclick="location.href='@Url.Action("MekanIndex","Explorers",new {RowId = @item.Id})'"> @item.Ad</a></td>
-                            <td><a type="submit"  data-bs-toggle="modal" data-bs-target="#myModalOK" class="btn btn-gradient-warning btn-sm col-lg-3 col-sm-6">Sil</a></td>
+                            <td><a type="submit"  data-bs-toggle="modal" data-bs-target="#myModalOK" class="btn btn-gradient-danger btn-sm col-lg-3 col-sm-6">Sil</a></td>
                         </tr>
                         }
                          <input value="" id="putValue" type="text" style="visibility:hidden" name="MekanAdi">

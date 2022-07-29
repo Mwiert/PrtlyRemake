@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Remake.Models;
 
 namespace Remake.Controllers
@@ -11,6 +12,7 @@ namespace Remake.Controllers
         Urunler prodct = new Urunler();
         Kategoriler category = new Kategoriler();
         List<Urunler> urunlers = new List<Urunler>();
+        Urunler urun = new Urunler();
         public IActionResult Index()
         {
             try
@@ -24,6 +26,28 @@ namespace Remake.Controllers
 
                 throw ex;
             }
+        }
+        public JsonResult updateProduct(string UK,string UM, int USF , int UA, int UF, string UC, string UAdi)
+        {
+            urun = db.Urunlers.FirstOrDefault(x => x.UrunKodu == UK);
+
+            if(urun.KullanilanUrunAdet > UA)
+            {
+               return Json("HATA");
+            }
+            else
+            {
+            urun.UrunAdet = UA;
+            urun.UrunAdi = UAdi.ToUpper();
+            urun.UrunFiyati = UF;
+            urun.SatisFiyati = USF;
+            urun.Marka = UM;
+            urun.UrunKategorisi = UC;
+            db.Entry(urun).State = EntityState.Modified;
+            db.SaveChanges();
+            return Json(urun);
+            }
+
         }
         public IActionResult DeleteProduct(string ProductCode)
         {

@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Remake.Models;
 
 namespace Remake.Controllers
 {
+    [Authorize(Roles = "ADMIN")]
     public class MekanController : Controller
     {
         kesifdbContext db = new kesifdbContext();
@@ -10,12 +12,27 @@ namespace Remake.Controllers
         List<Alanholder> alanHolders = new List<Alanholder>();
         List<Urunholder> urunHolders = new List<Urunholder>();
         List<Urunler> urunlers = new List<Urunler>();
-        
+        Mekantürleri mt = new Mekantürleri();
         
         public IActionResult Index()
         {
             db.Mekantürleris.ToList();
             return View(db.Mekantürleris);
+        }
+        public JsonResult DeleteMekan(string DeleteMekan)
+        {
+           mt= db.Mekantürleris.FirstOrDefault(x => x.MekanAdi == DeleteMekan);
+            var check = db.Alanholders.FirstOrDefault(x => x.MekanId == mt.Id);
+            if(check != null)
+            {
+                return Json("HATA");
+            }
+            else
+            {
+                db.Mekantürleris.Remove(mt);
+                db.SaveChanges();
+                return Json("OK");
+            }
         }
         public JsonResult getProductForSelected(string p)
         {

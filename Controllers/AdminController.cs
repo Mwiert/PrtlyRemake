@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Remake.Models;
 using Remake.Security.Authorization;
 
 namespace Remake.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    [Authorize(Roles ="ADMIN")]
     public class AdminController : Controller
     {
         Roles AutRoles = new Roles();
@@ -27,6 +28,39 @@ namespace Remake.Controllers
             {
 
                 throw ex;
+            }
+        }
+        public JsonResult UpdateUser(string name, string email, int Rolid, string oldMail)
+        {
+            roller = Db.Rollers.FirstOrDefault(x => x.RolId == Rolid);
+            k = Db.Kullanıcıs.FirstOrDefault(x => x.Email == email);
+            if (k == null)
+            {
+
+                k = new Kullanıcı();
+                k = Db.Kullanıcıs.FirstOrDefault(x => x.Email == oldMail);
+                k.Email = email;
+                k.RolId = Rolid;
+                Db.Entry(k).State = EntityState.Modified;
+                Db.SaveChanges();
+                return Json(1);
+            }
+            else
+            {
+                if (k.RolId == Rolid)
+                {
+                    return Json(0);
+                }
+                else
+                {
+                    k = new Kullanıcı();
+                    k = Db.Kullanıcıs.FirstOrDefault(x => x.Email == oldMail);
+                    k.Email = email;
+                    k.RolId = Rolid;
+                    Db.Entry(k).State = EntityState.Modified;
+                    Db.SaveChanges();
+                    return Json(3);
+                }
             }
         }
         public IActionResult DeleteUser(string UserEmail)
@@ -53,7 +87,7 @@ namespace Remake.Controllers
             try
             {
                 kullanıcıs = Db.Kullanıcıs.Where(x => x.Email == UsersEmail).ToList();
-                if(kullanıcıs.Count ==0 )
+                if (kullanıcıs.Count == 0)
                 {
                     k.Ad = UsersName.ToUpper().Trim();
                     k.Email = UsersEmail.ToLower().Trim();
@@ -62,15 +96,15 @@ namespace Remake.Controllers
                     Db.Kullanıcıs.Add(k);
                     Db.SaveChanges();
                 }
-              
+
                 return RedirectToAction("Index", "Admin");
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
 
                 throw ex;
             }
-      
+
         }
         public IActionResult AddNewRole(string RoleName)
         {

@@ -25,11 +25,11 @@
                     <div class="modal-footer">
                         @using (Html.BeginForm("DeleteUser","Admin",FormMethod.Post))
 {
-                                     <button type="submit" class="btn btn-gradient-dark me-2">Sil</button>
+                                     <button type="submit" class="btn btn-gradient-danger me-2">Sil</button>
                                                    <input value="" id="RowsValue" type="text" style="visibility:hidden" name="UserEmail">
 
 }
-                            <button type="submit" data-bs-dismiss="modal"  class="btn btn-gradient-red me-2">İptal Et</button>
+                            <button type="submit" data-bs-dismiss="modal"  class="btn btn-gradient-info me-2">İptal Et</button>
                     </div>
                 </div>
             </div>
@@ -56,7 +56,9 @@
                   <td style=" user-select: none;" >@item.Email</td>
                   <td style=" user-select: none;" >@item.Rol.RolAdi</td>
 
-                   <td><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" class="btn btn-gradient-danger btn-sm">Sil</a></td>
+                   <td>
+                        <a type="submit" data-bs-toggle="modal" data-bs-target="#myModalUpdate" style=" user-select: none;"class="btn btn-gradient-info btn-sm">Güncelle</a>
+                       <a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" class="btn btn-gradient-danger btn-sm">Sil</a></td>
                  
                         </tr>
                         }
@@ -66,12 +68,12 @@
                 </div>
               </div>
  <div class="dropup-center dropup">
-            <button class="btn btn-gradient-dark " style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;"type="button" id="dropupCenterBtn" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn btn-gradient-info " style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;"type="button" id="dropupCenterBtn" data-bs-toggle="dropdown" aria-expanded="false">
               +
             </button>
             <ul class="dropdown-menu text-center" style="background-color:transparent;"aria-labelledby="dropupCenterBtn">
-              <li><button type="button" class="btn btn-gradient-dark"   style="border-radius:7rem;"data-bs-toggle="modal" data-bs-target="#myModal">Yeni Kullanıcı</button> </li>
-              <li><button type="button"  style="border-radius:7rem;" class="btn btn-gradient-dark" data-bs-toggle="modal" data-bs-target="#myModal1">Yeni Rol</button></li>
+              <li><button type="button" class="btn btn-gradient-info"   style="border-radius:7rem;"data-bs-toggle="modal" data-bs-target="#myModal">Yeni Kullanıcı</button> </li>
+              <li><button type="button"  style="border-radius:7rem;" class="btn btn-gradient-info" data-bs-toggle="modal" data-bs-target="#myModal1">Yeni Rol</button></li>
             </ul>
           </div>
     @using (Html.BeginForm("AddUser","Admin",FormMethod.Post))
@@ -110,20 +112,9 @@
                                         {
                                             <option value="@item.RolId">@item.RolAdi</option>       
                                         }
-                                        <input value="" id="inputNameChange" type="text" style="visibility:hidden" name="RoleId">
-                                           
+                                        <input type="text" id="inputNameChange" style="visibility:hidden"name="RoleId">
                       </select>
                     </div>
-                      <div class="form-group">
-                        <label>File upload</label>
-                        <input type="file" name="UsersImg" class="file-upload-default">
-                        <div class="input-group col-xs-12">
-                          <input type="text" class="form-control file-upload-info" disabled placeholder="Resim Yükle ">
-                          <span class="input-group-append">
-                            <button class="file-upload-browse btn btn-gradient-dark" type="button">Yükle</button>
-                          </span>
-                        </div>
-                      </div>
                     </form>
                   </div>
                 </div>
@@ -137,6 +128,81 @@
         </div>
     </div>
        }
+       <div class="container mt-2"> @*mt kapatılabilir*@
+
+        <div class="modal" id="myModalUpdate">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Kullanıcı Güncelle</h4>
+                    <div class="modal-body">
+                        <div class="col-12 grid-margin stretch-card">
+                <div class="card " style="height:100%; margin-bottom:-3rem;">
+                  <div class="card-body">
+                    <form class="forms-sample">
+                      <div class="form-group">
+                        <label for="exampleInputName1">Kullanıcı Adı</label>
+                        <input type="text" class="form-control" id="UsersNameUpdate" name="UsersNameUpdate"  required placeholder="Kullanıcı Adı" readonly>
+                      </div>
+                       <div class="form-group">
+                        <label for="exampleInputName1">Kullanıcı Email </label>
+                         <input id="checkboxValue" style="margin-left:12.3rem;width:1.25rem;height:1.25rem;" onclick="test()" type="checkbox" > 
+                          <div class="form-group">
+                            <input type="text" class="form-control" id="UsersEmailUpdate" name="UsersEmailUpdate"  required placeholder="Kullanıcı Email Adresi" disabled>
+                      </div>
+                      </div>
+                      <div class="form-group">
+                      <label for="exampleFormControlSelect1">Rol Seçimi</label>
+                      <select class="form-control form-control-lg" id="SelectsGet">
+                          <option>-</option>
+                          @foreach(var item in (List<Roller>)ViewBag.RoleList)
+                                        {
+                                            <option value="@item.RolId">@item.RolAdi</option>       
+                                        }
+                                           
+                      </select>
+                    </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+                    </div>
+                    <div class="modal-footer">
+                         <button type="submit" data-bs-toggle="modal" data-bs-target="#myModalSure" class="btn btn-gradient-info me-2">Güncelle</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="container mt-2"> @*mt kapatılabilir*@
+        <div class="modal" id="myModalSure">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Emin Misiniz?</h4>
+                    <div class="modal-body">
+                        <div class="col-12 grid-margin stretch-card">
+                <div class="card " style="height:100%; margin-bottom:-3rem;">
+                  <div class="card-body">
+                              <h1 class="card-title text-center mt-2">Kişi bilgilerini güncellemek istediğinize emin misiniz?</h1>
+
+                  </div>
+                </div>
+              </div>
+                    </div>
+                    <div class="modal-footer">
+                                     <button type="submit" id="SureUpdate" class="btn btn-gradient-info me-2">Güncelle</button>
+
+                            <button type="submit" data-bs-dismiss="modal"  class="btn btn-gradient-danger me-2">İptal Et</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     @using (Html.BeginForm("AddNewRole", "Admin", FormMethod.Post))
     {
@@ -164,7 +230,7 @@
               </div>
                     </div>
                     <div class="modal-footer">
-                         <button type="submit" onclick="writeName()" class="btn btn-gradient-dark me-2">Onayla</button>
+                         <button type="submit" class="btn btn-gradient-info me-2">Onayla</button>
                     </div>
                 </div>
             </div>
@@ -174,24 +240,52 @@
    }
 
        <script type="text/javascript">
-//           $("#table").on("dblclick", "td", function(){
-//    var send = $(this).parent("tr").find("td:nth-child(2)").text();
-//            $.ajax({
-//            url: "@Url.Action("GetUserByCode","Admin")",
-//            type: 'POST',
-//            data: {send : send},
-//            dataType: 'json',
-//            success: function(data) {
-//                $("#UsersNameI").val(data.ad);
-//                $("#UsersEmailI").val(data.email);
-//                $("#UserRoleI").val(data.sendRole);
-//                $("#myModalinfo").modal('show');
-//            },
-//            error: function(err) {
-//                alert("no");
-//            }
-//        });
-//});
+
+          function writeName() {
+    var temp = document.getElementById("Selects").value
+    document.getElementById("inputNameChange").setAttribute("value", temp)
+}
+
+
+           $("#SureUpdate").on("click", function(){
+             var name = $("#UsersNameUpdate").val();
+               var email = $("#UsersEmailUpdate").val();
+               var oldMail = send3;
+               var Rolid = $("#SelectsGet").val();
+                         $.ajax({
+                   url: "@Url.Action("UpdateUser","Admin")",
+                   type: 'POST',
+                   data: {name : name, email:email , Rolid:Rolid,oldMail:oldMail},
+                   dataType: 'json',
+                   success: function(data) {
+                     if(data==0){
+                           swal("Hata Oluştu","Beklenmedik bir hata oluştu. Bu Email adresi zaten kayıtlı. Lütfen başka bir Email adresi deneyiniz.","warning")
+                        }
+                     else if (data == 3)
+                     {
+                         swal("Başarılı", "Güncelleme işlemi başarılı. Kullanıcı rolü güncellendi.", "success");
+                        location.reload(true);
+                     }
+                        else    {
+                        swal("Başarılı", "Güncelleme işlemi başarılı", "success");
+                        location.reload(true);
+                        }
+                       $("#myModalSure").modal("hide");
+            },
+            error: function(err) {
+               swal("Hata Oluştu","Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.","warning")
+            }
+        });
+});
+var send, send1, send2, send3;
+           $("#table").on("click", "td", function(){
+            send = $(this).parent("tr").find("td:nth-child(1)").text();
+     send1 = $(this).parent("tr").find("td:nth-child(2)").text();
+      send2 = $(this).parent("tr").find("td:nth-child(3)").text();
+               send3 = send1;
+               $("#UsersNameUpdate").val(send);
+        $("#UsersEmailUpdate").val(send1);
+});
        var table = document.getElementById("table"),indexy
 
     for (var i = 0; i < table.rows.length;i++)
@@ -202,11 +296,16 @@
             document.getElementById("RowsValue").value =this.cells[1].textContent;
         };
 }
-    function writeName() {
-    var temp = document.getElementById("Selects").value
-    document.getElementById("inputNameChange").setAttribute("value", temp)
-}
 
+          function test(){
+     var check= document.getElementById("checkboxValue").checked;
+        if (check == true) {
+            document.getElementById("UsersEmailUpdate").disabled = false;
+        }
+        else {
+             document.getElementById("UsersEmailUpdate").disabled = true;
+        }
+}
    </script>
 
 

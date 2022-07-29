@@ -18,13 +18,13 @@ namespace Remake.Controllers
             db.SaveChanges();
             return View(db.Kategorilers);
         }
-        public IActionResult DeleteProduct(string RowAdi, string redirectName)
+        public IActionResult DeleteProduct(string ProductCode, string redirectName)
         {
             try
             {
-                if (!string.IsNullOrEmpty(RowAdi))
+                if (!string.IsNullOrEmpty(ProductCode))
                 {
-                    prodct = db.Urunlers.FirstOrDefault(x => x.UrunKodu == RowAdi.ToUpper().Trim());
+                    prodct = db.Urunlers.FirstOrDefault(x => x.UrunKodu == ProductCode.ToUpper().Trim());
                     ;
                     if (db.Urunholders.Where(x => x.UrunId == prodct.Id).ToList().Count() == 0)
                     {

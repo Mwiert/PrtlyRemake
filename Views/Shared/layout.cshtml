@@ -3,21 +3,21 @@
 *@
 @{
    string nmspace;
-    if (User.IsInRole("Admin"))
+    if (User.IsInRole("ADMIN"))
     {
-        nmspace = "Admin";
+        nmspace = "ADMIN";
     }
-    else if (User.IsInRole("Direktör"))
+    else if (User.IsInRole("DİREKTÖR"))
     {
-        nmspace = "Direktör";
+        nmspace = "DİREKTÖR";
     }
-    else if (User.IsInRole("Saha Ekibi"))
+    else if (User.IsInRole("SAHA EKİBİ"))
     {
-        nmspace="Saha Ekibi";
+        nmspace="SAHA EKİBİ";
     }
     else
     {
-        nmspace = "Muhasebe";
+        nmspace = "MUHASEBE";
     }
     
 }
@@ -109,7 +109,7 @@
                 <i class="mdi mdi-format-list-bulleted menu-icon"></i>
               </a>
           </li>
-                    @if(User.IsInRole("Admin")){
+                    @if(User.IsInRole("ADMIN")){
 
                         <li class="nav-item">
               <a class="nav-link" href="@Url.Action("Index","Mekan")">
@@ -118,7 +118,7 @@
               </a>
           </li>
           }
-          @if(User.IsInRole("Admin")){
+          @if(User.IsInRole("ADMIN")){
 
                         <li class="nav-item">
               <a class="nav-link" href="@Url.Action("Index","Admin")">

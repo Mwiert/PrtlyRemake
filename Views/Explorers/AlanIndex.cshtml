@@ -28,7 +28,7 @@
                                                    <input value="" id="RowsValue" type="text" style="visibility:hidden" name="UserEmail">
 
 }
-                            <button type="submit" data-bs-dismiss="modal"  class="btn btn-gradient-red me-2">İptal Et</button>
+                            <button type="submit" data-bs-dismiss="modal"  class="btn btn-gradient-danger me-2">İptal Et</button>
                     </div>
                 </div>
             </div>
@@ -82,7 +82,7 @@
                     </div>
                     <div class="modal-footer">
                         <input value="@ViewBag.RowId" name="RowId" style="visibility:hidden">
-                         <button type="submit" class="btn btn-gradient-dark me-2">Onayla</button>
+                         <button type="submit" class="btn btn-gradient-info me-2">Onayla</button>
                     </div>
                 </div>
             </div>
@@ -108,11 +108,11 @@
                         {
                             if(item.Id == selecteditem.UrunId && ViewBag.RowId== selecteditem.AlanId)
                             {
-                               <tr class="table-info" style="cursor:pointer">
+                               <tr class="table" style="cursor:pointer;background-color:#e9e9f7">
                    <td class="col-lg-1 col-md-1 col-sm-1" ><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" style=" user-select: none;"class="btn btn-gradient-info btn-sm">@selecteditem.UrunAdet</a></td>
                   <td class="col-lg-2 col-md-2 col-sm-2" style=" user-select: none;" @*data-id="@item.UrunKodu" data-bs-toggle="modal" data-bs-target="#myModalProductInfo"*@ >@item.UrunKodu</td>
                   <td style=" user-select: none;">@item.UrunAdi</td>
-                  <td class="col-lg-2 col-md-2 col-sm-2" style=" user-select: none;" data-bs-toggle="modal" data-bs-target="#myModalDelProduct"><a type="submit"  class="btn btn-gradient-warning btn-sm">Sil</a></td>
+                  <td class="col-lg-2 col-md-2 col-sm-2" style=" user-select: none;" data-bs-toggle="modal" data-bs-target="#myModalDelProduct"><a type="submit"  class="btn btn-gradient-danger btn-sm">Sil</a></td>
                    </tr> 
                             }
                         }
@@ -152,8 +152,8 @@
               </div>
                     </div>
                     <div class="modal-footer">
-                         <button type="submit" id="DeleteAll" data-bs-toggle="modal" data-bs-target="#myModalAll" class="btn btn-gradient-dark me-2" style="float:left"> Hepsini Sil</button>
-                         <button type="submit" id="delbyAdet" data-bs-toggle="modal" data-bs-target="#myModalAdet"class="btn btn-gradient-dark me-2">Adede Göre Sil</button>
+                         <button type="submit" id="DeleteAll" data-bs-toggle="modal" data-bs-target="#myModalAll" class="btn btn-gradient-danger me-2" style="float:left"> Hepsini Sil</button>
+                         <button type="submit" id="delbyAdet" data-bs-toggle="modal" data-bs-target="#myModalAdet"class="btn btn-gradient-danger me-2">Adede Göre Sil</button>
                     </div>
                 </div>
             </div>

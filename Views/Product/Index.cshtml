@@ -28,11 +28,11 @@
                     <div class="modal-footer">
                         @using (Html.BeginForm("DeleteProduct","Product",FormMethod.Post))
 {
-                                     <button type="submit" class="btn btn-gradient-dark me-2">Sil</button>
+                                     <button type="submit" class="btn btn-gradient-info me-2">Sil</button>
                                                    <input value="" id="RowsValue" type="text" style="visibility:hidden" name="ProductCode"> 
 
 }
-                            <button type="submit" data-bs-dismiss="modal"  class="btn btn-gradient-red me-2">İptal Et</button>
+                            <button type="submit" data-bs-dismiss="modal"  class="btn btn-gradient-danger me-2">İptal Et</button>
                     </div>
                 </div>
             </div>
@@ -99,7 +99,7 @@
               </div>
                     </div>
                     <div class="modal-footer">
-                         <button type="submit" onclick="writeName()" class="btn btn-gradient-dark me-2">Onayla</button>
+                         <button type="submit" onclick="writeName()" class="btn btn-gradient-info me-2">Onayla</button>
                     </div>
                 </div>
             </div>
@@ -126,7 +126,9 @@
  <td class="col-lg-1 col-md-1 col-sm-1" ><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" style=" user-select: none;"class="btn btn-gradient-info btn-sm">@item.UrunAdet</a></td>
                   <td class="col-lg-2 col-md-2 col-sm-2" style=" user-select: none;" @*data-id="@item.UrunKodu" data-bs-toggle="modal" data-bs-target="#myModalProductInfo"*@ >@item.UrunKodu</td>
                   <td @*data-id="@item.UrunKodu" data-bs-toggle="modal" data-bs-target="#myModalProductInfo"*@ style=" user-select: none;">@item.UrunAdi</td>
-                   <td ><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" style=" user-select: none;"class="btn btn-gradient-danger btn-sm">Sil</a></td>
+                   <td >
+                       <button data-bs-toggle="modal" data-bs-target="#myModalProductUpdate" id="getProdInfo" style=" user-select: none;"class="btn btn-gradient-info btn-sm">Güncelle</button>
+                       <a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" style=" user-select: none;"class="btn btn-gradient-danger btn-sm">Sil</a></td>
                  
                         </tr>
                         }
@@ -170,10 +172,6 @@
                         <label for="exampleInputName1">Ürün Adedi</label>
                         <input type="text" class="form-control" id="UrunAdeti" name="UrunAdet"  required placeholder="Ürün Adedi" readonly>
                       </div>
-                      <div class="form-group">
-                        <label for="exampleInputName1">Ürün'ün Kullanıldığı Keşif</label>
-                        <input type="text" class="form-control" id="UrunAitligi" name="Aitlik"  required placeholder="Ürün'ün Kullanıldığı Keşif'" readonly>
-                      </div>
                     <div class="form-group">
                         <label for="exampleInputName1">Ürün Fiyatı </label>
                         <input type="number" class="form-control" id="UrunFiyat" name="fiyat"  required placeholder="Ürün Fiyatı" readonly>
@@ -188,17 +186,175 @@
               </div>
                     </div>
                     <div class="modal-footer">
-                          <button type="submit" data-bs-dismiss="modal"  class="btn btn-gradient-dark me-2">Kapat</button>
+                          <button type="submit" data-bs-dismiss="modal"  class="btn btn-gradient-danger me-2">Kapat</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+     <div class="container mt-2"> @*mt kapatılabilir*@
+
+        <div class="modal" id="myModalProductUpdate">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Ürün Bilgileri Güncelle</h4>
+                    <div class="modal-body">
+                        <div class="col-12 grid-margin stretch-card">
+                <div class="card " style="height:100%; margin-bottom:-3rem;">
+                  <div class="card-body">
+                    <form class="forms-sample">
+                        <label for="exampleInputName1" style="font-size:14px">Ürün Kodu</label>
+                      <div class="form-group" style="display:flex">
+                        <input type="text" class="form-control" id="UrunKoduUpdate" name="UrunKodu" value=""  required placeholder="Ürün Kodu" disabled>
+                      </div>
+                       
+                         <div class="form-group">
+                        <label for="exampleInputName1">Ürün Adı </label>
+                         <input id="checkboxValue" style="margin-left:13rem;width:1.25rem;height:1.25rem;" onclick="test()" type="checkbox" > 
+                          <div class="form-group">
+                        <input type="text" class="form-control" id="UrunAdiUpdate" name="UrunAdi"  required placeholder="Ürün Adı" disabled>
+                      </div>
+                      </div>
+                       <div class="form-group">
+                        <label for="exampleInputName1">Ürün Markası</label>
+                         <input id="checkboxValue1" style="margin-left:11.2rem;width:1.25rem;height:1.25rem;" onclick="test1()" type="checkbox" > 
+                         <div class="form-group">
+                        <input type="text" class="form-control" id="UrunMarkaUpdate" name="Marka"  required placeholder="Ürün Markası" disabled>
+                      </div>
+                      </div>
+                      
+                       <div class="form-group">
+                        <label for="exampleInputName1">Ürün Kategorisi</label>
+                         <input id="checkboxValue2" style="margin-left:10.5rem;width:1.25rem;height:1.25rem;" onclick="test2()" type="checkbox" > 
+                         <div class="form-group">
+                        <input type="text" class="form-control" id="UrunCatUpdate" name="Kategori"  required placeholder="Ürün Kategorisi" disabled>
+                      </div>
+                      </div>
+                       
+                              <div class="form-group">
+                        <label for="exampleInputName1">Ürün Adedi</label>
+                         <input id="checkboxValue3" style="margin-left:12.3rem;width:1.25rem;height:1.25rem;" onclick="test3()" type="checkbox" > 
+                         <div class="form-group">
+                        <input type="text" class="form-control" id="UrunAdetiUpdate" name="UrunAdet"  required placeholder="Ürün Adedi" disabled>
+                      </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputName1">Ürün Fiyatı </label>
+                         <input id="checkboxValue4" style="margin-left:12.3rem;width:1.25rem;height:1.25rem;" onclick="test4()" type="checkbox" > 
+                          <div class="form-group">
+                        <input type="number" class="form-control" id="UrunFiyatUpdate" name="fiyat"  required placeholder="Ürün Fiyatı" disabled>
+                      </div>      
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputName1"> Satış Fiyatı</label>
+                         <input id="checkboxValue5" style="margin-left:12.3rem;width:1.25rem;height:1.25rem;" onclick="test5()" type="checkbox" > 
+                          <div class="form-group">
+                        <input type="number" class="form-control" id="UrunSatisFiyatUpdate" name="satisFiyati"  required placeholder="Satış Fiyatı" disabled>
+                      </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+                    </div>
+                    <div class="modal-footer">
+                          <button type="submit" data-bs-toggle="modal" data-bs-target="#myModalSureUpdate" class="btn btn-gradient-info me-2">Güncelle</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-2"> @*mt kapatılabilir*@
+        <div class="modal" id="myModalSureUpdate">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Emin Misiniz?</h4>
+                    <div class="modal-body">
+                        <div class="col-12 grid-margin stretch-card">
+                <div class="card " style="height:100%; margin-bottom:-3rem;">
+                  <div class="card-body">
+                              <h1 class="card-title text-center mt-2">Ürünü Güncellemek istediğinize emin misiniz?</h1>
+                  </div>
+                </div>
+              </div>
+                    </div>
+                    <div class="modal-footer">
+                              <button type="submit" id="GuncelleProd" class="btn btn-gradient-info me-2">Güncelle</button>
+                            <button type="submit" data-bs-dismiss="modal"  class="btn btn-gradient-red me-2">İptal Et</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
     <button type="button" style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;" class="btn btn-gradient-info " style="margin-bottom:1rem;" data-bs-toggle="modal" data-bs-target="#myModal">Ürün Ekle</button>
 
 
               <script type="text/javascript">
+                            function test(){
+     var check= document.getElementById("checkboxValue").checked;
+        if (check == true) {
+            document.getElementById("UrunAdiUpdate").disabled = false;
+        }
+        else {
+             document.getElementById("UrunAdiUpdate").disabled = true;
+        }
+}
+                            function test1(){
+     var check= document.getElementById("checkboxValue1").checked;
+        if (check == true) {
+            document.getElementById("UrunMarkaUpdate").disabled = false;
+        }
+        else {
+             document.getElementById("UrunMarkaUpdate").disabled = true;
+        }
+}
+                            function test2(){
+     var check= document.getElementById("checkboxValue2").checked;
+        if (check == true) {
+            document.getElementById("UrunCatUpdate").disabled = false;
+        }
+        else {
+             document.getElementById("UrunCatUpdate").disabled = true;
+        }
+}
+                            function test3(){
+     var check= document.getElementById("checkboxValue3").checked;
+        if (check == true) {
+            document.getElementById("UrunAdetiUpdate").disabled = false;
+        }
+        else {
+             document.getElementById("UrunAdetiUpdate").disabled = true;
+        }
+}
+                            function test4(){
+     var check= document.getElementById("checkboxValue4").checked;
+        if (check == true) {
+            document.getElementById("UrunFiyatUpdate").disabled = false;
+        }
+        else {
+             document.getElementById("UrunFiyatUpdate").disabled = true;
+        }
+}
+                            function test5(){
+     var check= document.getElementById("checkboxValue5").checked;
+        if (check == true) {
+            document.getElementById("UrunSatisFiyatUpdate").disabled = false;
+        }
+        else {
+             document.getElementById("UrunSatisFiyatUpdate").disabled = true;
+        }
+}
 
                   GenerateCode = function() {
 
@@ -221,29 +377,89 @@
         };
     }
 
+ $("#GuncelleProd").on("click", function() {
+     var UK = $("#UrunKoduUpdate").val();
+     var UM = $("#UrunMarkaUpdate").val();
+     var USF = $("#UrunSatisFiyatUpdate").val();
+     var UA = $("#UrunAdetiUpdate").val();
+     var UF = $("#UrunFiyatUpdate").val();
+     var UC = $("#UrunCatUpdate").val();
+     var UAdi = $("#UrunAdiUpdate").val();
+     $.ajax({
+         url: "@Url.Action("updateProduct","Product")",
+            type: 'POST',
+            data: {UK:UK,UM:UM,USF:USF,UA:UA,UF:UF,UC:UC,UAdi:UAdi},
+            dataType: 'json',
+            success: function(data) {
+                if (data != "HATA") {
+
+                swal({icon:"success",title: "Başarılı", text: "Ürün Güncellendi!", type: 
+"success"}).then(function(){ 
+   location.reload();
+   }
+);
+                }
+                else    {
+                      swal("Hata Oluştu","Ürün Adedi Kullanılan adetten düşük olamaz.","warning")
+                }
+            },
+            error: function(err) {
+               swal("Hata Oluştu","Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.","warning")
+            }
+     });
+});
+
+
     function writeName() {
     var temp = document.getElementById("Selects").value
     document.getElementById("inputNameChange").setAttribute("value", temp)
        }
-           
+      
+       $("#table tbody td button").on("click", function(){
+           $("#table" ).on("click", "td:nth-child(4)", function(){
+              
+    var Send = $(this).parent("tr").find("td:nth-child(2)").text();
+                $("#myModalProductInfoUpdate").modal('show');
+
+      $.ajax({
+            url: "@Url.Action("GetProductByCode","Product")",
+            type: 'POST',
+            data: {Send : Send},
+            dataType: 'json',
+            success: function(data) {
+                console.log(data);
+                $("#UrunKoduUpdate").val(data.urunKodu);
+                $("#UrunMarkaUpdate").val(data.marka);
+                $("#UrunSatisFiyatUpdate").val(data.satisFiyati);
+                $("#UrunAdetiUpdate").val(data.urunAdet);
+                $("#UrunFiyatUpdate").val(data.urunFiyati);
+                $("#UrunCatUpdate").val(data.urunKategorisi);
+                $("#UrunAdiUpdate").val(data.urunAdi);
+                 //location.reload(true);
+            },
+            error: function(err) {
+               swal("Hata Oluştu","Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.","warning")
+            }
+        });
+});      
+});
+
             
 $("#table").on("dblclick", "td", function(){
-    var send = $(this).parent("tr").find("td:nth-child(2)").text();
+    var Send = $(this).parent("tr").find("td:nth-child(2)").text();
             $.ajax({
             url: "@Url.Action("GetProductByCode","Product")",
             type: 'POST',
-            data: {send : send},
+            data: {Send : Send},
             dataType: 'json',
             success: function(data) {
                 $("#UrunKodu").val(data.urunKodu);
                 $("#UrunMarka").val(data.marka);
-                $("#UrunAitligi").val(data.kesifAitligi);
                 $("#UrunSatisFiyat").val(data.satisFiyati);
                 $("#UrunAdeti").val(data.urunAdet);
                 $("#UrunFiyat").val(data.urunFiyati);
                 $("#UrunCat").val(data.urunKategorisi);
                 $("#UrunAdi").val(data.urunAdi);
-                $("#RowsValue").val(data.urunKodu);
                 $("#myModalProductInfo").modal('show');
             },
             error: function(err) {
@@ -251,6 +467,7 @@ $("#table").on("dblclick", "td", function(){
             }
         });
 });
+
   
    </script>
   

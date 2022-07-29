@@ -62,7 +62,7 @@
                     </div>
                     <div class="modal-footer">
                          <input value="@ViewBag.KesifAdi" id="RowsValue" type="text" style="visibility:hidden" name="KesifAdi">
-                         <button type="submit" class="btn btn-gradient-dark me-2">Onayla</button>
+                         <button type="submit" class="btn btn-gradient-info me-2">Onayla</button>
                     </div>
                 </div>
             </div>
@@ -99,9 +99,9 @@
                              {
                         if(@item.KesifId == @ViewBag.KesifId)
                         {
-                        <tr class="table-info" style="cursor:pointer;">
+                        <tr class="table" style="cursor:pointer;background-color:#e9e9f7">
                   <td onclick="location.href='@Url.Action("AlanIndex","Explorers",new {RowId = @item.Id})'">@item.AlanAdi</td>
-                  <td><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" style=" user-select: none;" class="btn btn-gradient-warning btn-sm col-sm-4">Sil</a></td>
+                  <td><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" style=" user-select: none;" class="btn btn-gradient-danger btn-sm col-sm-4">Sil</a></td>
                    </tr>
                     }
                         }
@@ -134,11 +134,11 @@
                     <div class="modal-footer">
                         @using (Html.BeginForm("DeleteAlan","Explorers",FormMethod.Post))
 {
-                                     <button type="submit" class="btn btn-gradient-dark me-2">Sil</button>
+                                     <button type="submit" class="btn btn-gradient-danger me-2">Sil</button>
                                                    <input value="" id="RowsValues" type="text" style="visibility:hidden" name="RowAdi">
 
 }
-                            <button type="submit" data-bs-dismiss="modal"  class="btn btn-gradient-red me-2">İptal Et</button>
+                            <button type="submit" data-bs-dismiss="modal"  class="btn btn-gradient-info me-2">İptal Et</button>
                     </div>
                 </div>
             </div>

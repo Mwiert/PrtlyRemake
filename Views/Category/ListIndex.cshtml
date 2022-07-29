@@ -24,7 +24,7 @@
                     <div class="modal-footer">
                         @using (Html.BeginForm("DeleteProduct","Category",FormMethod.Post))
 {
-                                     <button type="submit" class="btn btn-gradient-dark me-2">Sil</button>
+                                     <button type="submit" class="btn btn-gradient-danger me-2">Sil</button>
                                                    <input value="" id="RowsValue" type="text" style="visibility:hidden" name="ProductCode"> 
                                                    <input value="@ViewBag.CatName" type="text" style="visibility:hidden" name="redirectName">
 
@@ -70,10 +70,7 @@
                         <label for="exampleInputName1">Ürün Adedi</label>
                         <input type="text" class="form-control" id="UrunAdeti" name="UrunAdet"  required placeholder="Ürün Adedi" readonly>
                       </div>
-                      <div class="form-group">
-                        <label for="exampleInputName1">Ürün'ün Kullanıldığı Keşif</label>
-                        <input type="text" class="form-control" id="UrunAitligi" name="Aitlik"  required placeholder="Ürün'ün Kullanıldığı Keşif'" readonly>
-                      </div>
+                    
                     <div class="form-group">
                         <label for="exampleInputName1">Ürün Fiyatı </label>
                         <input type="number" class="form-control" id="UrunFiyat" name="fiyat"  required placeholder="Ürün Fiyatı" readonly>
@@ -107,7 +104,7 @@
                     <tr class="table" style="cursor:pointer;background-color:#d8dfeb">
                   <td class="col-lg-2 col-md-2 col-sm-2" style=" user-select: none;" >@item.UrunKodu</td>
                   <td  style=" user-select: none;">@item.UrunAdi</td>
-                   <td><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" class="btn btn-gradient-warning btn-sm">Sil</a></td>
+                   <td><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" class="btn btn-gradient-danger btn-sm">Sil</a></td>
                  
                         </tr>
                         }
@@ -169,7 +166,7 @@
               </div>
                     </div>
                     <div class="modal-footer">
-                         <button type="submit" onclick="writeName()" class="btn btn-gradient-dark me-2">Onayla</button>
+                         <button type="submit" onclick="writeName()" class="btn btn-gradient-info me-2">Onayla</button>
                     </div>
                 </div>
             </div>
@@ -230,7 +227,7 @@
               </div>
                     </div>
                     <div class="modal-footer">
-                          <button type="submit" data-bs-dismiss="modal"  class="btn btn-gradient-dark me-2">Kapat</button>
+                          <button type="submit" data-bs-dismiss="modal"  class="btn btn-gradient-danger me-2">Kapat</button>
                     </div>
                 </div>
             </div>
