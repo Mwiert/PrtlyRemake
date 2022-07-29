@@ -20,7 +20,7 @@ namespace Remake.Controllers
         Urunler urun = new Urunler();
         Mekantürleri mekanturleri = new Mekantürleri();
         Alanholder alanHolder = new Alanholder();
-        Urunholder Urunholder = new Urunholder();
+        Urunholder urunholder = new Urunholder();
         public static int KesifIdInt;
         public IActionResult Index()
         {
@@ -65,12 +65,12 @@ namespace Remake.Controllers
             int adet;
             urun = db.Urunlers.FirstOrDefault(x => x.UrunKodu == UrunKodu);
             alanHolder = db.Alanholders.FirstOrDefault(x => x.KesifId == KesifIdInt && x.AlanAdi == AlanAdi);
-            Urunholder = db.Urunholders.FirstOrDefault(x => x.UrunId == urun.Id && x.AlanId == alanHolder.Id);
+            urunholder = db.Urunholders.FirstOrDefault(x => x.UrunId == urun.Id && x.AlanId == alanHolder.Id);
 
-            urun.KullanilanUrunAdet -= Urunholder.UrunAdet;
+            urun.KullanilanUrunAdet -= urunholder.UrunAdet;
 
             db.Entry(urun).State = EntityState.Modified;
-            db.Urunholders.Remove(Urunholder);
+            db.Urunholders.Remove(urunholder);
             db.SaveChanges();
             return Json(0);
         }
@@ -78,19 +78,19 @@ namespace Remake.Controllers
         {
             urun = db.Urunlers.FirstOrDefault(x => x.UrunKodu == UrunKodu);
             alanHolder = db.Alanholders.FirstOrDefault(x=> x.KesifId == KesifIdInt && x.AlanAdi == AlanAdi);
-            Urunholder = db.Urunholders.FirstOrDefault(x => x.UrunId == urun.Id && x.AlanId == alanHolder.Id);
+            urunholder = db.Urunholders.FirstOrDefault(x => x.UrunId == urun.Id && x.AlanId == alanHolder.Id);
 
             urun.KullanilanUrunAdet -= adet;
             if (urun.KullanilanUrunAdet <= 0)
             {
-                db.Urunholders.Remove(Urunholder);
+                db.Urunholders.Remove(urunholder);
                 //db.Alanholders.Remove(alanHolder);
                 urun.KullanilanUrunAdet = 0;
             }
             else
             {
-                Urunholder.UrunAdet -= adet;
-            db.Entry(Urunholder).State = EntityState.Modified;
+                urunholder.UrunAdet -= adet;
+            db.Entry(urunholder).State = EntityState.Modified;
             }
             db.Entry(urun).State = EntityState.Modified;
             db.SaveChanges();
@@ -98,11 +98,11 @@ namespace Remake.Controllers
         }
         public IActionResult DeleteProductFromAlan(int Urunid, int alanid)
         {
-            Urunholder = db.Urunholders.FirstOrDefault(x => x.UrunId == Urunid && x.AlanId == alanid);
-            urun = db.Urunlers.FirstOrDefault(x => x.Id== Urunholder.UrunId);
-            urun.KullanilanUrunAdet -= Urunholder.UrunAdet;
+            urunholder = db.Urunholders.FirstOrDefault(x => x.UrunId == Urunid && x.AlanId == alanid);
+            urun = db.Urunlers.FirstOrDefault(x => x.Id== urunholder.UrunId);
+            urun.KullanilanUrunAdet -= urunholder.UrunAdet;
             db.Entry(urun).State = EntityState.Modified;
-            db.Urunholders.Remove(Urunholder);
+            db.Urunholders.Remove(urunholder);
             db.SaveChanges();
             return RedirectToAction("AlanIndex", new { RowId = alanid });
         }
@@ -127,10 +127,15 @@ namespace Remake.Controllers
                 {
                     string temp = rowAdi.TrimStart().ToUpper();
                     explorers = db.Kesiflers.FirstOrDefault(x => x.Ad == temp);
+                    alanHolders = db.Alanholders.Where(x => x.KesifId == explorers.Id).ToList();
+
                     if (explorers != null)
                     {
-                        db.Kesiflers.Remove(explorers);
-                        db.SaveChanges();
+                        if (alanHolders.Count == 0)
+                        {
+                            db.Kesiflers.Remove(explorers);
+                            db.SaveChanges();
+                        }
                     }
                    
                 }
@@ -193,6 +198,30 @@ namespace Remake.Controllers
             urunlers  = db.Urunlers.Where(x => x.UrunKategorisi == p ).ToList();
             }
             return Json(urunlers);
+        }
+        public JsonResult updateProduct(string UK,int adet,string AlanAdi)
+        {
+            urun = db.Urunlers.FirstOrDefault(x => x.UrunKodu == UK);
+            alanHolder = db.Alanholders.FirstOrDefault(x => x.KesifId == KesifIdInt && x.AlanAdi == AlanAdi);
+            urunholder = db.Urunholders.FirstOrDefault(x => x.UrunId==urun.Id && x.AlanId==alanHolder.Id);
+            if (urun.UrunAdet > adet)
+            {
+                urun.KullanilanUrunAdet = adet;
+                urunholder.UrunAdet = adet;
+                db.Entry(urunholder).State = EntityState.Modified;
+                db.Entry(urun).State = EntityState.Modified;
+                db.SaveChanges();
+                return Json("OK");
+            }
+            else
+            {
+                urun.KullanilanUrunAdet = urun.UrunAdet;
+                urunholder.UrunAdet = urun.UrunAdet;
+                db.Entry(urunholder).State = EntityState.Modified;
+                db.Entry(urun).State = EntityState.Modified;
+                db.SaveChanges();
+                return Json("UYARI");
+            }
         }
         public JsonResult getProductAdetLeft(string p)
         {

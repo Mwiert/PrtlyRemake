@@ -14,6 +14,28 @@ namespace Remake.Controllers
         kesifdbContext Db = new kesifdbContext();
         Roller roller = new Roller();
         List<Kullanıcı> kullanıcıs = new List<Kullanıcı>();
+        public JsonResult deleteRole(int getRoldId)
+        {
+            if(getRoldId == 1)
+            {
+            return Json("HATA");
+            }
+            else
+            {
+                roller = Db.Rollers.FirstOrDefault(x => x.RolId == getRoldId);
+                kullanıcıs = Db.Kullanıcıs.Where(x => x.RolId == getRoldId).ToList();
+                if(kullanıcıs.Count != 0)
+                {
+                    return Json("DENY");
+                }
+                else
+                {
+                Db.Rollers.Remove(roller);
+                Db.SaveChanges();
+                return Json("OK");
+                }
+            }
+        }
         public IActionResult Index()
         {
             try

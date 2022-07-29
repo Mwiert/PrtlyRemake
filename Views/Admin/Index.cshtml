@@ -67,15 +67,42 @@
                   </div>
                 </div>
               </div>
- <div class="dropup-center dropup">
-            <button class="btn btn-gradient-info " style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;"type="button" id="dropupCenterBtn" data-bs-toggle="dropdown" aria-expanded="false">
-              +
-            </button>
-            <ul class="dropdown-menu text-center" style="background-color:transparent;"aria-labelledby="dropupCenterBtn">
-              <li><button type="button" class="btn btn-gradient-info"   style="border-radius:7rem;"data-bs-toggle="modal" data-bs-target="#myModal">Yeni Kullanıcı</button> </li>
-              <li><button type="button"  style="border-radius:7rem;" class="btn btn-gradient-info" data-bs-toggle="modal" data-bs-target="#myModal1">Yeni Rol</button></li>
-            </ul>
-          </div>
+              
+
+
+           <div class="container mt-2"> @*mt kapatılabilir*@
+        <div class="modal" id="myModalDeleteRole">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Rol Sil</h4>
+                    <div class="modal-body">
+                        <div class="col-12 grid-margin stretch-card">
+                <div class="card " style="height:100%; margin-bottom:-3rem;">
+                  <div class="card-body">
+                    <form class="forms-sample">
+                          <select class="form-control form-control-lg" id="SelectsDel">
+                          <option>-</option>
+                          @foreach(var item in (List<Roller>)ViewBag.RoleList)
+                                        {
+                                            <option value="@item.RolId">@item.RolAdi</option>       
+                                        }
+                      </select>
+                                           
+                    </form>
+                  </div>
+                </div>
+              </div>
+                    </div>
+                    <div class="modal-footer">
+                         <button type="submit" id="DeleteRole" data-bs-toggle="modal" data-bs-target="#myModalDeleteRole" class="btn btn-gradient-info me-2">Onayla</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     @using (Html.BeginForm("AddUser","Admin",FormMethod.Post))
 {
 <div class="container mt-2"> @*mt kapatılabilir*@
@@ -238,8 +265,47 @@
         
     </div>
    }
-
+   <div class="dropup-center dropup">
+            <button class="btn btn-gradient-info " style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;"type="button" id="dropupCenterBtn" data-bs-toggle="dropdown" aria-expanded="false">
+              +
+            </button>
+            <ul class="dropdown-menu text-center" style="background-color:transparent;"aria-labelledby="dropupCenterBtn">
+              <li><button type="button"  style="border-radius:7rem;" class="btn btn-gradient-info" data-bs-toggle="modal" data-bs-target="#myModal">Yeni Kullanıcı</button></li>
+              <li><button type="button" class="btn btn-gradient-info"   style="border-radius:7rem;"data-bs-toggle="modal" data-bs-target="#myModal1">Yeni Rol</button></li>
+                 <li><button type="button" class="btn btn-gradient-info"   style="border-radius:7rem;"data-bs-toggle="modal" data-bs-target="#myModalDeleteRole">Rol Sil</button></li>
+            </ul>
+          </div>
        <script type="text/javascript">
+
+$("#DeleteRole").on("click", function() {
+    var getRoldId = $("#SelectsDel").val();
+    $.ajax({
+                   url: "@Url.Action("deleteRole","Admin")",
+                   type: 'POST',
+                   data: {getRoldId : getRoldId},
+                   dataType: 'json',
+                   success: function(data) {
+                     if(data=="HATA"){
+                           swal("Hata Oluştu","Admin Rolünü silemezsiniz.","warning")
+                        }
+                     else if (data == "DENY") {
+                         swal("Başarısız","Bu role ait kullanıcı bulunduğu için silemezsiniz.","warning")
+                     }
+                        else    {
+                            swal({icon:"success",title: "Başarılı", text: "Silme işlemi başarılı.Rol silindi", type: 
+                                                        "success"}).then(function(){ 
+                                                         location.reload();
+                                                 }
+                                                );
+                        
+                        }
+            },
+            error: function(err) {
+               swal("Hata Oluştu","Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.","warning")
+            }
+        });
+});
+
 
           function writeName() {
     var temp = document.getElementById("Selects").value
@@ -263,12 +329,18 @@
                         }
                      else if (data == 3)
                      {
-                         swal("Başarılı", "Güncelleme işlemi başarılı. Kullanıcı rolü güncellendi.", "success");
-                        location.reload(true);
+                          swal({icon:"success",title: "Başarılı", text: "Güncelleme işlemi başarılı. Kullanıcı rolü güncellendi.", type: 
+                                                        "success"}).then(function(){ 
+                                                         location.reload();
+                                                 }
+                                                );
                      }
                         else    {
-                        swal("Başarılı", "Güncelleme işlemi başarılı", "success");
-                        location.reload(true);
+                            swal({icon:"success",title: "Başarılı", text: "Güncelleme işlemi başarılı.", type: 
+                                                        "success"}).then(function(){ 
+                                                         location.reload();
+                                                 }
+                                                );
                         }
                        $("#myModalSure").modal("hide");
             },

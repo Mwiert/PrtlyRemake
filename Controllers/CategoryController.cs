@@ -51,10 +51,14 @@ namespace Remake.Controllers
             {
                 string temp = RowAdi.TrimStart().ToUpper();
                 kategoriler = db.Kategorilers.FirstOrDefault(x => x.KategoriAdi == temp);
+                urunlers = db.Urunlers.Where(x => x.UrunKategorisi == temp).ToList();
                 if (kategoriler != null)
                 {
-                    db.Kategorilers.Remove(kategoriler);
-                    db.SaveChanges();
+                    if (urunlers.Count() == 0)
+                    {
+                        db.Kategorilers.Remove(kategoriler);
+                        db.SaveChanges();
+                    }
                 }
                 return RedirectToAction("Index");
             }
