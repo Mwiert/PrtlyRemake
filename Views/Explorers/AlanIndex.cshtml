@@ -36,6 +36,21 @@
     </div>
  <h3 class="card-title text-center " id="alanAdiGet" style="margin-top:-2rem;padding:1rem;">@ViewBag.AlanAdi</h3>
     <input value="@ViewBag.AlanAdi" id="alanAdiGets" type="text" style="visibility:hidden">
+
+     <div class="form-group text-center">
+                     <h3>Mekanlar</h3>
+                      <select class="form-control form-control-sm" id="catAdi" name="KategoriAdi">
+                        <option class="text-center" style="font-size:1rem" >--</option> 
+        @foreach(var item in (List<Kategoriler>)ViewBag.ListKategori)
+        {
+            
+                   <option class="text-center" style="font-size:1rem">@item.KategoriAdi</option>                               // BURADA KALDIM. BURADAN CONTROLLERA MEKANADI GONDERILECEK
+        }
+                      </select>
+
+      </div>
+
+
 @using (Html.BeginForm("AddProductToAlan","Explorers",FormMethod.Post))
 {
     <div class="container mt-2"> @*mt kapatılabilir*@
@@ -120,8 +135,6 @@
                         }
                         
                              }
-                    
-                        
                       </tbody>
                     </table>
                   </div>
@@ -249,11 +262,47 @@
             </div>
         </div>
     </div>
-
-
 <button type="button" style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;" class="btn btn-gradient-info " style="margin-bottom:1rem;" data-bs-toggle="modal" data-bs-target="#myModal">+</button>
 
                         <script type="text/javascript">
+$("#catAdi").on("change", function() {
+    var getCatName = $("#catAdi").val();
+        var AlanAdi = $("#alanAdiGets").val();
+        var deneme = $("#catAdi option:selected").text();
+        if(deneme !="--"){
+
+    $.ajax({
+     url: "@Url.Action("filterProducts","Explorers")",
+            type: 'POST',
+            data: {getCatName:getCatName,AlanAdi:AlanAdi},
+            dataType: 'json',
+        success: function(data) {
+            console.log(data);
+              $('#table tbody').empty();
+             if (data.length != 0) {
+
+                    for (var i = 0; i < data.length; i++) {
+                        markup = "<tr class='table' style='cursor:pointer;background-color:#e9e9f7;user-select:none'><td class='col-lg-1 col-md-1 col-sm-1' ><a type='submit' class='btn btn-gradient-info btn-sm' data-bs-toggle='modal' data-bs-target='#myModalOK'>"
+                      + data[i].kullanilanUrunAdet + "</a></td><td style='user-select:none' class='col-lg-2 col-md-2 col-sm-2'>"
+                      + data[i].urunKodu+"</td><td style='user-select:none'>"
+                      + data[i].urunAdi+"</td><td class='col-lg-3 col-md-3 col-sm-3' style='user-select:none' data-bs-toggle='modal' data-bs-target='#myModalDelProduct'><button class='btn btn-gradient-info btn-sm' data-bs-toggle='modal' data-bs-target='#myModalProductUpdate' style='user-select:none'>Güncelle</button><a type='submit' class='btn btn-gradient-danger btn-sm'>Sil</a></td></tr>";
+                        tableBody = $("#table tbody");
+                        tableBody.append(markup);
+                    }
+                }
+                else {
+                       swal("Boş Alan","Bu Alana henüz Ürün eklemediniz.","warning")
+                }
+            },
+            error: function(err) {
+               swal("Hata Oluştu","Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.","warning")
+            }
+     });
+        }
+        else{
+            location.reload(true);
+        }
+});
 
 $("#updateProduct").on("click", function() {
     var adet = $("#UrunAdetiUpdate").val();

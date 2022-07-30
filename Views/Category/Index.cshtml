@@ -106,7 +106,8 @@
                       <tbody>
                          @foreach(var item in Model)
                              {
-                    <tr class="table" style="cursor:pointer;background-color:#d8dfeb">
+                            
+                        <tr class="table" style="cursor:pointer;background-color:#d8dfeb">
                    <td><a class="col-8 btn" style=" user-select: none;" value="@item.KategoriAdi" onclick="location.href='@Url.Action("ListIndex","Category", new {CatName = @item.KategoriAdi})'"> @item.KategoriAdi</a></td>
                    <td><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" style=" user-select: none;" class="btn btn-gradient-danger btn-sm col-sm-4">Sil</a></td>
                         </tr>

@@ -170,8 +170,8 @@
 
                     for (var i = 0; i < data.length; i++) {
                         var url = "location.href='@Url.Action("AlanIndex","Explorers")?RowId=" + data[i].id + "'";
-                        markup = "<tr class='table-info'><td style='cursor:pointer'><a  onclick="+url+" >"
-                      + data[i].alanAdi + "</a></td><td style='cursor:pointer'><a data-bs-toggle='modal' data-bs-target='#myModalOK' class='btn btn-gradient-warning btn-sm col-sm-4'>Sil</a></td></tr>";
+                        markup = "<tr class='table' style='cursor:pointer;background-color:#e9e9f7'><td ><a  onclick="+url+" >"
+                      + data[i].alanAdi + "</a></td><td style='cursor:pointer'><a data-bs-toggle='modal' data-bs-target='#myModalOK' class='btn btn-gradient-danger btn-sm col-sm-4'>Sil</a></td></tr>";
                         tableBody = $("#table tbody");
                         tableBody.append(markup);
                     }
@@ -185,9 +185,6 @@
             }
         });
        });
-
-
-
 
    function makedisable(){
         document.getElementById("BaglantiNoktasi").disabled = true;

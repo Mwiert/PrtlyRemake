@@ -36,7 +36,6 @@ namespace Remake.Controllers
                         }
                     }
                 }
-
                 return RedirectToAction("ListIndex", new {CatName = redirectName});
             }
             catch (Exception ex)

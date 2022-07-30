@@ -22,15 +22,51 @@ namespace Remake.Controllers
         Alanholder alanHolder = new Alanholder();
         Urunholder urunholder = new Urunholder();
         public static int KesifIdInt;
+        int temp;
         public IActionResult Index()
         {
-            db.Kesiflers.ToList();
+                db.Kesiflers.ToList();
             db.SaveChanges();
             return View(db.Kesiflers);
+
+        }
+        public JsonResult filterProducts(string getCatName,string AlanAdi)
+        {
+                int prdctId;
+
+            var AlanAndUrun = from c in db.Urunholders
+                              join o in db.Alanholders
+                              on c.AlanId equals o.Id
+                              where o.AlanAdi== AlanAdi
+                              select new
+                              {
+                                  c.UrunId,
+                                  c.AlanId
+                              };
+            kesifdbContext dbCon = new kesifdbContext();
+                foreach (var item in AlanAndUrun)
+            {
+                urunholder = dbCon.Urunholders.FirstOrDefault(x=>x.UrunId==item.UrunId && x.AlanId== item.AlanId);
+                if (urunholder != null)
+                {
+                    temp = (int)item.UrunId;
+                    prdctId = temp;
+                    urun = dbCon.Urunlers.FirstOrDefault(x => x.Id == prdctId && x.UrunKategorisi == getCatName);
+                    if (urun != null)
+                    {
+                        urun.KullanilanUrunAdet = urunholder.UrunAdet;
+                        urunlers.Add(urun);
+                    }
+                }  
+                }
+                    return Json(urunlers);
         }
         public IActionResult DeleteAlan(string RowAdi)
         {
-            alanHolder = db.Alanholders.FirstOrDefault(x => x.AlanAdi == RowAdi && x.KesifId == KesifIdInt);
+            using (var db = new kesifdbContext())
+            {
+                alanHolder = db.Alanholders.FirstOrDefault(x => x.AlanAdi == RowAdi && x.KesifId == KesifIdInt);
+
             var isBool = db.Urunholders.Where(x => x.AlanId == alanHolder.Id).ToList();
             if(isBool.Count == 0)
             {
@@ -40,6 +76,7 @@ namespace Remake.Controllers
             else
             {
                 //içerisinde ürün varken silemezsiniz.
+            }
             }
             return RedirectToAction("MekanIndex", new {RowId = KesifIdInt});
         }
@@ -154,6 +191,7 @@ namespace Remake.Controllers
             ViewBag.RowId = alanHolder.Id ;
             ViewBag.UrunList =db.Urunholders.ToList();
             ViewBag.CatList = db.Kategorilers.ToList();
+            ViewBag.ListKategori = db.Kategorilers.ToList();
             db.Urunlers.ToList();
             return View("AlanIndex", db.Urunlers);
         }
