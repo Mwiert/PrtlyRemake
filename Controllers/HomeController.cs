@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Remake.Models;
@@ -26,13 +27,13 @@ namespace Remake.Controllers
         {
             try
             {
-                await HttpContext.SignOutAsync();
+                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
                 return RedirectToAction("Index", "Login");
             }
             catch (Exception ex)
             {
 
-                throw;
+                throw ex;
             }
         }
     }

@@ -27,7 +27,7 @@ namespace Remake.Controllers
                 throw ex;
             }
         }
-        public JsonResult updateProduct(string UK,string UM, int USF , int UA, int UF, string UC, string UAdi)
+        public JsonResult updateProduct(string UK,string UM, float USF , int UA, float UF, string UC, string UAdi)
         {
             urun = db.Urunlers.FirstOrDefault(x => x.UrunKodu == UK);
 

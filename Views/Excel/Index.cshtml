@@ -1,0 +1,107 @@
+﻿@model IEnumerable<Remake.Models.Kesifler>
+@using Remake.Models;
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/layout.cshtml";
+}
+
+<h2 class="text-center" style="margin-top:-2rem;">EXCEL İŞLEMLERİ</h2>
+
+
+
+<div class="form-group text-center" style="margin-top:3rem;">
+                     <h3>Keşifler</h3>
+                      <select class="form-control form-control-sm" id="kesifid" name="Kesifid">
+                        <option class="text-center" style="font-size:1rem" >--</option> 
+        @foreach(var item in Model)
+        {
+            
+                   <option class="text-center" value="@item.Id" style="font-size:1rem">@item.Ad</option>                               
+        }
+                      </select>
+
+      </div>
+
+
+       <div class="form-group" style="width:55%;margin:0 auto" >
+                        <input type="number" class="form-control text-center" id="dolarkuru" name="dolarKuru"  required placeholder="Dolar Kurunu Giriniz">
+                      </div>
+
+      <div class="row justify-content-center" style="margin-top:1rem;">
+              <div class="col-sm-6 col-md-6 col-6">
+                <div class="card">
+                  <div class="card-body"style="margin:0 auto;">
+                    <p class="card-description text-center"> Bilgisayara kaydet </p>
+                      <button type="submit" id="saveXL" class="btn btn-gradient-success me-2" style="margin:0 auto;">Kaydet</button>
+                  </div>
+                </div>
+              </div>
+               <div class="col-sm-6 col-md-6 col-6">
+                <div class="card">
+                  <div class="card-body"style="margin:0 auto;">
+                    <p class="card-description text-center">Email gönder </p>
+                 <button type="submit" id="sendXL" class="btn btn-gradient-success me-2" style="margin:0 auto;">Gönder</button>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+
+      <script type="text/javascript">
+var kesifid, DolarKuru;
+
+$("#sendXL").on("click", function() {
+     kesifid = $("#kesifid").val();
+     DolarKuru = $("#dolarkuru").val();
+    if (kesifid == "--") {
+        swal("Uyarı", "Lütfen keşif seçiniz.", "warning")
+    }
+    else if (DolarKuru == "") {
+        swal("Uyarı", "Lütfen Dolar kurunu giriniz.", "warning")
+    }
+    else {
+
+    $.ajax({
+            url: "@Url.Action("ExcelMailGonder","Excel")",
+            type: 'POST',
+            data: {kesifid : kesifid,DolarKuru:DolarKuru},
+            dataType: 'json',
+            success: function(data) {
+                alert("Başarılı");
+            },
+            error: function(err) {
+                 swal("Hata Oluştu","Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.","warning")
+            }
+        });
+    }
+
+});
+
+$("#saveXL").on("click", function() {
+     kesifid = $("#kesifid").val();
+     DolarKuru = $("#dolarkuru").val();
+    if (kesifid == "--") {
+        swal("Uyarı", "Lütfen keşif seçiniz.", "warning")
+    }
+    else if (DolarKuru == "") {
+        swal("Uyarı", "Lütfen Dolar kurunu giriniz.", "warning")
+    }
+    else {
+
+    $.ajax({
+            url: "@Url.Action("ExcelKaydet","Excel")",
+            type: 'POST',
+            data: {kesifid : kesifid,DolarKuru:DolarKuru},
+            dataType: 'json',
+            success: function(data) {
+            },
+            error: function(err) {
+                 swal("Hata Oluştu","Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.","warning")
+            }
+        });
+
+    }
+});
+          
+      </script>

@@ -149,7 +149,6 @@ namespace Remake.Controllers
 
                 throw ex;
             }
-            return RedirectToAction("Index", "Admin");
         }
     }
 }

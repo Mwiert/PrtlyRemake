@@ -53,7 +53,6 @@ namespace Remake.Controllers
             try
             {
                 var claims = new List<Claim>();
-                bool check = false;
 
                 if (string.IsNullOrEmpty(username) && string.IsNullOrEmpty(password))
                 {

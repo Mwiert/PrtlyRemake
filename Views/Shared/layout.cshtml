@@ -109,6 +109,15 @@
                 <i class="mdi mdi-format-list-bulleted menu-icon"></i>
               </a>
           </li>
+                        @if(User.IsInRole("ADMIN") || User.IsInRole("MUHASEBE")){
+
+                        <li class="nav-item">
+              <a class="nav-link" href="@Url.Action("Index","Excel")">
+                <span class="menu-title">Excel</span>
+                <i class="mdi mdi-home menu-icon"></i>
+              </a>
+          </li>
+          }
                     @if(User.IsInRole("ADMIN")){
 
                         <li class="nav-item">

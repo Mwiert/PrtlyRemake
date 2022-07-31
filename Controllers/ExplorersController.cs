@@ -99,7 +99,6 @@ namespace Remake.Controllers
 
         public JsonResult deleteProductAll(string UrunKodu, string AlanAdi)
         {
-            int adet;
             urun = db.Urunlers.FirstOrDefault(x => x.UrunKodu == UrunKodu);
             alanHolder = db.Alanholders.FirstOrDefault(x => x.KesifId == KesifIdInt && x.AlanAdi == AlanAdi);
             urunholder = db.Urunholders.FirstOrDefault(x => x.UrunId == urun.Id && x.AlanId == alanHolder.Id);
@@ -244,7 +243,8 @@ namespace Remake.Controllers
             urunholder = db.Urunholders.FirstOrDefault(x => x.UrunId==urun.Id && x.AlanId==alanHolder.Id);
             if (urun.UrunAdet > adet)
             {
-                urun.KullanilanUrunAdet = adet;
+                urun.KullanilanUrunAdet -= urunholder.UrunAdet;
+                urun.KullanilanUrunAdet += adet;
                 urunholder.UrunAdet = adet;
                 db.Entry(urunholder).State = EntityState.Modified;
                 db.Entry(urun).State = EntityState.Modified;
