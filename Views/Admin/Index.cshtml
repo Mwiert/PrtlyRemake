@@ -63,9 +63,19 @@
                         </tr>
                         }
                       </tbody>
+                       </div>
+                        <div class="form-group" style="margin: 0 auto">
+                        <label for="exampleInputName1">Stok kontrolünü aktive/deaktive et </label>
+                         <input id="activeornot" style="margin-left:12.3rem;width:1.25rem;height:1.25rem;" onclick="test1()" type="checkbox" > 
+                         <span id="stokRenk"style="float:Right">@ViewBag.Stok</span>
+                          <div class="form-group">
+                            <input type="text" class="form-control" id="isenabledactive" name="activeornot"  required placeholder="Lütfen Aktive için 'Aktive et' Deaktive etmek için 'Deaktif et' yazınız." disabled>
+                       <button type="submit" id="degistirActivation" style="visibility:hidden;margin-left:45%;"  class="btn btn-gradient-info me-2">Değiştir</button>
+                      </div>
+                      </div>
                     </table>
+                   
                   </div>
-                </div>
               </div>
               
 
@@ -277,6 +287,81 @@
           </div>
        <script type="text/javascript">
 
+$("#activeornot").on("click", function() {
+    
+     var check= document.getElementById("activeornot").checked;
+        if (check == true) {
+            document.getElementById("degistirActivation").style.visibility ="visible"
+        }
+        else {
+             document.getElementById("degistirActivation").style.visibility ="hidden"
+        }
+});
+
+$("#degistirActivation").on("click", function() {
+    var inputString = $("#isenabledactive").val();
+    var uppInput =inputString.toUpperCase();
+    if(uppInput =="AKTIVE ET"){
+        $.ajax({
+                   url: "@Url.Action("AktiveEt","Admin")",
+                   type: 'POST',
+                   dataType: 'json',
+                   success: function(data) {
+                       if(data ==1){
+                           swal({icon:"success",title: "Başarılı", text: "Güncelleme işlemi başarılı. Stok durumu 'AKTİF' olarak güncellendi", type: 
+                                                        "success"}).then(function(){ 
+                                                            swal("UYARI", "Stok kontrolü aktif edildi. Lütfen Ürünlerin stok sayılarını kontrol ediniz.", "warning").then(function() {
+                                                         location.reload();
+
+                                                            });
+                                                 }
+                                                );
+                         
+                       }
+                       else{
+                                swal("Hata Oluştu","Stok kontrolü zaten Aktif durumdaır.","warning")
+                       }
+            },
+            error: function(err) {
+               swal("Hata Oluştu","Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.","warning")
+            }
+        });
+    }
+    else if(uppInput =="DEAKTIVE ET"){
+     $.ajax({
+                   url: "@Url.Action("DeaktiveEt","Admin")",
+                   type: 'POST',
+                   dataType: 'json',
+                   success: function(data) {
+                       if(data ==1){
+                            swal({icon:"success",title: "Başarılı", text: "Güncelleme işlemi başarılı. Stok durumu 'DEAKTİF' olarak güncellendi", type: 
+                                                        "success"}).then(function(){ 
+                                                         location.reload();
+                                                 }
+                                                );
+                       }
+                       else{
+                              swal("Hata Oluştu","Stok kontrolü zaten deaktif durumdaır.","warning")
+                       }
+            },
+            error: function(err) {
+               swal("Hata Oluştu","Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.","warning")
+            }
+        });
+
+    }
+    else{
+        swal("Hata Oluştu", "Lütfen 'Deaktive et' veya 'Aktive et' yazınız", "warning");
+    }
+});
+
+
+
+
+
+
+
+
 $("#DeleteRole").on("click", function() {
     var getRoldId = $("#SelectsDel").val();
     $.ajax({
@@ -376,6 +461,15 @@ var send, send1, send2, send3;
         }
         else {
              document.getElementById("UsersEmailUpdate").disabled = true;
+        }
+}
+          function test1(){
+     var check= document.getElementById("activeornot").checked;
+        if (check == true) {
+            document.getElementById("isenabledactive").disabled = false;
+        }
+        else {
+             document.getElementById("isenabledactive").disabled = true;
         }
 }
    </script>

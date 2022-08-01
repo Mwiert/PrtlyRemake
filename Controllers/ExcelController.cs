@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Remake.Models;
+using System.Globalization;
 
 namespace Remake.Controllers
 {
@@ -23,8 +24,9 @@ namespace Remake.Controllers
             }
                 return View(kesifler);
         }
-        public JsonResult ExcelKaydet(int kesifid,float DolarKuru)
+        public JsonResult ExcelKaydet(int kesifid,string DolarKuru)
         {
+            float dolar = float.Parse(DolarKuru, CultureInfo.InvariantCulture.NumberFormat);
             xle = new ExcelEntites();
             urunlerList = new List<Urunler>();
             kesif = new Kesifler();

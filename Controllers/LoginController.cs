@@ -83,7 +83,6 @@ namespace Remake.Controllers
             {
                 throw ex;
             }
-            return View();
         }
     }
 }

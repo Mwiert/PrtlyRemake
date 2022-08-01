@@ -48,8 +48,7 @@ namespace Remake.Controllers
             alanHolders = db.Alanholders.Where(x => x.MekanId == mkn.Id).ToList();
             if(alanHolders.Count != 0)
             {
-
-            urunHolders = db.Urunholders.ToList();
+                    urunHolders = db.Urunholders.ToList();
             foreach(var item in urunHolders)
             {
                 foreach(var item2 in alanHolders)

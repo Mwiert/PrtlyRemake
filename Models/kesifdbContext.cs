@@ -22,7 +22,10 @@ namespace Remake.Models
         public virtual DbSet<Kesifmekanholder> Kesifmekanholders { get; set; } = null!;
         public virtual DbSet<Kullanıcı> Kullanıcıs { get; set; } = null!;
         public virtual DbSet<Mekantürleri> Mekantürleris { get; set; } = null!;
+        public virtual DbSet<Paket> Pakets { get; set; } = null!;
+        public virtual DbSet<Paketholder> Paketholders { get; set; } = null!;
         public virtual DbSet<Roller> Rollers { get; set; } = null!;
+        public virtual DbSet<Stokısenabled> Stokısenableds { get; set; } = null!;
         public virtual DbSet<Urunholder> Urunholders { get; set; } = null!;
         public virtual DbSet<Urunler> Urunlers { get; set; } = null!;
 
@@ -107,6 +110,26 @@ namespace Remake.Models
                 entity.Property(e => e.MekanAdi).HasMaxLength(50);
             });
 
+            modelBuilder.Entity<Paket>(entity =>
+            {
+                entity.ToTable("paket");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+            });
+
+            modelBuilder.Entity<Paketholder>(entity =>
+            {
+                entity.ToTable("paketholder");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.PaketId).HasColumnName("paketId");
+
+                entity.Property(e => e.UrunAdeti).HasColumnName("urunAdeti");
+
+                entity.Property(e => e.UrunId).HasColumnName("urunId");
+            });
+
             modelBuilder.Entity<Roller>(entity =>
             {
                 entity.HasKey(e => e.RolId)
@@ -115,6 +138,17 @@ namespace Remake.Models
                 entity.ToTable("roller");
 
                 entity.Property(e => e.RolAdi).HasMaxLength(30);
+            });
+
+            modelBuilder.Entity<Stokısenabled>(entity =>
+            {
+                entity.ToTable("stokısenabled");
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
+
+                entity.Property(e => e.IsEnabled).HasColumnName("isEnabled");
             });
 
             modelBuilder.Entity<Urunholder>(entity =>
@@ -127,6 +161,8 @@ namespace Remake.Models
             modelBuilder.Entity<Urunler>(entity =>
             {
                 entity.ToTable("urunler");
+
+                entity.Property(e => e.KullanilanUrunAdet).HasDefaultValueSql("'0'");
 
                 entity.Property(e => e.Marka).HasMaxLength(50);
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Remake.Models;
+using System.Globalization;
 
 namespace Remake.Controllers
 {
@@ -83,29 +84,62 @@ namespace Remake.Controllers
                 throw ex;
             }
         }
-        public IActionResult AddNewProduct(string UrunKodu, string UrunAdi, string Marka, string Kategori, float satisFiyati, float fiyat, int UrunAdet, string redirectName)
+        public IActionResult AddNewProduct(string UrunKodu, string UrunAdi, string Marka, string Kategori, string satisFiyati, string fiyat, int UrunAdet, string redirectName)
         {
             try
             {
-                if (!string.IsNullOrEmpty(UrunKodu.ToUpper()) && !string.IsNullOrEmpty(UrunAdi.ToUpper()) && !string.IsNullOrEmpty(Marka.ToUpper()) && !string.IsNullOrEmpty(Kategori.ToUpper()) && !string.IsNullOrEmpty(satisFiyati.ToString()) && !string.IsNullOrEmpty(fiyat.ToString()))
+                float USFCon = float.Parse(satisFiyati, CultureInfo.InvariantCulture.NumberFormat);
+                float UFCon = float.Parse(fiyat, CultureInfo.InvariantCulture.NumberFormat);
+                Stokısenabled isStokKontrolEnabled = new Stokısenabled();
+                isStokKontrolEnabled = db.Stokısenableds.FirstOrDefault(x => x.Id == 1);
+                if (isStokKontrolEnabled.IsEnabled == 1)
                 {
-                    
-                    urunlers = db.Urunlers.Where(x => x.UrunKodu == UrunKodu.ToUpper()).ToList();
-                    if (urunlers.Count == 0)
+                    if (!string.IsNullOrEmpty(UrunKodu.ToUpper()) && !string.IsNullOrEmpty(UrunAdi.ToUpper()) && !string.IsNullOrEmpty(Marka.ToUpper()) && !string.IsNullOrEmpty(Kategori.ToUpper()) && !string.IsNullOrEmpty(satisFiyati.ToString()) && !string.IsNullOrEmpty(fiyat.ToString()))
                     {
-                        
-                        prodct.UrunKodu = UrunKodu.ToUpper().Trim();
-                        prodct.UrunAdi = UrunAdi.ToUpper().Trim();
-                        prodct.Marka = Marka.ToUpper().Trim();
-                        prodct.UrunKategorisi = Kategori.ToUpper().Trim();
-                        prodct.SatisFiyati = satisFiyati;
-                        prodct.UrunFiyati = fiyat;
-                        prodct.UrunAdet = UrunAdet;
-                        db.Urunlers.Add(prodct);
-                        db.SaveChanges();
+
+                        urunlers = db.Urunlers.Where(x => x.UrunKodu == UrunKodu.ToUpper()).ToList();
+                        if (urunlers.Count == 0)
+                        {
+
+                            prodct.UrunKodu = UrunKodu.ToUpper().Trim();
+                            prodct.UrunAdi = UrunAdi.ToUpper().Trim();
+                            prodct.Marka = Marka.ToUpper().Trim();
+                            prodct.UrunKategorisi = Kategori.ToUpper().Trim();
+                            prodct.SatisFiyati = USFCon;
+                            prodct.UrunFiyati = UFCon;
+                            prodct.UrunAdet = UrunAdet;
+                            db.Urunlers.Add(prodct);
+                            db.SaveChanges();
+                        }
                     }
                 }
+                else
+                {
+                    if (!string.IsNullOrEmpty(UrunKodu.ToUpper()) && !string.IsNullOrEmpty(UrunAdi.ToUpper()) && !string.IsNullOrEmpty(Marka.ToUpper()) && !string.IsNullOrEmpty(Kategori.ToUpper()) && !string.IsNullOrEmpty(satisFiyati.ToString()) && !string.IsNullOrEmpty(fiyat.ToString()))
+                    {
 
+                        urunlers = db.Urunlers.Where(x => x.UrunKodu == UrunKodu.ToUpper()).ToList();
+                        if (urunlers.Count == 0)
+                        {
+                            if(UrunAdet == null)
+                            {
+                                prodct.UrunAdet = 0;
+                            }
+                            else
+                            {
+                                prodct.UrunAdet = UrunAdet;
+                            }
+                            prodct.UrunKodu = UrunKodu.ToUpper().Trim();
+                            prodct.UrunAdi = UrunAdi.ToUpper().Trim();
+                            prodct.Marka = Marka.ToUpper().Trim();
+                            prodct.UrunKategorisi = Kategori.ToUpper().Trim();
+                            prodct.SatisFiyati = USFCon;
+                            prodct.UrunFiyati = UFCon;
+                            db.Urunlers.Add(prodct);
+                            db.SaveChanges();
+                        }
+                    }
+                }
 
                 return RedirectToAction("ListIndex", new {CatName = redirectName });
             }

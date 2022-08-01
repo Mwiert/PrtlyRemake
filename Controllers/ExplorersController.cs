@@ -21,7 +21,7 @@ namespace Remake.Controllers
         Mekantürleri mekanturleri = new Mekantürleri();
         Alanholder alanHolder = new Alanholder();
         Urunholder urunholder = new Urunholder();
-        public static int KesifIdInt;
+        public static int KesifIdInt,MekanidHold;
         int temp;
         public IActionResult Index()
         {
@@ -34,15 +34,15 @@ namespace Remake.Controllers
         {
                 int prdctId;
 
-            var AlanAndUrun = from c in db.Urunholders
-                              join o in db.Alanholders
-                              on c.AlanId equals o.Id
-                              where o.AlanAdi== AlanAdi
+            var AlanAndUrun = from c in db.Alanholders
+                              join o in db.Urunholders
+                              on c.Id equals o.AlanId
+                              where c.AlanAdi == AlanAdi && c.MekanId ==MekanidHold
                               select new
                               {
-                                  c.UrunId,
-                                  c.AlanId
-                              };
+                                  o.UrunId,
+                                  o.AlanId
+                              };// where çalışmıyor
             kesifdbContext dbCon = new kesifdbContext();
                 foreach (var item in AlanAndUrun)
             {
@@ -51,7 +51,7 @@ namespace Remake.Controllers
                 {
                     temp = (int)item.UrunId;
                     prdctId = temp;
-                    urun = dbCon.Urunlers.FirstOrDefault(x => x.Id == prdctId && x.UrunKategorisi == getCatName);
+                    urun = dbCon.Urunlers.FirstOrDefault(x => x.Id == prdctId && x.UrunKategorisi == getCatName );
                     if (urun != null)
                     {
                         urun.KullanilanUrunAdet = urunholder.UrunAdet;
@@ -66,11 +66,13 @@ namespace Remake.Controllers
             using (var db = new kesifdbContext())
             {
                 alanHolder = db.Alanholders.FirstOrDefault(x => x.AlanAdi == RowAdi && x.KesifId == KesifIdInt);
+                kesifmekanholder = db.Kesifmekanholders.FirstOrDefault(x=>x.MekanId == alanHolder.MekanId && x.KesifId == alanHolder.KesifId);
 
             var isBool = db.Urunholders.Where(x => x.AlanId == alanHolder.Id).ToList();
             if(isBool.Count == 0)
             {
             db.Alanholders.Remove(alanHolder);
+                    db.Kesifmekanholders.Remove(kesifmekanholder);
                 db.SaveChanges();
             }
             else
@@ -183,8 +185,9 @@ namespace Remake.Controllers
                 throw ex;
             }
         }
-        public IActionResult AlanIndex(int RowId)
+        public IActionResult AlanIndex(int RowId ,int MekanId)
         {
+            MekanidHold = MekanId;
             alanHolder = db.Alanholders.FirstOrDefault(x => x.Id == RowId);
             ViewBag.AlanAdi = alanHolder.AlanAdi;
             ViewBag.RowId = alanHolder.Id ;
@@ -238,31 +241,57 @@ namespace Remake.Controllers
         }
         public JsonResult updateProduct(string UK,int adet,string AlanAdi)
         {
+            Stokısenabled stean = new Stokısenabled();
+            stean = new Stokısenabled();
+            stean = db.Stokısenableds.FirstOrDefault(x=> x.Id==1);
             urun = db.Urunlers.FirstOrDefault(x => x.UrunKodu == UK);
-            alanHolder = db.Alanholders.FirstOrDefault(x => x.KesifId == KesifIdInt && x.AlanAdi == AlanAdi);
+            alanHolder = db.Alanholders.FirstOrDefault(x => x.KesifId == KesifIdInt && x.AlanAdi == AlanAdi && x.MekanId == MekanidHold);
             urunholder = db.Urunholders.FirstOrDefault(x => x.UrunId==urun.Id && x.AlanId==alanHolder.Id);
-            if (urun.UrunAdet > adet)
+            if(stean.IsEnabled == 1)
             {
-                urun.KullanilanUrunAdet -= urunholder.UrunAdet;
-                urun.KullanilanUrunAdet += adet;
-                urunholder.UrunAdet = adet;
-                db.Entry(urunholder).State = EntityState.Modified;
-                db.Entry(urun).State = EntityState.Modified;
-                db.SaveChanges();
-                return Json("OK");
+                if (urun.UrunAdet > adet)
+                {
+                    urun.KullanilanUrunAdet -= urunholder.UrunAdet;
+                    urun.KullanilanUrunAdet += adet;
+                    urunholder.UrunAdet = adet;
+                    db.Entry(urunholder).State = EntityState.Modified;
+                    db.Entry(urun).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return Json("OK");
+                }
+                else
+                {
+                    urun.KullanilanUrunAdet = urun.UrunAdet;
+                    urunholder.UrunAdet = urun.UrunAdet;
+                    db.Entry(urunholder).State = EntityState.Modified;
+                    db.Entry(urun).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return Json("UYARI");
+                }
             }
             else
             {
-                urun.KullanilanUrunAdet = urun.UrunAdet;
-                urunholder.UrunAdet = urun.UrunAdet;
-                db.Entry(urunholder).State = EntityState.Modified;
-                db.Entry(urun).State = EntityState.Modified;
-                db.SaveChanges();
-                return Json("UYARI");
+                if(urunholder.UrunAdet == null)
+                {
+                    urunholder.UrunAdet = 0;
+                }
+                    urun.KullanilanUrunAdet -= urunholder.UrunAdet;
+                    urun.KullanilanUrunAdet += adet;
+                    urunholder.UrunAdet = adet;
+                    db.Entry(urunholder).State = EntityState.Modified;
+                    db.Entry(urun).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return Json("OK2");
+                
             }
+           
         }
         public JsonResult getProductAdetLeft(string p)
         {
+            Stokısenabled stokısenabled = new Stokısenabled();
+            stokısenabled = db.Stokısenableds.FirstOrDefault(x=>x.Id==1);
+            if (stokısenabled.IsEnabled == 1)
+            {
             if (p != null)
             {
                 if(p.Trim() =="--")
@@ -283,16 +312,50 @@ namespace Remake.Controllers
                 var EklenebilecekUrun = ((urun.UrunAdet - urun.KullanilanUrunAdet));
                     return Json(EklenebilecekUrun);
                 }
-               
+                }
+            else
+            {
+                return Json("OK");
+            }
+            }
+            else if(stokısenabled.IsEnabled ==0)
+            {
+                if (p != null)
+                {
+                    if (p.Trim() == "--")
+                    {
+                        return Json("Ürün Seçiniz");
+                    }
+                    else
+                    {
+                        urun = db.Urunlers.FirstOrDefault(x => x.UrunKodu == p);
+                        if (urun.KullanilanUrunAdet == null)
+                        {
+                            if (urun.UrunAdet == null)
+                            {
+                                urun.UrunAdet = 0;
+                            }
+                            urun.KullanilanUrunAdet = 0;
+                        }
+                        return Json("DontAlert");
+                    }
+
+                }
+                else
+                {
+                    return Json("DontAlert");
+                }
             }
             else
             {
-                return Json("0");
+                return Json("DontAlert");
             }
-        
+
         }
         public IActionResult AddProductToAlan(string UrunKodu, int UrunAdedi, int RowId)
         {
+            Stokısenabled stok = new Stokısenabled();
+            stok = db.Stokısenableds.FirstOrDefault(x=>x.Id==1);
             int Compare, cross;
             Urunler urunler = new Urunler();
             Urunholder urunholder = new Urunholder();
@@ -303,7 +366,9 @@ namespace Remake.Controllers
                 urunholder = new Urunholder();
                 urunholder.AlanId = RowId;
                 urunholder.UrunId = urunler.Id;
-                if(urunler.KullanilanUrunAdet <= urunler.UrunAdet)
+                if (stok.IsEnabled == 1)
+                { 
+                if (urunler.KullanilanUrunAdet <= urunler.UrunAdet)
                 {
                     urunholder.UrunAdet = UrunAdedi;
                     urunler.KullanilanUrunAdet += UrunAdedi;
@@ -312,13 +377,20 @@ namespace Remake.Controllers
                 {
                     urunholder.UrunAdet = urunler.UrunAdet;
                 }
+                }
+                else
+                {
+                    urunler.KullanilanUrunAdet += UrunAdedi;
+                }
                 db.Entry(urunler).State = EntityState.Modified;
                 db.Urunholders.Add(urunholder);
                 db.SaveChanges();
             }
             else
             {
-             cross = ((int)(urunler.UrunAdet - urunler.KullanilanUrunAdet));
+                if (stok.IsEnabled == 1)
+                { 
+                    cross = ((int)(urunler.UrunAdet - urunler.KullanilanUrunAdet));
             if (urunler.KullanilanUrunAdet <= urunler.UrunAdet)
             {
                 if(UrunAdedi <= cross)
@@ -338,16 +410,25 @@ namespace Remake.Controllers
                 }
                 else
                 {
-            urunholder.UrunAdet = (urunler.UrunAdet - urunler.KullanilanUrunAdet);
+                 urunholder.UrunAdet = (urunler.UrunAdet - urunler.KullanilanUrunAdet);
                     //HTTP RESPONSE İLE DURUM MESAJI VERİLİR. STOKTA BU KADAR BULUNDUĞU İÇİN ŞU KADAR EKLENMİŞTİR.
                 }
-            }
+                 }
+                }
+                else
+                {
+                    urunler.KullanilanUrunAdet -= urunholder.UrunId;
+                    urunholder.UrunAdet = UrunAdedi;
+                    urunler.KullanilanUrunAdet += UrunAdedi;
+                }
+         }
+            
+
             urunholder.AlanId = RowId;
             urunholder.UrunId = urunler.Id;
             db.Entry(urunholder).State = EntityState.Modified;
             db.Entry(urunler).State = EntityState.Modified;
             db.SaveChanges();
-            }
 
             return RedirectToAction("AlanIndex", new { RowId = RowId });
         }

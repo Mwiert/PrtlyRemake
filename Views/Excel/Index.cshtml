@@ -24,7 +24,7 @@
 
 
        <div class="form-group" style="width:55%;margin:0 auto" >
-                        <input type="number" class="form-control text-center" id="dolarkuru" name="dolarKuru"  required placeholder="Dolar Kurunu Giriniz">
+                        <input type="text" class="form-control text-center" id="dolarkuru" name="dolarKuru"  required placeholder="Dolar Kurunu Giriniz">
                       </div>
 
       <div class="row justify-content-center" style="margin-top:1rem;">
@@ -80,7 +80,7 @@ $("#sendXL").on("click", function() {
 
 $("#saveXL").on("click", function() {
      kesifid = $("#kesifid").val();
-     DolarKuru = $("#dolarkuru").val();
+    DolarKuru = $("#dolarkuru").val();
     if (kesifid == "--") {
         swal("Uyarı", "Lütfen keşif seçiniz.", "warning")
     }

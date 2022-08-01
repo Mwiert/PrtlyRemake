@@ -110,13 +110,13 @@
                     <table id="table" class="table table-bordered text-center ">
         <thead>
                         <tr>
-            <th>Ürün Adedi</th>
+             <th>Kategori</th>
             <th>Ürün Kodu</th>
             <th>Ürün Adı</th>
+            <th>Ürün Adedi</th>
                         </tr>
                       </thead>
                       <tbody>
-
                              @foreach(var item in Model)
                              {
                         foreach(var selecteditem in (List<Urunholder>)ViewBag.UrunList)
@@ -124,25 +124,23 @@
                             if(item.Id == selecteditem.UrunId && ViewBag.RowId== selecteditem.AlanId)
                             {
                                <tr class="table" style="cursor:pointer;background-color:#e9e9f7">
-                   <td class="col-lg-1 col-md-1 col-sm-1" ><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" style=" user-select: none;"class="btn btn-gradient-info btn-sm">@selecteditem.UrunAdet</a></td>
-                  <td class="col-lg-2 col-md-2 col-sm-2" style=" user-select: none;" @*data-id="@item.UrunKodu" data-bs-toggle="modal" data-bs-target="#myModalProductInfo"*@ >@item.UrunKodu</td>
-                  <td style=" user-select: none;">@item.UrunAdi</td>
-                  <td class="col-lg-3 col-md-3 col-sm-3" style=" user-select: none;" data-bs-toggle="modal" data-bs-target="#myModalDelProduct">
+                                       <td style=" user-select: none;" >@item.UrunKategorisi</td>
+                  <td  style="user-select: none;" >@item.UrunKodu</td>
+                  <td style="user-select: none;">@item.UrunAdi</td>
+                   <td ><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" style=" user-select: none;"class="btn btn-gradient-info btn-sm">@selecteditem.UrunAdet</a></td>
+                  <td style=" user-select: none;" data-bs-toggle="modal" data-bs-target="#myModalDelProduct">
                       <button data-bs-toggle="modal" data-bs-target="#myModalProductUpdate" style=" user-select: none;"class="btn btn-gradient-info btn-sm">Güncelle</button>
                       <a type="submit"  class="btn btn-gradient-danger btn-sm">Sil</a></td>
                    </tr> 
                             }
                         }
-                        
                              }
                       </tbody>
                     </table>
                   </div>
                 </div>
               </div>
-
-               <div class="container mt-2"> @*mt kapatılabilir*@
-
+               <div class="container mt-2">
         <div class="modal" id="myModalProductUpdate">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -174,7 +172,6 @@
             </div>
         </div>
     </div>
-
               <div class="container mt-2">
         <div class="modal" id="myModalDelProduct">
             <div class="modal-dialog">
@@ -282,10 +279,12 @@ $("#catAdi").on("change", function() {
              if (data.length != 0) {
 
                     for (var i = 0; i < data.length; i++) {
-                        markup = "<tr class='table' style='cursor:pointer;background-color:#e9e9f7;user-select:none'><td class='col-lg-1 col-md-1 col-sm-1' ><a type='submit' class='btn btn-gradient-info btn-sm' data-bs-toggle='modal' data-bs-target='#myModalOK'>"
-                      + data[i].kullanilanUrunAdet + "</a></td><td style='user-select:none' class='col-lg-2 col-md-2 col-sm-2'>"
+                        markup = "<tr class='table' style='cursor:pointer;background-color:#e9e9f7;user-select:none'><td >"
+                      + data[i].urunKategorisi + "</td><td style='user-select:none'>"
                       + data[i].urunKodu+"</td><td style='user-select:none'>"
-                      + data[i].urunAdi+"</td><td class='col-lg-3 col-md-3 col-sm-3' style='user-select:none' data-bs-toggle='modal' data-bs-target='#myModalDelProduct'><button class='btn btn-gradient-info btn-sm' data-bs-toggle='modal' data-bs-target='#myModalProductUpdate' style='user-select:none'>Güncelle</button><a type='submit' class='btn btn-gradient-danger btn-sm'>Sil</a></td></tr>";
+                      + data[i].urunAdi+"</td><td><a type='submit' data-bs-toggle='modal' data-bs-target='myModalOK' style='user-select:none;' class='btn btn-gradient-info btn-sm'>" 
+                      +data[i].kullanilanUrunAdet+"<a/></td><td style='user-select:none' data-bs-toggle='modal' data-bs-target='#myModalDelProduct'><button class='btn btn-gradient-info btn-sm' data-bs-toggle='modal' data-bs-target='#myModalProductUpdate' style='user-select:none'>Güncelle</button>"
+                      "<a type='submit' class='btn btn-gradient-danger btn-sm'>Sil</a></td></tr>";
                         tableBody = $("#table tbody");
                         tableBody.append(markup);
                     }
@@ -329,6 +328,14 @@ $("#updateProduct").on("click", function() {
    }
 );
                 }
+                else if (data == "OK2") 
+                {
+swal({icon:"success",title: "Başarılı", text: "Ürün Adedi Güncellendi!", type: 
+"success"}).then(function(){ 
+   location.reload();
+   }
+);
+                }
                 else    {
                       swal("Hata Oluştu","Bilinmeyen bir hata ile karşılaşıldı.","warning")
                 }
@@ -342,7 +349,7 @@ $("#updateProduct").on("click", function() {
 
 
                              $("#table tbody td button").on("click", function(){
-           $("#table" ).on("click", "td:nth-child(4)", function(){
+           $("#table" ).on("click", "td:nth-child(5)", function(){
               
     var Send = $(this).parent("tr").find("td:nth-child(2)").text();
                var id;
@@ -368,6 +375,9 @@ $("#updateProduct").on("click", function() {
                                     type: "warning",
                                     confirmButtonText: "Cool"
                                 });
+                            }
+                            else if(data =="DontAlert"){
+
                             }
                             else {
 
@@ -500,16 +510,19 @@ var AlanAdi;
                                     confirmButtonText: "Cool"
                                 });
                             }
-                            else {
+                            else if (data == "OK") {
 
-                            swal({
-  title: "HATIRLATMA!",
-  text: "Bu üründen en fazla " + data+" Adet Ekleyebilirsiniz",
-  type: "warning",
-  confirmButtonText: "Cool" 
- });
+                                swal({
+                                    title: "HATIRLATMA!",
+                                    text: "Bu üründen en fazla " + data + " Adet Ekleyebilirsiniz",
+                                    type: "warning",
+                                    confirmButtonText: "Cool"
+                                });
                             }
-                                        }
+                            else if (data == "DontAlert") {
+                            }
+                                        
+                        }
                                         });
                                 });
 </script>

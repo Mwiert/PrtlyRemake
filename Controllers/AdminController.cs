@@ -14,6 +14,40 @@ namespace Remake.Controllers
         kesifdbContext Db = new kesifdbContext();
         Roller roller = new Roller();
         List<Kullanıcı> kullanıcıs = new List<Kullanıcı>();
+        Stokısenabled ie = new Stokısenabled();
+
+        public JsonResult AktiveEt()
+        {
+            ie = new Stokısenabled();
+            ie = Db.Stokısenableds.FirstOrDefault(x => x.Id == 1);
+            if (ie.IsEnabled == 1)
+            {
+                return Json(0);
+            }
+            else
+            {
+                ie.IsEnabled = 1;
+                Db.Entry(ie).State = EntityState.Modified;
+                Db.SaveChanges();
+                return Json(1);
+            }
+        }
+        public JsonResult DeaktiveEt()
+        {
+            ie = new Stokısenabled();
+            ie = Db.Stokısenableds.FirstOrDefault(x => x.Id == 1);
+            if(ie.IsEnabled == 0)
+            {
+                return Json(0);
+            }
+            else
+            {
+                ie.IsEnabled = 0;
+                Db.Entry(ie).State = EntityState.Modified;
+                Db.SaveChanges();
+                return Json(1);
+            }
+        }
         public JsonResult deleteRole(int getRoldId)
         {
             if(getRoldId == 1)
@@ -38,8 +72,17 @@ namespace Remake.Controllers
         }
         public IActionResult Index()
         {
-            try
-            {
+            try {
+                var stok =Db.Stokısenableds.FirstOrDefault(x => x.Id == 1);
+                if (stok.IsEnabled == 1)
+                {
+                    ViewBag.Stok = "STOK KONTROLÜ : AKTİF";
+
+                }
+                else
+                {
+                    ViewBag.Stok = "STOK KONTROLÜ : DEAKTİF";
+                }
                 Db.Rollers.ToList();
                 Db.Kullanıcıs.ToList();
                 Db.SaveChanges();

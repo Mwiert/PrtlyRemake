@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Remake.Models;
+using System.Globalization;
 
 namespace Remake.Controllers
 {
@@ -27,10 +28,15 @@ namespace Remake.Controllers
                 throw ex;
             }
         }
-        public JsonResult updateProduct(string UK,string UM, float USF , int UA, float UF, string UC, string UAdi)
+        public JsonResult updateProduct(string UK,string UM, string USF , int UA, string UF, string UC, string UAdi)
         {
+            Stokısenabled senab = new Stokısenabled();
+            senab = db.Stokısenableds.FirstOrDefault(x=>x.Id==1);
+            float USFCon = float.Parse(USF, CultureInfo.InvariantCulture.NumberFormat);
+            float UFCon = float.Parse(UF, CultureInfo.InvariantCulture.NumberFormat);
             urun = db.Urunlers.FirstOrDefault(x => x.UrunKodu == UK);
-
+            if(senab.IsEnabled == 1)
+            {
             if(urun.KullanilanUrunAdet > UA)
             {
                return Json("HATA");
@@ -39,13 +45,26 @@ namespace Remake.Controllers
             {
             urun.UrunAdet = UA;
             urun.UrunAdi = UAdi.ToUpper();
-            urun.UrunFiyati = UF;
-            urun.SatisFiyati = USF;
+            urun.UrunFiyati = UFCon;
+            urun.SatisFiyati = USFCon;
             urun.Marka = UM;
             urun.UrunKategorisi = UC;
             db.Entry(urun).State = EntityState.Modified;
             db.SaveChanges();
             return Json(urun);
+            }
+            }
+            else
+            {
+                urun.UrunAdet = UA;
+                urun.UrunAdi = UAdi.ToUpper();
+                urun.UrunFiyati = UFCon;
+                urun.SatisFiyati = USFCon;
+                urun.Marka = UM;
+                urun.UrunKategorisi = UC;
+                db.Entry(urun).State = EntityState.Modified;
+                db.SaveChanges();
+                return Json(urun);
             }
 
         }
@@ -84,10 +103,16 @@ namespace Remake.Controllers
             urunler = db.Urunlers.FirstOrDefault(x => x.UrunKodu == Send.ToUpper());
             return Json(urunler);
         }
-        public IActionResult AddNewProduct(string UrunKodu, string UrunAdi, string Marka, string Kategori, float satisFiyati, float fiyat,int UrunAdet)
+        public IActionResult AddNewProduct(string UrunKodu, string UrunAdi, string Marka, string Kategori, string satisFiyati, string fiyat,int UrunAdet)
         {
             try
             {
+                float USFCon = float.Parse(satisFiyati, CultureInfo.InvariantCulture.NumberFormat);
+                float UFCon = float.Parse(fiyat, CultureInfo.InvariantCulture.NumberFormat);
+                Stokısenabled isStokKontrolEnabled = new Stokısenabled();
+                isStokKontrolEnabled = db.Stokısenableds.FirstOrDefault(x => x.Id == 1);
+                if(isStokKontrolEnabled.IsEnabled == 1)
+                {
                 if (!string.IsNullOrEmpty(UrunKodu.ToUpper()) && !string.IsNullOrEmpty(UrunAdi.ToUpper()) && !string.IsNullOrEmpty(Marka.ToUpper()) && !string.IsNullOrEmpty(Kategori.ToUpper()) && !string.IsNullOrEmpty(satisFiyati.ToString()) && !string.IsNullOrEmpty(fiyat.ToString()))
                 {
                     urunlers = db.Urunlers.Where(x => x.UrunKodu == UrunKodu.ToUpper()).ToList();
@@ -98,16 +123,43 @@ namespace Remake.Controllers
                         prodct.UrunAdi = UrunAdi.ToUpper().Trim();
                         prodct.Marka = Marka.ToUpper().Trim();
                         prodct.UrunKategorisi = Kategori.ToUpper();
-                        prodct.SatisFiyati = satisFiyati;
-                        prodct.UrunFiyati = fiyat;
+                        prodct.SatisFiyati = USFCon;
+                        prodct.UrunFiyati = UFCon;
                         prodct.UrunAdet = UrunAdet;
                         db.Urunlers.Add(prodct);
                         db.SaveChanges();
                     }
 
                 }
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(UrunKodu.ToUpper()) && !string.IsNullOrEmpty(UrunAdi.ToUpper()) && !string.IsNullOrEmpty(Marka.ToUpper()) && !string.IsNullOrEmpty(Kategori.ToUpper()) && !string.IsNullOrEmpty(satisFiyati.ToString()) && !string.IsNullOrEmpty(fiyat.ToString()))
+                    {
+                        urunlers = db.Urunlers.Where(x => x.UrunKodu == UrunKodu.ToUpper()).ToList();
+                        if (urunlers.Count == 0)
+                        {
+                            prodct.KullanilanUrunAdet = 0;
+                            prodct.UrunKodu = UrunKodu.ToUpper().Trim();
+                            prodct.UrunAdi = UrunAdi.ToUpper().Trim();
+                            prodct.Marka = Marka.ToUpper().Trim();
+                            prodct.UrunKategorisi = Kategori.ToUpper();
+                            prodct.SatisFiyati = USFCon;
+                            if(UrunAdet == null)
+                            {
+                                UrunAdet = 0;
+                            }
+                            else
+                            {
+                            prodct.UrunAdet = UrunAdet;
+                            }
+                            prodct.UrunFiyati = UFCon;
+                            db.Urunlers.Add(prodct);
+                            db.SaveChanges();
+                        }
 
-
+                    }
+                }
                 return RedirectToAction("Index", "Product");
             }
             catch (Exception ex)
