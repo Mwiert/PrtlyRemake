@@ -294,49 +294,20 @@
         </div>
     </div>
 
-      <div class="container mt-2"> @*mt kapatılabilir*@
-
+      <div class="container mt-2">
         <div class="modal" id="myModalPaket">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
-                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Ürün Bilgileri</h4>
+                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Paket İşlemleri</h4>
                     <div class="modal-body">
                         <div class="col-12 grid-margin stretch-card">
                 <div class="card " style="height:100%; margin-bottom:-3rem;">
                   <div class="card-body">
-                    <form class="forms-sample">
-                        <label for="exampleInputName1" style="font-size:14px">Ürün Kodu</label>
-                      <div class="form-group" style="display:flex">
-                        <input type="text" class="form-control" id="UrunKodu" name="UrunKodu" value=""  required placeholder="Ürün Kodu" readonly>
-                      </div>
-                        <div class="form-group">
-                        <label for="exampleInputName1">Ürün Adı </label>
-                        <input type="text" class="form-control" id="UrunAdi" name="UrunAdi"  required placeholder="Ürün Adı" readonly>
-                      </div>
-                        <div class="form-group">
-                        <label for="exampleInputName1">Ürün Markası</label>
-                        <input type="text" class="form-control" id="UrunMarka" name="Marka"  required placeholder="Ürün Markası" readonly>
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleInputName1">Ürün Kategorisi</label>
-                        <input type="text" class="form-control" id="UrunCat" name="Kategori"  required placeholder="Ürün Kategorisi" readonly>
-                      </div>
-                       <div class="form-group">
-                        <label for="exampleInputName1">Ürün Stok Adedi</label>
-                        <input type="text" class="form-control" id="UrunAdeti" name="UrunAdet"  required placeholder="Ürün Stok Adedi" readonly>
-                      </div>
-                    <div class="form-group">
-                        <label for="exampleInputName1">Ürün Fiyatı </label>
-                        <input type="number" class="form-control" id="UrunFiyat" name="fiyat"  required placeholder="Ürün Fiyatı" readonly>
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleInputName1"> Satış Fiyatı</label>
-                        <input type="number" class="form-control" id="UrunSatisFiyat" name="satisFiyati"  required placeholder="Satış Fiyatı" readonly>
-                      </div>
-                    </form>
+                       <button type="submit"  class="btn btn-gradient-info me-2">Paket Oluştur</button>
+                        <button type="submit"  class="btn btn-gradient-info me-2">Pakete Ürün Ekle </button>
                   </div>
                 </div>
               </div>
@@ -355,7 +326,7 @@
               +
             </button>
             <ul class="dropdown-menu text-center" style="background-color:transparent;outline:none;border:none"aria-labelledby="dropupCenterBtn">
-              <li><button type="button"  style="border-radius:7rem;" class="btn btn-gradient-info" data-bs-toggle="modal" data-bs-target="#myModalPaket">Paket Oluştur</button></li>
+              <li><button type="button"  style="border-radius:7rem;" class="btn btn-gradient-info" data-bs-toggle="modal" data-bs-target="#myModalPaket">Paket İşlemleri</button></li>
               <li><button type="button" class="btn btn-gradient-info"   style="border-radius:7rem;"data-bs-toggle="modal" data-bs-target="#myModal">Yeni Mekan Ekle</button> </li>
             </ul>
           </div>

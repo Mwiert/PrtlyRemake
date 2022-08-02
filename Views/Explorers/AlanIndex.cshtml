@@ -4,6 +4,31 @@
     ViewData["Title"] = "AlanIndex";
     Layout = "~/Views/Shared/layout.cshtml";
 }
+      <div class="container mt-2">
+        <div class="modal" id="myModalPaket">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Paket İşlemleri</h4>
+                    <div class="modal-body">
+                        <div class="col-12 grid-margin stretch-card">
+                <div class="card " style="height:100%; margin-bottom:-3rem;">
+                  <div class="card-body">
+                       <button type="submit"  class="btn btn-gradient-info me-2">Paket Oluştur</button>
+                        <button type="submit"  class="btn btn-gradient-info me-2">Pakete Ürün Ekle </button>
+                  </div>
+                </div>
+              </div>
+                    </div>
+                    <div class="modal-footer">
+                          <button type="submit" data-bs-dismiss="modal"  class="btn btn-gradient-danger me-2">Kapat</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 <div class="container mt-2"> @*mt kapatılabilir*@
         <div class="modal" id="myModalDelete">
             <div class="modal-dialog">
@@ -55,8 +80,6 @@
         <div class="modal" id="myModal">
             <div class="modal-dialog">
                 <div class="modal-content">
-@using (Html.BeginForm("AddProductToAlan","Explorers",FormMethod.Post))
-{
                     <div class="modal-header">
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
@@ -89,18 +112,19 @@
                       <div class="form-group">
                         <label for="exampleInputName1">Ürün Adedi </label>
                         <input type="number" class="form-control" id="UrunAdet" name="UrunAdedi"  required placeholder="Ürün Adedi">
+                        <input type="number" value="@ViewBag.RowId" id="rowids"name="RowId" style="visibility:hidden">
                       </div>
                     </form>
                   </div>
                 </div>
               </div>
-                    </div>
-                 <button type="submit" class="btn btn-gradient-info me-2">Onayla</button>
-    }
-    <div class="modal-footer">
-        <button type="submit" data-bs-dismiss="modal" class="btn btn-gradient-warning me-2">Kapat</button>
-    <button type="submit" data-bs-toggle="modal" data-bs-target="#myModalnewProd" class="btn btn-gradient-success me-2">Yeni Ürün Ekle</button>
-<button type="submit" class="btn btn-gradient-danger me-2">Paket Ekle</button>
+           </div>
+                 <button type="button" id="addprod3" class="btn btn-gradient-info me-2">Onayla</button>
+    
+   <div class="modal-footer">
+        <button data-bs-dismiss="modal" class="btn btn-gradient-warning me-2">Kapat</button>
+    <button data-bs-toggle="modal" data-bs-target="#myModalnewProd" class="btn btn-gradient-success me-2">Yeni Ürün Ekle</button>
+<button data-bs-toggle="modal" data-bs-target="#myModalPaket" class="btn btn-gradient-danger me-2">Paket Ekle</button>
       </div>
                 </div>
             </div>
@@ -277,40 +301,43 @@
                     <form class="forms-sample">
                         <label for="exampleInputName1" style="font-size:14px">Ürün Kodu</label>
                       <div class="form-group" style="display:flex">
-                        <input type="text" class="form-control" id="UrunKoduId" name="UrunKodu"   required placeholder="Ürün Kodu">
+                        <input type="text" class="form-control" id="UKod" name="UrunKodu" required placeholder="Ürün Kodu">
                         <a type="button" onclick="GenerateCode( )"class="btn btn-gradient-success">Kod üret</a>
                       </div>
                         <div class="form-group">
                         <label for="exampleInputName1">Ürün Adı </label>
-                        <input type="text" class="form-control" id="exampleInputName1" name="UrunAdi"  required placeholder="Ürün Adı">
+                        <input type="text" class="form-control" id="UName" name="UrunAdi"  required placeholder="Ürün Adı">
                       </div>
                         <div class="form-group">
                         <label for="exampleInputName1">Ürün Markası</label>
-                        <input type="text" class="form-control" id="exampleInputName1" name="Marka"  required placeholder="Ürün Markası">
+                        <input type="text" class="form-control" id="UMarka" name="Marka"  required placeholder="Ürün Markası">
                       </div>
                       <div class="form-group">
                       <label for="exampleFormControlSelect1">Kategori Seçiniz</label>
-                      <select class="form-control form-control-lg" id="Selects">
+                      <select class="form-control form-control-lg" id="SelectsProd">
                           <option>-</option>
                           @foreach(var item in (List<Kategoriler>)ViewBag.CatList)
                                         {
                                             <option value="@item.KategoriAdi">@item.KategoriAdi</option>       
                                         }
-                                        <input value="" id="inputNameChange" type="text" style="visibility:hidden" name="Kategori">
                                            
                       </select>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputName1">Ürün Stok Adedi </label>
-                        <input type="number" class="form-control" id="exampleInputName1" name="UrunAdet" placeholder="Ürün Stok Adedi(Boş geçilebilir)">
+                        <input type="number" class="form-control" id="UAdet" name="UrunAdet" placeholder="Ürün Stok Adedi(Boş geçilebilir)">
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputName1">Ürün Adedi </label>
+                        <input type="number" class="form-control" id="UKullanilan" name="UrunAdet" required placeholder="Ürün Adedi">
                       </div>
                     <div class="form-group">
                         <label for="exampleInputName1">Ürün Fiyatı </label>
-                        <input type="text" class="form-control" id="exampleInputName1" name="fiyat"  required placeholder="Ürün Fiyatı">
+                        <input type="text" class="form-control" id="UFiyat" name="fiyat"  required placeholder="Ürün Fiyatı">
                       </div>
                       <div class="form-group">
                         <label for="exampleInputName1"> Satış Fiyatı</label>
-                        <input type="text" class="form-control" id="exampleInputName1" name="satisFiyati"  required placeholder="Satış Fiyatı">
+                        <input type="text" class="form-control" id="USatisFiyat" name="satisFiyati"  required placeholder="Satış Fiyatı">
                       </div>
                     </form>
                   </div>
@@ -318,7 +345,7 @@
               </div>
                     </div>
                     <div class="modal-footer">
-                         <button type="submit" onclick="writeName()" class="btn btn-gradient-info me-2">Onayla</button>
+                         <button type="submit" id="addNewProd" class="btn btn-gradient-info me-2">Onayla</button>
                     </div>
                 </div>
             </div>
@@ -326,8 +353,113 @@
     </div>
 
 <button type="button" style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;" class="btn btn-gradient-info " style="margin-bottom:1rem;" data-bs-toggle="modal" data-bs-target="#myModal">+</button>
-
+                                    
                         <script type="text/javascript">
+
+$("#addprod3").on("click", function() {
+    var UrunKodu = $("#odaAdi").val(); 
+    var UrunAdedi = $("#UrunAdet").val();
+    var RowId = $("#rowids").val();
+
+    $.ajax({
+        url: "@Url.Action("AddProductToAlan","Explorers")",
+        type: 'POST',
+        data: {UrunKodu:UrunKodu,UrunAdedi:UrunAdedi ,RowId:RowId },
+        dataType: 'json',
+        success: function(data) {
+            if (data == 0) {
+                swal({
+                    icon: "success", title: "Başarılı", text: "Ürün Alana Eklendi!", type:
+                        "success"
+                }).then(function() {
+                    location.reload();
+                });
+            }
+            else if (data == 1) {
+                swal({
+                    icon: "warning", title: "UYARI", text: "Stok kontrolü açık durumda. Kullanılan ürün adedi Stok adedinden fazla olamaz! Kullanılan ürün adedi kullanbilir adede eşitlendi", type:
+                        "warning"
+                });
+            }
+            else if (data == 3) {
+                swal("Hata Oluştu", "Bu ürün zaten bulunuyor.", "warning")
+            }
+            else {
+                swal("Hata Oluştu", "Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.", "warning")
+            }
+            
+        },
+        error: function(err) {
+            swal("Hata Oluştu", "Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.", "warning")
+        }
+    });
+});
+
+                            $("#addNewProd").on("click", function() {
+    var UKod= $("#UKod").val();
+    var UName = $("#UName").val();
+    var UMarka = $("#UMarka").val();
+    var UCat = $("#SelectsProd").val();
+    var UAdet = $("#UAdet").val();
+    var UF = $("#UFiyat").val();
+    var USF = $("#USatisFiyat").val();
+    var UKullan = $("#UKullanilan").val();
+    var AlanAdi = $("#alanAdiGets").val();
+   $.ajax({
+         url: "@Url.Action("addProdAjax","Explorers")",
+            type: 'POST',
+            data: {UKod:UKod,UName:UName,UMarka:UMarka,UCat:UCat,UAdet:UAdet,UF:UF,USF:USF,UKullan:UKullan,AlanAdi:AlanAdi},
+            dataType: 'json',
+            success: function(data) {
+                if (data == 0) {
+
+                    swal({
+                        icon: "warning", title: "UYARI", text: "Stok kontrolü açık durumda. Lütfen ürün stok adedi giriniz!", type:
+                            "warning"
+                    });
+                }
+                else if (data == 1) {
+                    swal({
+                        icon: "warning", title: "UYARI", text: "Stok kontrolü açık durumda. Kullanılan ürün adedi Stok adedinden fazla olamaz!", type:
+                            "warning"
+                    });
+                }
+                else if (data == 2) 
+                {
+swal({icon:"success",title: "Başarılı", text: "Ürün Alana Eklendi!", type: 
+"success"}).then(function(){ 
+   location.reload();
+   }
+);
+                }
+                else if(data==3)   {
+                      swal("Hata Oluştu","Bu ürün zaten bulunuyor.","warning")
+                }
+                else  {
+                     swal("Hata Oluştu","Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.","warning")
+                }
+            },
+            error: function(err) {
+               swal("Hata Oluştu","Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.","warning")
+            }
+     });
+});
+
+     GenerateCode = function() {
+
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < 10; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    document.getElementById("UKod").setAttribute("value", result)
+};
+          
+
+
+
+
 $("#catAdi").on("change", function() {
     var getCatName = $("#catAdi").val();
         var AlanAdi = $("#alanAdiGets").val();
@@ -349,8 +481,7 @@ $("#catAdi").on("change", function() {
                       + data[i].urunKategorisi + "</td><td style='user-select:none'>"
                       + data[i].urunKodu+"</td><td style='user-select:none'>"
                       + data[i].urunAdi+"</td><td><a type='submit' data-bs-toggle='modal' data-bs-target='myModalOK' style='user-select:none;' class='btn btn-gradient-info btn-sm'>" 
-                      +data[i].kullanilanUrunAdet+"<a/></td><td style='user-select:none' data-bs-toggle='modal' data-bs-target='#myModalDelProduct'><button class='btn btn-gradient-info btn-sm' data-bs-toggle='modal' data-bs-target='#myModalProductUpdate' style='user-select:none'>Güncelle</button>"
-                      "<a type='submit' class='btn btn-gradient-danger btn-sm'>Sil</a></td></tr>";
+                      +data[i].kullanilanUrunAdet+"<a/></td><td style='user-select:none' data-bs-toggle='modal' data-bs-target='#myModalDelProduct'><button class='btn btn-gradient-info btn-sm' data-bs-toggle='modal' data-bs-target='#myModalProductUpdate' style='user-select:none'>Güncelle</button><a type='submit' class='btn btn-gradient-danger btn-sm'>Sil</a></td></tr>";
                         tableBody = $("#table tbody");
                         tableBody.append(markup);
                     }
@@ -560,6 +691,7 @@ var AlanAdi;
                                         });
                                 });
 
+
   $('#odaAdi').change(function () {
                         var id = $('#odaAdi').val();
                         $.ajax({
@@ -576,16 +708,17 @@ var AlanAdi;
                                     confirmButtonText: "Cool"
                                 });
                             }
-                            else if (data == "OK") {
+                            else if (data == "DontAlert") {
 
-                                swal({
+                               
+                            }
+                            else {
+                                  swal({
                                     title: "HATIRLATMA!",
-                                    text: "Bu üründen en fazla " + data + " Adet Ekleyebilirsiniz",
+                                    text: "Bu üründen en fazla " + data + " Adet Ekleyebilirsiniz. Eğer Eklenebilecek ürün sayıfı negatif ise stok güncelleyiniz.",
                                     type: "warning",
                                     confirmButtonText: "Cool"
                                 });
-                            }
-                            else if (data == "DontAlert") {
                             }
                                         
                         }
