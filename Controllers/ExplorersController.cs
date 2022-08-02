@@ -34,12 +34,17 @@ namespace Remake.Controllers
         }
         public JsonResult addProdAjax(string UKod,string UName, string UMarka, string UCat, int UAdet,string UF,string USF,int UKullan,string AlanAdi)
         {
-
-            Stokısenabled stokis = new Stokısenabled();
-            float USFCon = float.Parse(USF, CultureInfo.InvariantCulture.NumberFormat);
-            float UFCon = float.Parse(UF, CultureInfo.InvariantCulture.NumberFormat);
-            stokis = db.Stokısenableds.FirstOrDefault(x=>x.Id==1);
-            alanHolder = db.Alanholders.FirstOrDefault(x => x.MekanId == MekanidHold && x.AlanAdi == AlanAdi && x.KesifId == KesifIdInt);
+            if(UKod==null || UName==null || UMarka == null || AlanAdi == null || USF == null || UF == null || UAdet ==0)
+            {
+                return Json(4);
+            }
+            else
+            {
+                Stokısenabled stokis = new Stokısenabled();
+                float USFCon = float.Parse(USF, CultureInfo.InvariantCulture.NumberFormat);
+                float UFCon = float.Parse(UF, CultureInfo.InvariantCulture.NumberFormat);
+                stokis = db.Stokısenableds.FirstOrDefault(x => x.Id == 1);
+                alanHolder = db.Alanholders.FirstOrDefault(x => x.MekanId == MekanidHold && x.AlanAdi == AlanAdi && x.KesifId == KesifIdInt);
             Urunler u = new Urunler();
             u = db.Urunlers.FirstOrDefault(x=>x.UrunAdi== UName && x.Marka ==UMarka && x.UrunKategorisi == UCat);
             if (u == null)
@@ -103,6 +108,8 @@ namespace Remake.Controllers
             else
             {
                 return Json(3);
+            }
+
             }
         }
         public JsonResult filterProducts(string getCatName,string AlanAdi)
@@ -438,6 +445,13 @@ namespace Remake.Controllers
         }
         public JsonResult AddProductToAlan(string UrunKodu, int UrunAdedi, int RowId)
         {
+            if(string.IsNullOrEmpty(UrunKodu) || UrunAdedi==0 ||string.IsNullOrEmpty(RowId.ToString()))
+            {
+                return Json(4);
+            }
+            else
+            {
+
             Stokısenabled stok = new Stokısenabled();
             stok = db.Stokısenableds.FirstOrDefault(x=>x.Id==1);
             int Compare=0, cross;
@@ -500,6 +514,7 @@ namespace Remake.Controllers
                     urunholder = new Urunholder();
                     urunholder.AlanId = RowId;
                     urunholder.UrunId = urunler.Id;
+                    urunholder.UrunAdet = UrunAdedi;
                     urunler.KullanilanUrunAdet += UrunAdedi;
                     db.Entry(urunler).State = EntityState.Modified;
                     db.Urunholders.Add(urunholder);
@@ -512,6 +527,7 @@ namespace Remake.Controllers
                 }
             }
 
+            }
         }
         public IActionResult AddExplore(string ExpName)
         {

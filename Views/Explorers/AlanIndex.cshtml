@@ -16,8 +16,8 @@
                         <div class="col-12 grid-margin stretch-card">
                 <div class="card " style="height:100%; margin-bottom:-3rem;">
                   <div class="card-body">
-                       <button type="submit"  class="btn btn-gradient-info me-2">Paket Oluştur</button>
-                        <button type="submit"  class="btn btn-gradient-info me-2">Pakete Ürün Ekle </button>
+                       <button type="submit"  data-bs-toggle="modal" data-bs-target="#modalCreatePack" class="btn btn-gradient-info me-2">Paket Oluştur</button>
+                        <button type="submit"  data-bs-toggle="modal" data-bs-target="#modalAddPrdctPack"  class="btn btn-gradient-info me-2">Pakete Ürün Ekle </button>
                   </div>
                 </div>
               </div>
@@ -360,7 +360,6 @@ $("#addprod3").on("click", function() {
     var UrunKodu = $("#odaAdi").val(); 
     var UrunAdedi = $("#UrunAdet").val();
     var RowId = $("#rowids").val();
-
     $.ajax({
         url: "@Url.Action("AddProductToAlan","Explorers")",
         type: 'POST',
@@ -383,6 +382,9 @@ $("#addprod3").on("click", function() {
             }
             else if (data == 3) {
                 swal("Hata Oluştu", "Bu ürün zaten bulunuyor.", "warning")
+            }
+             else if (data == 4) {
+                swal("Hata Oluştu", "Urun adedi boş bırakılamaz.", "warning")
             }
             else {
                 swal("Hata Oluştu", "Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.", "warning")
@@ -434,6 +436,9 @@ swal({icon:"success",title: "Başarılı", text: "Ürün Alana Eklendi!", type:
                 }
                 else if(data==3)   {
                       swal("Hata Oluştu","Bu ürün zaten bulunuyor.","warning")
+                }
+                else if(data==4)   {
+                      swal("Hata Oluştu","Ürün bilgilerinde stok adedi hariç lütfen doldurunuz.","warning")
                 }
                 else  {
                      swal("Hata Oluştu","Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.","warning")
@@ -512,7 +517,6 @@ $("#updateProduct").on("click", function() {
             dataType: 'json',
             success: function(data) {
                 if (data == "OK") {
-
                     swal({
                         icon: "success", title: "Başarılı", text: "Ürün Adedi Güncellendi!", type:
                             "success"
