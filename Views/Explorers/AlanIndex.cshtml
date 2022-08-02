@@ -158,6 +158,7 @@
                       <button data-bs-toggle="modal" data-bs-target="#myModalProductUpdate" style=" user-select: none;"class="btn btn-gradient-info btn-sm">Güncelle</button>
                       <a type="submit"  class="btn btn-gradient-danger btn-sm">Sil</a></td>
                    </tr> 
+
                             }
                         }
                              }
@@ -184,7 +185,7 @@
                         <input type="text" class="form-control" id="UrunKoduUpdate" name="UrunKodu" value=""  required placeholder="Ürün Kodu" disabled>
                       </div>
                             <div class="form-group">
-                        <input type="text" class="form-control" id="UrunAdetiUpdate" name="UrunAdet"  required placeholder="Ürün Adedi">
+                        <input type="number" class="form-control" id="UrunAdetiUpdate" name="UrunAdet"  required placeholder="Ürün Adedi">
                       </div>
                     </form>
                   </div>
@@ -355,7 +356,6 @@
 <button type="button" style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;" class="btn btn-gradient-info " style="margin-bottom:1rem;" data-bs-toggle="modal" data-bs-target="#myModal">+</button>
                                     
                         <script type="text/javascript">
-
 $("#addprod3").on("click", function() {
     var UrunKodu = $("#odaAdi").val(); 
     var UrunAdedi = $("#UrunAdet").val();
@@ -457,9 +457,6 @@ swal({icon:"success",title: "Başarılı", text: "Ürün Alana Eklendi!", type:
 };
           
 
-
-
-
 $("#catAdi").on("change", function() {
     var getCatName = $("#catAdi").val();
         var AlanAdi = $("#alanAdiGets").val();
@@ -504,46 +501,46 @@ $("#updateProduct").on("click", function() {
     var adet = $("#UrunAdetiUpdate").val();
     var UK = $("#UrunKoduUpdate").val();
     var AlanAdi = $("#alanAdiGets").val();
-   $.ajax({
-         url: "@Url.Action("updateProduct","Explorers")",
+    if (adet == 0) {
+        swal("Hata Oluştu", "Lütfen ürün adedi giriniz.", "warning")
+    }
+    else {
+        $.ajax({
+            url: "@Url.Action("updateProduct","Explorers")",
             type: 'POST',
-            data: {UK:UK,adet:adet,AlanAdi:AlanAdi},
+            data: { UK: UK, adet: adet, AlanAdi: AlanAdi },
             dataType: 'json',
             success: function(data) {
                 if (data == "OK") {
 
-                swal({icon:"success",title: "Başarılı", text: "Ürün Adedi Güncellendi!", type: 
-"success"}).then(function(){ 
-   location.reload();
-   }
-);
+                    swal({
+                        icon: "success", title: "Başarılı", text: "Ürün Adedi Güncellendi!", type:
+                            "success"
+                    }).then(function() {
+                        location.reload();
+                    }
+                    );
                 }
-                else if (data == "UYARI") {
-                     swal({icon:"warning",title: "DİKKAT", text: "Girilen miktar stoğun dışına çıkmıştır. Ürün için maximum stok adedi tanımlanmıştır.!", type: 
-"warning"}).then(function(){ 
-   location.reload();
-   }
-);
+                else if (data == 0) {
+                    swal({
+                        icon: "warning", title: "DİKKAT", text: "Ürün stoğu yetersizdir. Lütfen stoğu güncelleyiniz.!", type:
+                            "warning"
+                    }).then(function() {
+                        location.reload();
+                    }
+                    );
                 }
-                else if (data == "OK2") 
-                {
-swal({icon:"success",title: "Başarılı", text: "Ürün Adedi Güncellendi!", type: 
-"success"}).then(function(){ 
-   location.reload();
-   }
-);
-                }
-                else    {
-                      swal("Hata Oluştu","Bilinmeyen bir hata ile karşılaşıldı.","warning")
+                else {
+                    swal("Hata Oluştu", "Bilinmeyen bir hata ile karşılaşıldı.", "warning")
                 }
             },
             error: function(err) {
-               swal("Hata Oluştu","Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.","warning")
+                swal("Hata Oluştu", "Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.", "warning")
             }
-     });
+        });
+
+    }
 });
-
-
 
                              $("#table tbody td button").on("click", function(){
            $("#table" ).on("click", "td:nth-child(5)", function(){
@@ -644,33 +641,7 @@ var UrunKodu;
 var AlanAdi;
                             $("#table").on("click", "td", function(){
      UrunKodu = $(this).parent("tr").find("td:nth-child(2)").text();
-        //    $.ajax({
-        //    url: "@Url.Action("deleteProductAdet","Explorers")",
-        //    type: 'POST',
-        //    data: {UrunKodu : UrunKodu, AlanAdi:AlanAdi},
-        //    dataType: 'json',
-        //    success: function(data) {
-        //        $("#UrunKodu").val(data.urunKodu);
-        //        $("#UrunMarka").val(data.marka);
-        //        $("#UrunAitligi").val(data.kesifAitligi);
-        //        $("#UrunSatisFiyat").val(data.satisFiyati);
-        //        $("#UrunAdeti").val(data.urunAdet);
-        //        $("#UrunFiyat").val(data.urunFiyati);
-        //        $("#UrunCat").val(data.urunKategorisi);
-        //        $("#UrunAdi").val(data.urunAdi);
-        //        $("#RowsValue").val(data.urunKodu);
-        //        $("#myModalProductInfo").modal('show');
-        //    },
-        //    error: function(err) {
-        //       swal("Hata Oluştu","Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.","warning")
-        //    }
-        //});
 });
-
-
-
-
-
 
 
   $('#catName').change(function () {
