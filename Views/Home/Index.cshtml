@@ -23,10 +23,10 @@
                       <tbody>
                                                     @foreach(var item in (List<HomeExportEntites>)ViewBag.Entities){
                           <tr>
-                               <td class="col-lg-3 col-md-3 col-sm-3 text-center" ><a type="submit" style=" user-select: none;"class="btn btn-gradient-info btn">@item.KesifSayisi</a></td>
-                                <td class="col-lg-3 col-md-3 col-sm-3 text-center" ><a type="submit" style=" user-select: none;"class="btn btn-gradient-info btn">@item.UrunSayisi</a></td>
-                                 <td class="col-lg-2 col-md-2 col-sm-2 text-center" ><a type="submit" style=" user-select: none;"class="btn btn-gradient-info btn">@item.SumUrunAdedi</a></td>
-                                  <td class="col-lg-2 col-md-2 col-sm-2 text-center" ><a type="submit"  style=" user-select: none;"class="btn btn-gradient-info btn">@item.KategoriSayisi</a></td>
+                               <td class="col-lg-3 col-md-3 col-sm-3 text-center" ><a type="submit" style=" user-select: none;"class="btn btn-gradient-info btn" href="@Url.Action("Index","Explorers")">@item.KesifSayisi</a></td>
+                                <td class="col-lg-3 col-md-3 col-sm-3 text-center" ><a type="submit" style=" user-select: none;"class="btn btn-gradient-info btn" href="@Url.Action("Index","Product")">@item.UrunSayisi</a></td>
+                                 <td class="col-lg-2 col-md-2 col-sm-2 text-center" ><a type="submit" style=" user-select: none;"class="btn btn-gradient-info btn" >@item.SumUrunAdedi</a></td>
+                                  <td class="col-lg-2 col-md-2 col-sm-2 text-center" ><a type="submit"  style=" user-select: none;"class="btn btn-gradient-info btn" href="@Url.Action("Index","Category")">@item.KategoriSayisi</a></td>
                                    <td class="col-lg-2 col-md-2 col-sm-2 text-center" ><a type="submit"  style=" user-select: none;"class="btn btn-gradient-info btn">@item.KullanıcıSayisi</a></td>
                           <td></td>
                         </tr>
