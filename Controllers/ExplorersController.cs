@@ -22,6 +22,8 @@ namespace Remake.Controllers
         Mekantürleri mekanturleri = new Mekantürleri();
         Alanholder alanHolder = new Alanholder();
         Urunholder urunholder = new Urunholder();
+        Paket pack = new Paket();
+        Paketholder paketHolder = new Paketholder();
         public static int KesifIdInt,MekanidHold;
         int temp;
         int UrunKullanilanAdet;
@@ -31,6 +33,30 @@ namespace Remake.Controllers
             db.SaveChanges();
             return View(db.Kesiflers);
 
+        }
+        public JsonResult addPack(string PName)
+        {
+            if (string.IsNullOrEmpty(PName))
+            {
+                return Json(0);
+            }
+            else
+            {
+                string PCName = PName.ToUpper().Trim();
+                pack = db.Pakets.FirstOrDefault(x => x.PaketAdi == PCName);
+                if (pack != null)
+                {
+                    return Json(2);
+                }
+                else
+                {
+                    pack = new Paket();
+                    pack.PaketAdi = PCName;
+                    db.Pakets.Add(pack);
+                    db.SaveChanges();
+                    return Json(1);
+                }
+            }
         }
         public JsonResult addProdAjax(string UKod,string UName, string UMarka, string UCat, int UAdet,string UF,string USF,int UKullan,string AlanAdi)
         {

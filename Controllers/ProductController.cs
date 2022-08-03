@@ -14,6 +14,8 @@ namespace Remake.Controllers
         Kategoriler category = new Kategoriler();
         List<Urunler> urunlers = new List<Urunler>();
         Urunler urun = new Urunler();
+        Paket pack = new Paket();
+        Paketholder paketholder = new Paketholder();
         public IActionResult Index()
         {
             try
@@ -26,6 +28,29 @@ namespace Remake.Controllers
             {
 
                 throw ex;
+            }
+        }
+        public JsonResult addPack(string PName)
+        {
+            if (string.IsNullOrEmpty(PName))
+            {
+                return Json(0);
+            }
+            else
+            {
+                string PCName =PName.ToUpper().Trim();
+                pack = db.Pakets.FirstOrDefault(x => x.PaketAdi == PCName);
+                if (pack != null)
+                {
+                    return Json(2);
+                }
+                else {
+                    pack = new Paket();
+                    pack.PaketAdi = PCName;
+                    db.Pakets.Add(pack);
+                    db.SaveChanges();
+                    return Json(1);
+                }
             }
         }
         public JsonResult updateProduct(string UK,string UM, string USF , int UA, string UF, string UC, string UAdi)

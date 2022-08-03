@@ -115,6 +115,8 @@ namespace Remake.Models
                 entity.ToTable("paket");
 
                 entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.PaketAdi).HasMaxLength(60);
             });
 
             modelBuilder.Entity<Paketholder>(entity =>
