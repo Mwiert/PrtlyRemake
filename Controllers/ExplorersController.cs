@@ -23,16 +23,24 @@ namespace Remake.Controllers
         Alanholder alanHolder = new Alanholder();
         Urunholder urunholder = new Urunholder();
         Paket pack = new Paket();
+        List<Paket> packs = new List<Paket>();
         Paketholder paketHolder = new Paketholder();
         public static int KesifIdInt,MekanidHold;
         int temp;
         int UrunKullanilanAdet;
         public IActionResult Index()
         {
-                db.Kesiflers.ToList();
+            db.Kesiflers.ToList();
             db.SaveChanges();
             return View(db.Kesiflers);
 
+        }
+        public JsonResult listPaket()
+        {
+            db = new kesifdbContext();
+            packs = new List<Paket>();
+            packs = db.Pakets.ToList();
+            return Json(packs);
         }
         public JsonResult addPack(string PName)
         {

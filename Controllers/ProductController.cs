@@ -16,6 +16,7 @@ namespace Remake.Controllers
         Urunler urun = new Urunler();
         Paket pack = new Paket();
         Paketholder paketholder = new Paketholder();
+        List<Paket> packs = new List<Paket>();
         public IActionResult Index()
         {
             try
@@ -29,6 +30,28 @@ namespace Remake.Controllers
 
                 throw ex;
             }
+        }
+        public JsonResult GetUrunList()
+        {
+            urunlers = new List<Urunler>();
+            db = new kesifdbContext();
+            urunlers = db.Urunlers.ToList();
+            return Json(urunlers);
+        }
+        public JsonResult delPaket(int Paketid)
+        {
+            pack = new Paket();
+            pack = db.Pakets.FirstOrDefault(x=>x.Id == Paketid);
+            db.Pakets.Remove(pack);
+            db.SaveChanges();
+            return Json(1);
+        }
+        public JsonResult listPaket()
+        {
+            db = new kesifdbContext();
+            packs = new List<Paket>();
+            packs = db.Pakets.ToList();
+            return Json(packs);
         }
         public JsonResult addPack(string PName)
         {

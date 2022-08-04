@@ -4,88 +4,6 @@
     ViewData["Title"] = "AlanIndex";
     Layout = "~/Views/Shared/layout.cshtml";
 }
- <div class="container mt-2">
-        <div class="modal" id="modalAddPrdctPackandPack">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Paket'e Ürün Ekleyin</h4>
-                      <div class="modal-body">
-                        <div class="col-12 grid-margin stretch-card">
-                <div class="card " style="height:100%; margin-bottom:-3rem;">
-                                      <div class="card-body">
-                    <form class="forms-sample">
-                      <div class="form-group">
-                        <label for="exampleInputName1">Paket Adı </label>
-                        <input type="text" class="form-control" id="paketAdi" name="paketAdi" disabled placeholder="Paket Adı">
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-                    </div>
-                    
-                    <div class="modal-footer">
-                         <button type="submit" id="saveProd2Pack"  class="btn btn-gradient-info me-2">Kaydet</button>
-                          <button type="submit" data-bs-dismiss="modal"  class="btn btn-gradient-danger me-2">Kapat</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-       <div class="container mt-2">
-        <div class="modal" id="modalCreatePack">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Paket Oluştur</h4>
-                    <div class="modal-body">
-                        <div class="col-12 grid-margin stretch-card">
-                <div class="card " style="height:100%; margin-bottom:-3rem;">
-                                      <div class="card-body">
-                    <form class="forms-sample">
-                      <div class="form-group">
-                        <label for="exampleInputName1">Paket Adı </label>
-                        <input type="text" class="form-control" id="packName" name="paketAdi"  required placeholder="Paket Adı">
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-                    </div>
-                    <div class="modal-footer">
-                         <button type="submit" id="CreatePackt" class="btn btn-gradient-info me-2">Paketi Oluştur</button>
-                          <button type="submit" id="addProd2Pack" class="btn btn-gradient-warning me-2">Paket Oluştur ve Ürün Ekle</button>
-                          <button type="submit" id="CreatePacktandProd" data-bs-dismiss="modal"  class="btn btn-gradient-danger me-2">Kapat</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-          <div class="container mt-2">
-        <div class="modal" id="modalAddPrdctPack">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Paket İşlemleri</h4>
-                    <div class="modal-body">
-                        <div class="col-12 grid-margin stretch-card">
-                <div class="card " style="height:100%; margin-bottom:-3rem;">
-                </div>
-              </div>
-                    </div>
-                    <div class="modal-footer">
-                          <button type="submit" data-bs-dismiss="modal"  class="btn btn-gradient-danger me-2">Kapat</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
       <div class="container mt-2">
         <div class="modal" id="myModalPaket">
             <div class="modal-dialog">
@@ -93,14 +11,14 @@
                     <div class="modal-header">
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
-                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Paket İşlemleri</h4>
+                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Paket Ekle</h4>
                     <div class="modal-body">
                         <div class="col-12 grid-margin stretch-card">
                 <div class="card " style="height:100%; margin-bottom:-3rem;">
                   <div class="card-body">
-                       <button type="submit"  data-bs-toggle="modal" data-bs-target="#modalCreatePack" class="btn btn-gradient-info me-2">Paket Oluştur</button>
-                        <button type="submit"  data-bs-toggle="modal" data-bs-target="#modalAddPrdctPack"  class="btn btn-gradient-info me-2">Pakete Ürün Ekle </button>
-                                                <button type="submit" style="margin-top:1rem;margin-left:7rem;" data-bs-toggle="modal" data-bs-target="#"  class="btn btn-gradient-info me-2">Paket Sil </button>
+                       <select class="form-control form-control-sm" id="selectsPack" name="packAdi">
+                        <option class="text-center" style="font-size:1rem" >--</option> 
+                      </select>
                   </div>
                 </div>
               </div>
@@ -152,7 +70,7 @@
         @foreach(var item in (List<Kategoriler>)ViewBag.ListKategori)
         {
             
-                   <option class="text-center" style="font-size:1rem">@item.KategoriAdi</option>                               // BURADA KALDIM. BURADAN CONTROLLERA MEKANADI GONDERILECEK
+                   <option class="text-center" style="font-size:1rem">@item.KategoriAdi</option>                          
         }
                       </select>
 
@@ -207,7 +125,7 @@
    <div class="modal-footer">
         <button data-bs-dismiss="modal" class="btn btn-gradient-warning me-2">Kapat</button>
     <button data-bs-toggle="modal" data-bs-target="#myModalnewProd" class="btn btn-gradient-success me-2">Yeni Ürün Ekle</button>
-<button data-bs-toggle="modal" data-bs-target="#myModalPaket" class="btn btn-gradient-danger me-2">Paket</button>
+<button data-bs-toggle="modal" data-bs-target="#myModalPaket" id="addPack" class="btn btn-gradient-danger me-2">Paket Ekle</button>
       </div>
                 </div>
             </div>
@@ -439,72 +357,34 @@
 <button type="button" style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;" class="btn btn-gradient-info " style="margin-bottom:1rem;" data-bs-toggle="modal" data-bs-target="#myModal">+</button>
                                     
                         <script type="text/javascript">
-                            $("#addProd2Pack").on("click", function() {
-    var PName = $("#packName").val();
+$("#selectsPack").on("change", function() { 
+var packid = $("#selectsPack").val();
+
+});
+
+$("#addPack").on("click", function() {
+       $('#selectsPack').empty();
      $.ajax({
-         url: "@Url.Action("addPack","Explorers")",
+            url: "@Url.Action("listPaket","Explorers")",
             type: 'POST',
-            data: {PName:PName},
             dataType: 'json',
             success: function(data) {
-                if (data == 1) {
-
-                swal({icon:"success",title: "Başarılı", text: "Paket oluşturuldu. Ürün Yükleme ekranı açılacak!", type: 
-"success"});
-  $("#modalCreatePack").modal('hide'); 
-$("#modalAddPrdctPackandPack").modal('show'); 
-                    $("#paketAdi").val(PName);
+                if (data != null) {
+                    for (var i = 0; i < data.length; i++) {
+                    $('#selectsPack').append('<option class="text-center" style="font-size:1rem" value='+data[i].id+'>'+data[i].paketAdi+'</option>');
+                    }
                 }
-                else if(data ==2){
-                     swal("Hata Oluştu","Paket zaten bulunuyor.","warning")
-                }
-                else if(data ==0){
-                     swal("UYARI","Lütfen paket adı giriniz.","warning")
-                }
-                else    {
-                      swal("Hata Oluştu","Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.","warning")
+                else {
+                    swal("Hata Oluştu", "Hiç paket oluşturmadınız.", "warning")
                 }
             },
             error: function(err) {
-               swal("Hata Oluştu","Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.","warning")
+                swal("Hata Oluştu", "Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.", "warning")
             }
-     });
+        });
 });
-
-
-$("#CreatePackt").on("click", function() {
-    var PName = $("#packName").val();
-     $.ajax({
-         url: "@Url.Action("addPack","Explorers")",
-            type: 'POST',
-            data: {PName:PName},
-            dataType: 'json',
-            success: function(data) {
-                if (data == 1) {
-
-                swal({icon:"success",title: "Başarılı", text: "Paket oluşturuldu. İçerisinde ürün yoktur!", type: 
-"success"}).then(function(){ 
-   location.reload();
-   }
-);
-
-                }
-                else if(data ==2){
-                     swal("Hata Oluştu","Paket zaten bulunuyor.","warning")
-                }
-                else if(data ==0){
-                     swal("UYARI","Lütfen paket adı giriniz.","warning")
-                }
-                else    {
-                      swal("Hata Oluştu","Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.","warning")
-                }
-            },
-            error: function(err) {
-               swal("Hata Oluştu","Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.","warning")
-            }
-     });
-});
-
+ 
+                           
 $("#addprod3").on("click", function() {
     var UrunKodu = $("#odaAdi").val(); 
     var UrunAdedi = $("#UrunAdet").val();
