@@ -17,6 +17,9 @@ namespace Remake.Controllers
         Paket pack = new Paket();
         Paketholder paketholder = new Paketholder();
         List<Paket> packs = new List<Paket>();
+        public static List<Paketholder> listPaketStatic = new List<Paketholder>();
+        Paketholder packHolder = new Paketholder();
+        int counter;
         public IActionResult Index()
         {
             try
@@ -30,6 +33,68 @@ namespace Remake.Controllers
 
                 throw ex;
             }
+        }
+        public JsonResult restorePackList()
+        {
+            listPaketStatic.Clear();
+            return Json(1);
+        }
+        public JsonResult SavePack()
+        {
+            if (listPaketStatic.Count == 0)
+            {
+                return Json(0);
+            }
+            else
+            {
+                packHolder = new Paketholder();
+                foreach(var item in listPaketStatic)
+                {
+                    packHolder = item;
+                    db.Paketholders.Add(packHolder);
+                    db.SaveChanges();
+                }
+                return Json(1);
+            }
+        }
+        public JsonResult AddToPaketHolder(string urunKodu,int adet,int packId)
+        {
+            urun = new Urunler();
+            urun = db.Urunlers.FirstOrDefault(x=>x.UrunKodu== urunKodu);
+            pack = new Paket();
+            if(listPaketStatic.Count == 0)
+            {
+                packHolder = new Paketholder();
+                packHolder.UrunAdeti = adet;
+                packHolder.UrunId = urun.Id;
+                packHolder.PaketId = packId;
+                listPaketStatic.Add(packHolder);
+                return Json(urun);
+            }
+            else
+            {
+            foreach(var item in listPaketStatic)
+            {
+                if(item.UrunId == urun.Id)
+                {
+                    return Json(0);  // ürün zaten ekli
+                }
+                else
+                {
+                    counter++;
+                }
+            }
+            if(counter == listPaketStatic.Count)
+                {
+                    packHolder = new Paketholder();
+                    packHolder.UrunAdeti = adet;
+                    packHolder.UrunId = urun.Id;
+                    packHolder.PaketId = packId;
+                    listPaketStatic.Add(packHolder);
+                    return Json(urun);
+                }
+            }
+            return Json(1);
         }
         public JsonResult GetUrunList()
         {

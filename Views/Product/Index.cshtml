@@ -104,6 +104,10 @@
                        <select class="form-control form-control-sm" id="selectsPackUrunEkle" name="packAdiUrun">
                         <option class="text-center">--</option> 
                       </select>
+                      <div class="form-group">
+                        <label for="exampleInputName1" style="margin-left:10rem;margin-top:1.5rem">Ürün Adedi </label>
+                        <input type="number" class="form-control" id="urunAdediPack" name="urunadet"  required placeholder="Ürün Adedi giriniz" >
+                      </div>
                   </div>
                    <button type="submit" id="addp2paket" class="btn btn-gradient-info me-2">Ekle</button>
                 </div>
@@ -447,7 +451,7 @@
                        <select class="form-control form-control-sm" id="selectsPackadd" name="packAdi">
                         <option class="text-center" style="font-size:1rem" >--</option> 
                       </select>
-                      <button data-bs-toggle="modal" data-bs-target="#addProdct2PaketModal" class="btn btn-gradient-warning btn-sm" id="UrunYukle"style="float:right">Ürün Ekle</button>
+                      <button data-bs-toggle="modal" data-bs-target="#addProdct2PaketModal" class="btn btn-gradient-warning btn-sm" id="UrunYukle"style="margin-left:9.5rem;margin-top:5px;margin-bottom:5px;">Ürün Ekle</button>
                       <table id="tableAddedProduct" class="table table-sm table-bordered text-center  " >
         <thead>
                         <tr style="font-size:12px">
@@ -458,13 +462,12 @@
                       </thead>
                       <tbody>
                         
-                    <tr class="table" style="cursor:pointer;background-color:#e9e9f7; user-select: none;font-size:12px">
-                        </tr>
+                    <tr class="table" style="cursor:pointer;background-color:#e9e9f7; user-select: none;font-size:12px"> </tr>
                         
                       </tbody>
                     </table>
-
                   </div>
+                       <button class="btn btn-gradient-info" id="UrunYukle2Holder"style="float:right">Kaydet</button>
                 </div>
               </div>
                     </div>
@@ -514,21 +517,69 @@
           </div>
 
               <script type="text/javascript">
+
+$("#UrunYukle2Holder").on("click", function() {
+    $.ajax({
+        url: "@Url.Action("SavePack","Product")",
+        type: 'POST',
+        dataType: 'json',
+        success: function(data) {
+            if (data == 0) {
+                  swal("Hata Oluştu", "Paket boş olduğu için işlem başarısız.", "warning")
+            }
+            else{
+                swal({
+                    icon: "success", title: "Başarılı", text: "Paket Kaydedildi!", type:
+                "success"
+                });
+
+            }
+            },
+            error: function(err) {
+                swal("Hata Oluştu", "Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.", "warning")
+            }
+        });
+   
+});
+
 $("#addp2paket").on("click", function() {
-    var urunadi = $("#selectsPackUrunEkle").val();
-    swal({
-        icon: "success", title: "Başarılı", text: "Ürün Eklendi.!", type:
+    var urunKodu = $("#selectsPackUrunEkle").val();
+    var adet = $("#urunAdediPack").val();
+    var packId = $("#selectsPackadd").val();
+    if(adet==0){
+          swal("Hata Oluştu", "Lütfen ürün adedi giriniz.", "warning")
+    }
+    else{
+        $.ajax({
+            url: "@Url.Action("AddToPaketHolder","Product")",
+            type: 'POST',
+            data:{urunKodu:urunKodu,adet:adet,packId:packId},
+            dataType: 'json',
+            success: function(data) {
+                if(data==0){
+                     swal("Hata Oluştu", "Bu ürünü zaten eklediniz.", "warning")
+                }
+                else if(data==1){
+                           swal("Hata Oluştu", "Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.", "warning")
+                }
+                else{
+                     swal({
+        icon: "success", title: "Başarılı", text: "Ürün Eklendi!", type:
             "success"
     }).then(function() {
         $("#addProdct2PaketModal").modal("hide");
          $("#modalAddPrdctPack").modal("show");
-          $('#tableAddedProduct tbody tr').append('<td class="text-center" style=" user-select: none;font-size:12px">'+urunadi+'</td>');
-               $('#tableAddedProduct tbody tr').append('<td class="text-center" style=" user-select: none;font-size:12px">'+urunadi+'</td>');
-                    $('#tableAddedProduct tbody tr').append('<td class="text-center" style=" user-select: none;font-size:12px">'+urunadi+'</td>');
-               $('#tableAddedProduct tbody tr').append('<td class="text-center" style=" user-select: none;font-size:12px">'+urunadi+'</td>');
-
+          $('#tableAddedProduct tbody').append('<tr class="table" style="cursor:pointer;background-color:#e9e9f7; user-select: none;font-size:12px"><td class="text-center" style=" user-select: none;font-size:12px">'+urunKodu+'</td><td class="text-center" style=" user-select: none;font-size:12px">'+data.urunAdi+'</td><td class="text-center" style=" user-select: none;font-size:12px">'+adet+'</td> </tr>');
     });
+                }
+            },
+            error: function(err) {
+                swal("Hata Oluştu", "Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.", "warning")
+            }
+        });
+   
 
+    }
 });
  $("#UrunYukle").on("click", function() {
        $('#selectsPackUrunEkle').empty();
@@ -581,6 +632,16 @@ $("#addp2paket").on("click", function() {
 });
 $("#selectsPackadd").on("change", function() {
     $("#tableAddedProduct tbody tr").empty();
+    $.ajax({
+            url: "@Url.Action("restorePackList","Product")",
+            type: 'POST',
+            dataType: 'json',
+            success: function(data) {
+            },
+            error: function(err) {
+                swal("Hata Oluştu", "Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.", "warning")
+            }
+        });
 });
            
                   $("#addprodtoPack").on("click", function() {
