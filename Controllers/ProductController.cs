@@ -15,10 +15,10 @@ namespace Remake.Controllers
         List<Urunler> urunlers = new List<Urunler>();
         Urunler urun = new Urunler();
         Paket pack = new Paket();
-        Paketholder paketholder = new Paketholder();
         List<Paket> packs = new List<Paket>();
         public static List<Paketholder> listPaketStatic = new List<Paketholder>();
         Paketholder packHolder = new Paketholder();
+        List<Paketholder> paketholders = new List<Paketholder>();
         int counter;
         public IActionResult Index()
         {
@@ -34,12 +34,34 @@ namespace Remake.Controllers
                 throw ex;
             }
         }
+        public JsonResult getPackUruns(int packid)
+        {
+            var data = from c in db.Paketholders
+                       join o in db.Urunlers
+                       on c.UrunId equals o.Id
+                       where c.PaketId == packid
+                       select new
+                       {
+                           urunAdi = o.UrunAdi,
+                           urunKodu = o.UrunKodu,
+                           urunAdedi = c.UrunAdeti
+                       };
+
+            return Json(data);
+        }
+        public JsonResult GetPaketList()
+        {
+            packs = new List<Paket>();
+            packs = db.Pakets.ToList();
+            return Json(packs);
+            
+        }
         public JsonResult restorePackList()
         {
             listPaketStatic.Clear();
             return Json(1);
         }
-        public JsonResult SavePack()
+        public JsonResult SavePack(int paketid)
         {
             if (listPaketStatic.Count == 0)
             {
@@ -50,41 +72,63 @@ namespace Remake.Controllers
                 packHolder = new Paketholder();
                 foreach(var item in listPaketStatic)
                 {
-                    packHolder = item;
-                    db.Paketholders.Add(packHolder);
-                    db.SaveChanges();
+                        packHolder = item;
+                        db.Paketholders.Add(packHolder);
+                        db.SaveChanges();
                 }
                 return Json(1);
             }
         }
-        public JsonResult AddToPaketHolder(string urunKodu,int adet,int packId)
+        public JsonResult AddToPaketHolderTwo(string urunKodu, int adet, string packId)
         {
             urun = new Urunler();
-            urun = db.Urunlers.FirstOrDefault(x=>x.UrunKodu== urunKodu);
+            urun = db.Urunlers.FirstOrDefault(x => x.UrunKodu == urunKodu);
             pack = new Paket();
-            if(listPaketStatic.Count == 0)
+            pack = db.Pakets.FirstOrDefault(x => x.PaketAdi == packId);
+
+            if (listPaketStatic.Count == 0)
             {
                 packHolder = new Paketholder();
                 packHolder.UrunAdeti = adet;
                 packHolder.UrunId = urun.Id;
-                packHolder.PaketId = packId;
+                packHolder.PaketId = pack.Id;
                 listPaketStatic.Add(packHolder);
                 return Json(urun);
             }
             else
             {
-            foreach(var item in listPaketStatic)
-            {
-                if(item.UrunId == urun.Id)
+                foreach (var item in listPaketStatic)
                 {
-                    return Json(0);  // ürün zaten ekli
+                    if (item.UrunId == urun.Id)
+                    {
+                        return Json(0);  // ürün zaten ekli
+                    }
+                    else
+                    {
+                        counter++;
+                    }
                 }
-                else
+                if (counter == listPaketStatic.Count)
                 {
-                    counter++;
+                    packHolder = new Paketholder();
+                    packHolder.UrunAdeti = adet;
+                    packHolder.UrunId = urun.Id;
+                    packHolder.PaketId = pack.Id;
+                    listPaketStatic.Add(packHolder);
+                    return Json(urun);
                 }
             }
-            if(counter == listPaketStatic.Count)
+            return Json(1);
+        }
+        public JsonResult AddToPaketHolder(string urunKodu,int adet,int packId)
+        {
+            urun = new Urunler();
+            urun = db.Urunlers.FirstOrDefault(x=>x.UrunKodu== urunKodu);
+            Paketholder phnew = new Paketholder();
+            phnew = db.Paketholders.FirstOrDefault(x => x.PaketId == packId && x.UrunId == urun.Id);
+            if (phnew == null)
+            {
+                if (listPaketStatic.Count == 0)
                 {
                     packHolder = new Paketholder();
                     packHolder.UrunAdeti = adet;
@@ -93,6 +137,33 @@ namespace Remake.Controllers
                     listPaketStatic.Add(packHolder);
                     return Json(urun);
                 }
+                else
+                {
+                    foreach (var item in listPaketStatic)
+                    {
+                        if (item.UrunId == urun.Id)
+                        {
+                            return Json(0);  // ürün zaten ekli
+                        }
+                        else
+                        {
+                            counter++;
+                        }
+                    }
+                    if (counter == listPaketStatic.Count)
+                    {
+                        packHolder = new Paketholder();
+                        packHolder.UrunAdeti = adet;
+                        packHolder.UrunId = urun.Id;
+                        packHolder.PaketId = packId;
+                        listPaketStatic.Add(packHolder);
+                        return Json(urun);
+                    }
+                }
+            }
+            else
+            {
+                return Json(0);
             }
             return Json(1);
         }

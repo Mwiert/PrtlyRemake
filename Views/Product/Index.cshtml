@@ -120,6 +120,37 @@
             </div>
         </div>
     </div>
+     <div class="container mt-2">
+        <div class="modal" id="addProdct2PaketModalTwo">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Paket'e Ürün Ekle</h4>
+                    <div class="modal-body">
+                        <div class="col-12 grid-margin stretch-card">
+                <div class="card " style="height:100%; margin-bottom:-3rem;">
+                  <div class="card-body">
+                       <select class="form-control form-control-sm" id="selectsPackUrunEkleTwo" name="packAdiUrun">
+                        <option class="text-center">--</option> 
+                      </select>
+                      <div class="form-group">
+                        <label for="exampleInputName1" style="margin-left:10rem;margin-top:1.5rem">Ürün Adedi </label>
+                        <input type="number" class="form-control" id="urunAdediPackTwo" name="urunadet"  required placeholder="Ürün Adedi giriniz" >
+                      </div>
+                  </div>
+                   <button type="submit" id="addp2paketTwo" class="btn btn-gradient-info me-2">Ekle</button>
+                </div>
+              </div>
+                    </div>
+                    <div class="modal-footer">
+                          <button type="submit" data-bs-dismiss="modal"  class="btn btn-gradient-danger me-2">Kapat</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
  @using (Html.BeginForm("AddNewProduct","Product",FormMethod.Post))
 {
@@ -417,12 +448,28 @@
                         <div class="col-12 grid-margin stretch-card">
                 <div class="card " style="height:100%; margin-bottom:-3rem;">
                                       <div class="card-body">
-                    <form class="forms-sample">
                       <div class="form-group">
                         <label for="exampleInputName1">Paket Adı </label>
                         <input type="text" class="form-control" id="paketAdi" name="paketAdi" disabled placeholder="Paket Adı">
                       </div>
-                    </form>
+                                            <button data-bs-toggle="modal" data-bs-target="#addProdct2PaketModalTwo" class="btn btn-gradient-warning btn-sm" id="UrunYukless"style="margin-left:9.5rem;margin-top:5px;margin-bottom:5px;">Ürün Ekle</button>
+ <table id="tableAddedProductTwo" class="table table-sm table-bordered text-center  " >
+        <thead>
+                        <tr style="font-size:12px">
+                       <th style="font-size:12px">Ürün Kodu</th>
+                       <th style="font-size:12px">Ürün Adı</th>
+                        <th style="font-size:12px">Adet</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        
+                    <tr class="table" style="cursor:pointer;background-color:#e9e9f7; user-select: none;font-size:12px"> </tr>
+                        
+                      </tbody>
+                    </table>
+                  </div>
+                       <button class="btn btn-gradient-info" id="UrunYukle2HolderTwo"style="float:right">Kaydet</button>
+                </div>
                   </div>
                 </div>
               </div>
@@ -434,8 +481,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
           <div class="container mt-2">
         <div class="modal" id="modalAddPrdctPack">
             <div class="modal-dialog">
@@ -492,7 +537,8 @@
                   <div class="card-body">
                        <button type="submit" data-bs-toggle="modal" data-bs-target="#modalCreatePack" class="btn btn-gradient-info me-2">Paket Oluştur</button>
                         <button type="submit" data-bs-toggle="modal" data-bs-target="#modalAddPrdctPack"  class="btn btn-gradient-info me-2" id="addprodtoPack">Pakete Ürün Ekle </button>
-                        <button type="submit" style="margin-top:1rem;margin-left:7rem;" data-bs-toggle="modal" data-bs-target="#myModalPaketDel" id="delPack"  class="btn btn-gradient-info me-2">Paket Sil </button>
+                        <button type="submit" style="margin-top:1rem;margin-left:1rem;" data-bs-toggle="modal" data-bs-target="#myModalPaketDel" id="delPack"  class="btn btn-gradient-info me-2">Paket Sil </button>
+                             <button type="submit" style="margin-top:1rem;margin-left:1rem;" data-bs-toggle="modal" data-bs-target="#myModalPaketSee" id="seePack"  class="btn btn-gradient-info me-2">Paketleri Gör </button>
                   </div>
                 </div>
               </div>
@@ -505,6 +551,45 @@
         </div>
     </div>
 
+     <div class="container mt-2">
+        <div class="modal" id="myModalPaketSee">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Paket Listesi</h4>
+                    <div class="modal-body">
+                        <div class="col-12 grid-margin stretch-card">
+                <div class="card " style="height:100%; margin-bottom:-3rem;">
+                     <div class="card-body">
+                       <select class="form-control form-control-sm" id="packListesi" name="packListe">
+                        <option class="text-center" style="font-size:1rem" >--</option> 
+                      </select>
+                      <table id="listPaketInside" class="table table-sm table-bordered text-center  " style="margin-top:2rem;">
+        <thead>
+                        <tr style="font-size:12px">
+                       <th style="font-size:12px">Ürün Kodu</th>
+                       <th style="font-size:12px">Ürün Adı</th>
+                        <th style="font-size:12px">Adet</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        
+                        
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+                    </div>
+                    <div class="modal-footer">
+                          <button type="submit" data-bs-dismiss="modal"  class="btn btn-gradient-danger me-2">Kapat</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="dropup-center dropup" style="outline:none">
             <button class="btn btn-gradient-info " style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;"type="button" id="dropupCenterBtn" data-bs-toggle="dropdown" aria-expanded="false">
@@ -517,8 +602,75 @@
           </div>
 
               <script type="text/javascript">
+$("#packListesi").on("change", function() {
+    var packid = $("#packListesi").val();
+    $("#listPaketInside tbody").empty();
+     $.ajax({
+            url: "@Url.Action("getPackUruns","Product")",
+            type: 'POST',
+            data:{packid:packid},
+            dataType: 'json',
+            success: function(data) {
+                for(var i =0;i <data.length ; i++){
+
+          $('#listPaketInside tbody').append('<tr class="table" style="cursor:pointer;background-color:#e9e9f7; user-select: none;font-size:12px"><td class="text-center" style=" user-select: none;font-size:12px">'+data[i].urunKodu+'</td><td class="text-center" style=" user-select: none;font-size:12px">'+data[i].urunAdi+'</td><td class="text-center" style=" user-select: none;font-size:12px">'+data[i].urunAdedi+'</td> </tr>');
+                }
+            },
+            error: function(err) {
+                swal("Hata Oluştu", "Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.", "warning")
+            }
+        });
+   
+});
+
+$("#seePack").on("click", function() {
+     $.ajax({
+            url: "@Url.Action("GetPaketList","Product")",
+            type: 'POST',
+            dataType: 'json',
+            success: function(data) {
+                if (data != null) {
+                    for (var i = 0; i < data.length; i++) {
+                    $('#packListesi').append('<option class="text-center" style="font-size:1rem" value='+data[i].id+'>'+data[i].paketAdi+'</option>');
+                    }
+                }
+                else {
+                    swal("Hata Oluştu", "Hiç paket oluşturmadınız.", "warning")
+                }
+            },
+            error: function(err) {
+                swal("Hata Oluştu", "Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.", "warning")
+            }
+        });
+});
 
 $("#UrunYukle2Holder").on("click", function() {
+    var paketid = $("#selectsPackadd").val();
+    $.ajax({
+        url: "@Url.Action("SavePack","Product")",
+        type: 'POST',
+        data: {paketid:paketid},
+        dataType: 'json',
+        success: function(data) {
+            if (data == 0) {
+                  swal("Hata Oluştu", "Paket boş olduğu için işlem başarısız.", "warning")
+            }
+            else{
+                swal({
+                    icon: "success", title: "Başarılı", text: "Paket Kaydedildi!", type:
+                "success"
+                });
+                $("#modalAddPrdctPack").modal("hide");
+
+            }
+            },
+            error: function(err) {
+                swal("Hata Oluştu", "Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.", "warning")
+            }
+        });
+   
+});
+$("#UrunYukle2HolderTwo").on("click", function() {
     $.ajax({
         url: "@Url.Action("SavePack","Product")",
         type: 'POST',
@@ -540,6 +692,45 @@ $("#UrunYukle2Holder").on("click", function() {
             }
         });
    
+});
+$("#addp2paketTwo").on("click", function() {
+    var urunKodu = $("#selectsPackUrunEkleTwo").val();
+    var adet = $("#urunAdediPackTwo").val();
+    var packId = $("#paketAdi").val();
+    if(adet==0){
+          swal("Hata Oluştu", "Lütfen ürün adedi giriniz.", "warning")
+    }
+    else{
+        $.ajax({
+            url: "@Url.Action("AddToPaketHolderTwo","Product")",
+            type: 'POST',
+            data:{urunKodu:urunKodu,adet:adet,packId:packId},
+            dataType: 'json',
+            success: function(data) {
+                if(data==0){
+                     swal("Hata Oluştu", "Bu ürünü zaten eklediniz.", "warning")
+                }
+                else if(data==1){
+                           swal("Hata Oluştu", "Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.", "warning")
+                }
+                else{
+                     swal({
+        icon: "success", title: "Başarılı", text: "Ürün Eklendi!", type:
+            "success"
+    }).then(function() {
+        $("#addProdct2PaketModalTwo").modal("hide");
+         $("#modalAddPrdctPackandPack").modal("show");
+          $('#tableAddedProductTwo tbody').append('<tr class="table" style="cursor:pointer;background-color:#e9e9f7; user-select: none;font-size:12px"><td class="text-center" style=" user-select: none;font-size:12px">'+urunKodu+'</td><td class="text-center" style=" user-select: none;font-size:12px">'+data.urunAdi+'</td><td class="text-center" style=" user-select: none;font-size:12px">'+adet+'</td> </tr>');
+    });
+                }
+            },
+            error: function(err) {
+                swal("Hata Oluştu", "Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.", "warning")
+            }
+        });
+   
+
+    }
 });
 
 $("#addp2paket").on("click", function() {
@@ -580,6 +771,27 @@ $("#addp2paket").on("click", function() {
    
 
     }
+});
+ $("#UrunYukless").on("click", function() {
+       $('#selectsPackUrunEkleTwo').empty();
+     $.ajax({
+            url: "@Url.Action("GetUrunList","Product")",
+            type: 'POST',
+            dataType: 'json',
+            success: function(data) {
+                if (data != null) {
+                    for (var i = 0; i < data.length; i++) {
+                    $('#selectsPackUrunEkleTwo').append('<option class="text-center" style="font-size:1rem" value='+data[i].urunKodu+'>'+data[i].urunAdi+'</option>');
+                    }
+                }
+                else {
+                    swal("Hata Oluştu", "Hiç paket oluşturmadınız.", "warning")
+                }
+            },
+            error: function(err) {
+                swal("Hata Oluştu", "Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.", "warning")
+            }
+        });
 });
  $("#UrunYukle").on("click", function() {
        $('#selectsPackUrunEkle').empty();

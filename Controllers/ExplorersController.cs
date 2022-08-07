@@ -16,6 +16,7 @@ namespace Remake.Controllers
         List<Kesifmekanholder> KMHolderList = new List<Kesifmekanholder>();
         List<Alanholder> alanHolders = new List<Alanholder>();
         List<Urunler> urunlers = new List<Urunler>();
+        List<Urunholder> urunholders = new List<Urunholder>();
         Kesifmekanholder kesifmekanholder = new Kesifmekanholder();
         Kesifler kesifler = new Kesifler();
         Urunler urun = new Urunler();
@@ -25,6 +26,8 @@ namespace Remake.Controllers
         Paket pack = new Paket();
         List<Paket> packs = new List<Paket>();
         Paketholder paketHolder = new Paketholder();
+        List<Paketholder> PH = new List<Paketholder>();
+        Stokısenabled stokısenabled = new Stokısenabled();
         public static int KesifIdInt,MekanidHold;
         int temp;
         int UrunKullanilanAdet;
@@ -34,6 +37,69 @@ namespace Remake.Controllers
             db.SaveChanges();
             return View(db.Kesiflers);
 
+        }
+        public JsonResult AddPack2Alan(int packid,string AlanAdi)
+        {
+            List<string> urunEklenmeyen = new List<string>();
+            urun = new Urunler();
+            alanHolder = new Alanholder();
+            urunholders = new List<Urunholder>();
+            stokısenabled = db.Stokısenableds.FirstOrDefault(x=>x.Id==1);
+            alanHolder = db.Alanholders.FirstOrDefault(x => x.MekanId == MekanidHold && x.AlanAdi == AlanAdi && x.KesifId == KesifIdInt);
+            urunholders = db.Urunholders.Where(x=>x.AlanId==alanHolder.Id).ToList();
+            if (stokısenabled.IsEnabled == 0)
+            {
+                PH = new List<Paketholder>();
+                PH = db.Paketholders.Where(x => x.PaketId == packid).ToList();
+                foreach(var item in urunholders)
+                {
+                    foreach(var item2 in PH)
+                    {
+                        if (item2.UrunId == item.UrunId)
+                        {
+                            urun = db.Urunlers.FirstOrDefault(x=>x.Id==item.UrunId);
+                            urunEklenmeyen.Add(urun.UrunAdi);
+                        }
+                        else
+                        {
+                            urunholder = new Urunholder();
+                            urunholder.AlanId = alanHolder.Id;
+                            urunholder.UrunId = item2.UrunId;
+                            urunholder.UrunAdet = item2.UrunAdeti;
+                            db.Urunholders.Add(urunholder);
+                            db.SaveChanges();
+                        }
+                    }
+                }
+                if(urunEklenmeyen.Count == 0)
+                {
+                    return Json(0); // bütün ürünler eklendi
+                }
+                else
+                {
+                  return Json(urunEklenmeyen); // bu ürünler eklenmedi.
+                }
+            }
+            else  // stok kontrolü yapılacak
+            {
+
+            return Json(0);
+            }
+        }
+        public JsonResult getProd4Paket(int packid)
+        {
+            var data = from c in db.Paketholders
+                              join o in db.Urunlers
+                              on c.UrunId equals o.Id
+                              where c.PaketId == packid
+                              select new
+                              {
+                                  urunAdi = o.UrunAdi,
+                                  urunKodu = o.UrunKodu,
+                                  urunAdedi = c.UrunAdeti
+                              };
+
+            return Json(data);
         }
         public JsonResult listPaket()
         {

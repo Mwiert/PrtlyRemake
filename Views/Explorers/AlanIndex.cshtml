@@ -22,7 +22,7 @@
 
                            <label for="exampleInputName1" style="margin-left:9rem;margin-top:1.5rem;">Paket içeriği</label>
                       <div class="form-group" style=" margin-top:10px;">
-                       <table id="tableAddedProduct" class="table table-sm table-bordered text-center  " >
+                       <table id="tableListPaketİcerik" class="table table-sm table-bordered text-center  " >
         <thead>
                         <tr style="font-size:12px">
                        <th style="font-size:12px">Ürün Kodu</th>
@@ -31,13 +31,11 @@
                         </tr>
                       </thead>
                       <tbody>
-                        
-                    <tr class="table" style="cursor:pointer;background-color:#e9e9f7; user-select: none;font-size:12px"> </tr>
-                        
                       </tbody>
                     </table>
                     </div>
                   </div>
+                        <button class="btn btn-gradient-info" id="UrunYukle2Holder"style="float:right">Kaydet</button>
                 </div>
               </div>
                     </div>
@@ -82,7 +80,7 @@
     <input value="@ViewBag.AlanAdi" id="alanAdiGets" type="text" style="visibility:hidden">
 
      <div class="form-group text-center">
-                     <h3>Mekanlar</h3>
+                     <h3>Kategoriler</h3>
                       <select class="form-control form-control-sm" id="catAdi" name="KategoriAdi">
                         <option class="text-center" style="font-size:1rem" >--</option> 
         @foreach(var item in (List<Kategoriler>)ViewBag.ListKategori)
@@ -375,9 +373,55 @@
 <button type="button" style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;" class="btn btn-gradient-info " style="margin-bottom:1rem;" data-bs-toggle="modal" data-bs-target="#myModal">+</button>
                                     
                         <script type="text/javascript">
+$("#UrunYukle2Holder").on("click", function() {
+    var packid = $("#").val();
+        var AlanAdi = $("#alanAdiGets").val();
+    $.ajax({
+            url: "@Url.Action("AddPack2Alan","Explorers")",
+            type: 'POST',
+            data:{packid:packid,AlanAdi:AlanAdi},
+            dataType: 'json',
+            success: function(data) {
+              //if(data.length !=0){
+
+              //}
+              //else if(data ==){
+
+              //}
+              //else{
+              //     swal({
+              //      icon: "success", title: "Başarılı", text: "Paket içerisindeki ürünler alana eklendi!", type:
+              //          "success"
+              //  }).then(function() {
+              //      location.reload();
+              //  });
+              //}
+            },
+            error: function(err) {
+                swal("Hata Oluştu", "Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.", "warning")
+            }
+        });
+});
+
 $("#selectsPack").on("change", function() { 
 var packid = $("#selectsPack").val();
-
+    $("#tableListPaketİcerik tbody").empty();
+    $.ajax({
+        url: "@Url.Action("getProd4Paket","Explorers")",
+        type: 'POST',
+        data: {packid:packid},
+        dataType: 'json',
+        success: function(data) {
+            console.log(data)
+            for (var i = 0; i < data.length; i++) {
+            $('#tableListPaketİcerik tbody').append('<tr class="table" style="cursor:pointer;background-color:#e9e9f7; user-select: none;font-size:12px"><td class="text-center" style=" user-select: none;font-size:12px">'+data[i].urunKodu+'</td><td class="text-center" style=" user-select: none;font-size:12px">'+data[i].urunAdi+'</td><td class="text-center" style=" user-select: none;font-size:12px">'+data[i].urunAdedi+'</td> </tr>');
+            }
+   
+        },
+        error:function(err){
+              swal("Hata Oluştu", "Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.", "warning")
+        }
+    });
 });
 
 $("#addPack").on("click", function() {
@@ -388,6 +432,7 @@ $("#addPack").on("click", function() {
             dataType: 'json',
             success: function(data) {
                 if (data != null) {
+                    $('#selectsPack').append('<option class="text-center" style="font-size:1rem" value="bos">Paket Seçiniz</option>');
                     for (var i = 0; i < data.length; i++) {
                     $('#selectsPack').append('<option class="text-center" style="font-size:1rem" value='+data[i].id+'>'+data[i].paketAdi+'</option>');
                     }
