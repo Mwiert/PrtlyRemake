@@ -4,398 +4,416 @@
     ViewData["Title"] = "AlanIndex";
     Layout = "~/Views/Shared/layout.cshtml";
 }
-      <div class="container mt-2">
-        <div class="modal" id="myModalPaket">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Paket Ekle</h4>
-                    <div class="modal-body">
-                        <div class="col-12 grid-margin stretch-card">
-                <div class="card " style="height:100%; margin-bottom:-3rem;">
-                  <div class="card-body">
-                       <select class="form-control form-control-sm" id="selectsPack" name="packAdi">
-                        <option class="text-center" style="font-size:1rem" >--</option> 
-                      </select>
-
-                           <label for="exampleInputName1" style="margin-left:9rem;margin-top:1.5rem;">Paket içeriği</label>
-                      <div class="form-group" style=" margin-top:10px;">
-                       <table id="tableListPaketİcerik" class="table table-sm table-bordered text-center  " >
-        <thead>
-                        <tr style="font-size:12px">
-                       <th style="font-size:12px">Ürün Kodu</th>
-                       <th style="font-size:12px">Ürün Adı</th>
-                        <th style="font-size:12px">Adet</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                      </tbody>
-                    </table>
-                    </div>
-                  </div>
-                        <button class="btn btn-gradient-info" id="UrunYukle2Holder"style="float:right">Kaydet</button>
+<div class="container mt-2">
+    <div class="modal" id="myModalPaket">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-              </div>
+                <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Paket Ekle</h4>
+                <div class="modal-body">
+                    <div class="col-12 grid-margin stretch-card">
+                        <div class="card " style="height:100%; margin-bottom:-3rem;">
+                            <div class="card-body">
+                                <select class="form-control form-control-sm" id="selectsPack" name="packAdi">
+                                    <option class="text-center" style="font-size:1rem">--</option>
+                                </select>
+
+                                <label for="exampleInputName1" style="margin-left:9rem;margin-top:1.5rem;">Paket içeriği</label>
+                                <div class="form-group" style=" margin-top:10px;">
+                                    <table id="tableListPaketİcerik" class="table table-sm table-bordered text-center  ">
+                                        <thead>
+                                            <tr style="font-size:12px">
+                                                <th style="font-size:12px">Ürün Kodu</th>
+                                                <th style="font-size:12px">Ürün Adı</th>
+                                                <th style="font-size:12px">Adet</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <button class="btn btn-gradient-info" id="UrunYukle2Holder" style="float:right">Kaydet</button>
+                        </div>
                     </div>
-                    <div class="modal-footer">
-                          <button type="submit" data-bs-dismiss="modal"  class="btn btn-gradient-danger me-2">Kapat</button>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" data-bs-dismiss="modal" class="btn btn-gradient-danger me-2">Kapat</button>
                 </div>
             </div>
         </div>
     </div>
-<div class="container mt-2"> @*mt kapatılabilir*@
-        <div class="modal" id="myModalDelete">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Emin Misiniz?</h4>
-                    <div class="modal-body">
-                        <div class="col-12 grid-margin stretch-card">
-                <div class="card " style="height:100%; margin-bottom:-3rem;">
-                  <div class="card-body">
-                              <h1 class="card-title text-center mt-2">Ürünü silmek istediğinize emin misiniz?</h1>
-                  </div>
+</div>
+<div class="container mt-2">
+    @*mt kapatılabilir*@
+    <div class="modal" id="myModalDelete">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-              </div>
+                <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Emin Misiniz?</h4>
+                <div class="modal-body">
+                    <div class="col-12 grid-margin stretch-card">
+                        <div class="card " style="height:100%; margin-bottom:-3rem;">
+                            <div class="card-body">
+                                <h1 class="card-title text-center mt-2">Ürünü silmek istediğinize emin misiniz?</h1>
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal-footer">
-                        @using (Html.BeginForm("DeleteProductFromAlan","Explorers",FormMethod.Post))
-{
-                                     <button type="submit" class="btn btn-gradient-danger me-2">Sil</button>
-                                                   <input value="" id="RowsValue" type="text" style="visibility:hidden" name="UserEmail">
+                </div>
+                <div class="modal-footer">
+                    @using (Html.BeginForm("DeleteProductFromAlan", "Explorers", FormMethod.Post))
+                    {
+                        <button type="submit" class="btn btn-gradient-danger me-2">Sil</button>
+                        <input value="" id="RowsValue" type="text" style="visibility:hidden" name="UserEmail">
 
-}
-                            <button type="submit" data-bs-dismiss="modal"  class="btn btn-gradient-info me-2">İptal Et</button>
-                    </div>
+                    }
+                    <button type="submit" data-bs-dismiss="modal" class="btn btn-gradient-info me-2">İptal Et</button>
                 </div>
             </div>
         </div>
     </div>
- <h3 class="card-title text-center " id="alanAdiGet" style="margin-top:-2rem;padding:1rem;">@ViewBag.AlanAdi</h3>
-    <input value="@ViewBag.AlanAdi" id="alanAdiGets" type="text" style="visibility:hidden">
+</div>
+<h3 class="card-title text-center " id="alanAdiGet" style="margin-top:-2rem;padding:1rem;">@ViewBag.AlanAdi</h3>
+<input value="@ViewBag.AlanAdi" id="alanAdiGets" type="text" style="visibility:hidden">
 
-     <div class="form-group text-center">
-                     <h3>Kategoriler</h3>
-                      <select class="form-control form-control-sm" id="catAdi" name="KategoriAdi">
-                        <option class="text-center" style="font-size:1rem" >--</option> 
-        @foreach(var item in (List<Kategoriler>)ViewBag.ListKategori)
+<div class="form-group text-center">
+    <h3>Kategoriler</h3>
+    <select class="form-control form-control-sm" id="catAdi" name="KategoriAdi">
+        <option class="text-center" style="font-size:1rem">--</option>
+        @foreach (var item in (List<Kategoriler>)ViewBag.ListKategori)
         {
-            
-                   <option class="text-center" style="font-size:1rem">@item.KategoriAdi</option>                          
-        }
-                      </select>
 
-      </div>
+            <option class="text-center" style="font-size:1rem">@item.KategoriAdi</option>
+
+        }
+    </select>
+
+</div>
 
 
-    <div class="container mt-2"> @*mt kapatılabilir*@
-        <div class="modal" id="myModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Ürün Ekle</h4>
-                    <div class="modal-body">
-                        <div class="col-12 grid-margin stretch-card">
-                <div class="card " style="height:100%; margin-bottom:-3rem;">
-                  <div class="card-body">
-                    <form class="forms-sample">
-                        <div class="form-group">
-                        <label for="exampleInputName1">Kategori Seçiniz</label>
-                         <select class="form-control form-control-sm" id="catName" name="CatName">
-                        <option class="text-center" style="font-size:1rem" >--</option> 
-        @foreach(var item in (List<Kategoriler>)ViewBag.CatList)
-        { 
-                   <option class="text-center" value="@item.KategoriAdi" style="font-size:1rem">@item.KategoriAdi</option>                              
-        }
-                      </select>
-                      </div>
-                         <div class="form-group">
-                        <label for="exampleInputName1">Ürün Seçiniz</label>
-                         <select class="form-control form-control-sm" id="odaAdi" name="UrunKodu">
-                        <option class="text-center" style="font-size:1rem" >--</option> 
-        @foreach(var item in Model)
-        { 
-                   <option class="text-center" value="@item.UrunKodu" style="font-size:1rem">@item.UrunAdi</option>                              
-        }
-                      </select>
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleInputName1">Ürün Adedi </label>
-                        <input type="number" class="form-control" id="UrunAdet" name="UrunAdedi"  required placeholder="Ürün Adedi">
-                        <input type="number" value="@ViewBag.RowId" id="rowids"name="RowId" style="visibility:hidden">
-                      </div>
-                    </form>
-                  </div>
+<div class="container mt-2">
+    @*mt kapatılabilir*@
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-              </div>
-           </div>
-                 <button type="button" id="addprod3" class="btn btn-gradient-info me-2">Onayla</button>
-    
-   <div class="modal-footer">
-        <button data-bs-dismiss="modal" class="btn btn-gradient-warning me-2">Kapat</button>
-    <button data-bs-toggle="modal" data-bs-target="#myModalnewProd" class="btn btn-gradient-success me-2">Yeni Ürün Ekle</button>
-<button data-bs-toggle="modal" data-bs-target="#myModalPaket" id="addPack" class="btn btn-gradient-danger me-2">Paket Ekle</button>
-      </div>
+                <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Ürün Ekle</h4>
+                <div class="modal-body">
+                    <div class="col-12 grid-margin stretch-card">
+                        <div class="card " style="height:100%; margin-bottom:-3rem;">
+                            <div class="card-body">
+                                <form class="forms-sample">
+                                    <div class="form-group">
+                                        <label for="exampleInputName1">Kategori Seçiniz</label>
+                                        <select class="form-control form-control-sm" id="catName" name="CatName">
+                                            <option class="text-center" style="font-size:1rem">--</option>
+                                            @foreach (var item in (List<Kategoriler>)ViewBag.CatList)
+                                            {
+                                                <option class="text-center" value="@item.KategoriAdi" style="font-size:1rem">@item.KategoriAdi</option>
+
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputName1">Ürün Seçiniz</label>
+                                        <select class="form-control form-control-sm" id="odaAdi" name="UrunKodu">
+                                            <option class="text-center" style="font-size:1rem">--</option>
+                                            @foreach (var item in Model)
+                                            {
+                                                <option class="text-center" value="@item.UrunKodu" style="font-size:1rem">@item.UrunAdi</option>
+
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputName1">Ürün Adedi </label>
+                                        <input type="number" class="form-control" id="UrunAdet" name="UrunAdedi" required placeholder="Ürün Adedi">
+                                        <input type="number" value="@ViewBag.RowId" id="rowids" name="RowId" style="visibility:hidden">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" id="addprod3" class="btn btn-gradient-info me-2">Onayla</button>
+
+                <div class="modal-footer">
+                    <button data-bs-dismiss="modal" class="btn btn-gradient-warning me-2">Kapat</button>
+                    <button data-bs-toggle="modal" data-bs-target="#myModalnewProd" class="btn btn-gradient-success me-2">Yeni Ürün Ekle</button>
+                    <button data-bs-toggle="modal" data-bs-target="#myModalPaket" id="addPack" class="btn btn-gradient-danger me-2">Paket Ekle</button>
                 </div>
             </div>
         </div>
     </div>
-     <div class="col-md-12">
-                <div class="table-responsive card">
-                  <div class="card-body">
-                    <table id="table" class="table table-bordered text-center ">
-        <thead>
-                        <tr>
-             <th>Kategori</th>
-            <th>Ürün Kodu</th>
-            <th>Ürün Adı</th>
-            <th>Ürün Adedi</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                             @foreach(var item in Model)
-                             {
-                        foreach(var selecteditem in (List<Urunholder>)ViewBag.UrunList)
+</div>
+<div class="col-md-12">
+    <div class="table-responsive card">
+        <div class="card-body">
+            <table id="table" class="table table-bordered text-center ">
+                <thead>
+                    <tr>
+                        <th>Kategori</th>
+                        <th>Ürün Kodu</th>
+                        <th>Ürün Adı</th>
+                        <th>Ürün Adedi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        foreach (var selecteditem in (List<Urunholder>)ViewBag.UrunList)
                         {
-                            if(item.Id == selecteditem.UrunId && ViewBag.RowId== selecteditem.AlanId)
+                            if (item.Id == selecteditem.UrunId && ViewBag.RowId == selecteditem.AlanId)
                             {
-                               <tr class="table" style="cursor:pointer;background-color:#e9e9f7">
-                                       <td style=" user-select: none;" >@item.UrunKategorisi</td>
-                  <td  style="user-select: none;" >@item.UrunKodu</td>
-                  <td style="user-select: none;">@item.UrunAdi</td>
-                   <td ><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" style=" user-select: none;"class="btn btn-gradient-info btn-sm">@selecteditem.UrunAdet</a></td>
-                  <td style=" user-select: none;" data-bs-toggle="modal" data-bs-target="#myModalDelProduct">
-                      <button data-bs-toggle="modal" data-bs-target="#myModalProductUpdate" style=" user-select: none;"class="btn btn-gradient-info btn-sm">Güncelle</button>
-                      <a type="submit"  class="btn btn-gradient-danger btn-sm">Sil</a></td>
-                   </tr> 
+                                <tr class="table" style="cursor:pointer;background-color:#e9e9f7">
+                                    <td style=" user-select: none;">@item.UrunKategorisi</td>
+                                    <td style="user-select: none;">@item.UrunKodu</td>
+                                    <td style="user-select: none;">@item.UrunAdi</td>
+                                    <td><a type="submit" data-bs-toggle="modal" data-bs-target="#myModalOK" style=" user-select: none;" class="btn btn-gradient-info btn-sm">@selecteditem.UrunAdet</a></td>
+                                    <td style=" user-select: none;" data-bs-toggle="modal" data-bs-target="#myModalDelProduct">
+                                        <button data-bs-toggle="modal" data-bs-target="#myModalProductUpdate" style=" user-select: none;" class="btn btn-gradient-info btn-sm">Güncelle</button>
+                                        <a type="submit" class="btn btn-gradient-danger btn-sm">Sil</a>
+                                    </td>
+                                </tr>
+
+
 
                             }
                         }
-                             }
-                      </tbody>
-                    </table>
-                  </div>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="container mt-2">
+    <div class="modal" id="myModalProductUpdate">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-              </div>
-               <div class="container mt-2">
-        <div class="modal" id="myModalProductUpdate">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Ürün Adedi Güncelle</h4>
+                <div class="modal-body">
+                    <div class="col-12 grid-margin stretch-card">
+                        <div class="card " style="height:100%; margin-bottom:-3rem;">
+                            <div class="card-body">
+                                <form class="forms-sample">
+                                    <label for="exampleInputName1" style="font-size:14px">Ürün Kodu</label>
+                                    <div class="form-group" style="display:flex">
+                                        <input type="text" class="form-control" id="UrunKoduUpdate" name="UrunKodu" value="" required placeholder="Ürün Kodu" disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="form-control" id="UrunAdetiUpdate" name="UrunAdet" required placeholder="Ürün Adedi">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Ürün Adedi Güncelle</h4>
-                    <div class="modal-body">
-                        <div class="col-12 grid-margin stretch-card">
-                <div class="card " style="height:100%; margin-bottom:-3rem;">
-                  <div class="card-body">
-                    <form class="forms-sample">
-                        <label for="exampleInputName1" style="font-size:14px">Ürün Kodu</label>
-                      <div class="form-group" style="display:flex">
-                        <input type="text" class="form-control" id="UrunKoduUpdate" name="UrunKodu" value=""  required placeholder="Ürün Kodu" disabled>
-                      </div>
-                            <div class="form-group">
-                        <input type="number" class="form-control" id="UrunAdetiUpdate" name="UrunAdet"  required placeholder="Ürün Adedi">
-                      </div>
-                    </form>
-                  </div>
                 </div>
-              </div>
-                    </div>
-                    <div class="modal-footer">
-                          <button type="submit" data-bs-toggle="modal" data-bs-target="#myModalSureUpdate" id="updateProduct" class="btn btn-gradient-info me-2">Güncelle</button>
-                    </div>
+                <div class="modal-footer">
+                    <button type="submit" data-bs-toggle="modal" data-bs-target="#myModalSureUpdate" id="updateProduct" class="btn btn-gradient-info me-2">Güncelle</button>
                 </div>
             </div>
         </div>
     </div>
-              <div class="container mt-2">
-        <div class="modal" id="myModalDelProduct">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Ürün Sil</h4>
-                    <div class="modal-body">
-                        <div class="col-12 grid-margin stretch-card">
-                <div class="card " style="height:100%; margin-bottom:-3rem;">
-                  <div class="card-body">
-                    <form class="forms-sample">
-                      <div class="form-group">
-                        <label for="exampleInputName1">Ürün Adedine Göre Sil</label>
-                         <input id="checkboxValueSil" style="margin-left:12.3rem;width:1.25rem;height:1.25rem;" onclick="testSil()" type="checkbox" > 
-                          <div class="form-group">
-                        <input type="text" class="form-control" id="urunAdetSil" name="UrunAdedi"  placeholder="Ürün Adedi Giriniz" disabled> 
-                      </div>
-                      </div>
-                    </form>
-                  </div>
+</div>
+<div class="container mt-2">
+    <div class="modal" id="myModalDelProduct">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-              </div>
-                    </div>
-                    <div class="modal-footer">
-                         <button type="submit" id="DeleteAll" data-bs-toggle="modal" data-bs-target="#myModalAll" class="btn btn-gradient-danger me-2" style="float:left"> Hepsini Sil</button>
-                         <button type="submit" id="delbyAdet" data-bs-toggle="modal" data-bs-target="#myModalAdet"class="btn btn-gradient-danger me-2">Adede Göre Sil</button>
+                <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Ürün Sil</h4>
+                <div class="modal-body">
+                    <div class="col-12 grid-margin stretch-card">
+                        <div class="card " style="height:100%; margin-bottom:-3rem;">
+                            <div class="card-body">
+                                <form class="forms-sample">
+                                    <div class="form-group">
+                                        <label for="exampleInputName1">Ürün Adedine Göre Sil</label>
+                                        <input id="checkboxValueSil" style="margin-left:12.3rem;width:1.25rem;height:1.25rem;" onclick="testSil()" type="checkbox">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="urunAdetSil" name="UrunAdedi" placeholder="Ürün Adedi Giriniz" disabled>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="container mt-2"> @*mt kapatılabilir*@
-        <div class="modal" id="myModalAdet">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Emin Misiniz?</h4>
-                    <div class="modal-body">
-                        <div class="col-12 grid-margin stretch-card">
-                <div class="card " style="height:100%; margin-bottom:-3rem;">
-                  <div class="card-body">
-                              <h1 class="card-title text-center mt-2">Ürünü silmek istediğinize emin misiniz?</h1>
-
-                  </div>
-                </div>
-              </div>
-                    </div>
-                    <div class="modal-footer">
-                                     <button type="submit" id="SureAdet" class="btn btn-gradient-danger me-2">Sil</button>
-
-                            <button type="submit" data-bs-dismiss="modal"  class="btn btn-gradient-info me-2">İptal Et</button>
-                    </div>
+                <div class="modal-footer">
+                    <button type="submit" id="DeleteAll" data-bs-toggle="modal" data-bs-target="#myModalAll" class="btn btn-gradient-danger me-2" style="float:left"> Hepsini Sil</button>
+                    <button type="submit" id="delbyAdet" data-bs-toggle="modal" data-bs-target="#myModalAdet" class="btn btn-gradient-danger me-2">Adede Göre Sil</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="container mt-2"> @*mt kapatılabilir*@
-        <div class="modal" id="myModalAll">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Emin Misiniz?</h4>
-                    <div class="modal-body">
-                        <div class="col-12 grid-margin stretch-card">
-                <div class="card " style="height:100%; margin-bottom:-3rem;">
-                  <div class="card-body">
-                              <h1 class="card-title text-center mt-2">Ürünlerin tamamını silmek istediğinize emin misiniz?</h1>
-
-                  </div>
+</div>
+<div class="container mt-2">
+    @*mt kapatılabilir*@
+    <div class="modal" id="myModalAdet">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-              </div>
-                    </div>
-                    <div class="modal-footer">
-                                     <button type="submit" id="SureAll" class="btn btn-gradient-danger me-2">Sil</button>
+                <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Emin Misiniz?</h4>
+                <div class="modal-body">
+                    <div class="col-12 grid-margin stretch-card">
+                        <div class="card " style="height:100%; margin-bottom:-3rem;">
+                            <div class="card-body">
+                                <h1 class="card-title text-center mt-2">Ürünü silmek istediğinize emin misiniz?</h1>
 
-                            <button type="submit" data-bs-dismiss="modal"  class="btn btn-gradient-info me-2">İptal Et</button>
+                            </div>
+                        </div>
                     </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="SureAdet" class="btn btn-gradient-danger me-2">Sil</button>
+
+                    <button type="submit" data-bs-dismiss="modal" class="btn btn-gradient-info me-2">İptal Et</button>
                 </div>
             </div>
         </div>
     </div>
-<div class="container mt-2"> @*mt kapatılabilir*@
-
-        <div class="modal" id="myModalnewProd">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                     <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Yeni Ürün Ekle</h4>
-                    <div class="modal-body">
-                        <div class="col-12 grid-margin stretch-card">
-                <div class="card " style="height:100%; margin-bottom:-3rem;">
-                  <div class="card-body">
-                    <form class="forms-sample">
-                        <label for="exampleInputName1" style="font-size:14px">Ürün Kodu</label>
-                      <div class="form-group" style="display:flex">
-                        <input type="text" class="form-control" id="UKod" name="UrunKodu" required placeholder="Ürün Kodu">
-                        <a type="button" onclick="GenerateCode( )"class="btn btn-gradient-success">Kod üret</a>
-                      </div>
-                        <div class="form-group">
-                        <label for="exampleInputName1">Ürün Adı </label>
-                        <input type="text" class="form-control" id="UName" name="UrunAdi"  required placeholder="Ürün Adı">
-                      </div>
-                        <div class="form-group">
-                        <label for="exampleInputName1">Ürün Markası</label>
-                        <input type="text" class="form-control" id="UMarka" name="Marka"  required placeholder="Ürün Markası">
-                      </div>
-                      <div class="form-group">
-                      <label for="exampleFormControlSelect1">Kategori Seçiniz</label>
-                      <select class="form-control form-control-lg" id="SelectsProd">
-                          <option>-</option>
-                          @foreach(var item in (List<Kategoriler>)ViewBag.CatList)
-                                        {
-                                            <option value="@item.KategoriAdi">@item.KategoriAdi</option>       
-                                        }
-                                           
-                      </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputName1">Ürün Stok Adedi </label>
-                        <input type="number" class="form-control" id="UAdet" name="UrunAdet" placeholder="Ürün Stok Adedi(Boş geçilebilir)">
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleInputName1">Ürün Adedi </label>
-                        <input type="number" class="form-control" id="UKullanilan" name="UrunAdet" required placeholder="Ürün Adedi">
-                      </div>
-                    <div class="form-group">
-                        <label for="exampleInputName1">Ürün Fiyatı </label>
-                        <input type="text" class="form-control" id="UFiyat" name="fiyat"  required placeholder="Ürün Fiyatı">
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleInputName1"> Satış Fiyatı</label>
-                        <input type="text" class="form-control" id="USatisFiyat" name="satisFiyati"  required placeholder="Satış Fiyatı">
-                      </div>
-                    </form>
-                  </div>
+</div>
+<div class="container mt-2">
+    @*mt kapatılabilir*@
+    <div class="modal" id="myModalAll">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-              </div>
+                <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Emin Misiniz?</h4>
+                <div class="modal-body">
+                    <div class="col-12 grid-margin stretch-card">
+                        <div class="card " style="height:100%; margin-bottom:-3rem;">
+                            <div class="card-body">
+                                <h1 class="card-title text-center mt-2">Ürünlerin tamamını silmek istediğinize emin misiniz?</h1>
+
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal-footer">
-                         <button type="submit" id="addNewProd" class="btn btn-gradient-info me-2">Onayla</button>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="SureAll" class="btn btn-gradient-danger me-2">Sil</button>
+
+                    <button type="submit" data-bs-dismiss="modal" class="btn btn-gradient-info me-2">İptal Et</button>
                 </div>
             </div>
         </div>
     </div>
+</div>
+<div class="container mt-2">
+    @*mt kapatılabilir*@
+
+    <div class="modal" id="myModalnewProd">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <h4 class="modal-title d-flex justify-content-center" style="margin-top:-1rem;">Yeni Ürün Ekle</h4>
+                <div class="modal-body">
+                    <div class="col-12 grid-margin stretch-card">
+                        <div class="card " style="height:100%; margin-bottom:-3rem;">
+                            <div class="card-body">
+                                <form class="forms-sample">
+                                    <label for="exampleInputName1" style="font-size:14px">Ürün Kodu</label>
+                                    <div class="form-group" style="display:flex">
+                                        <input type="text" class="form-control" id="UKod" name="UrunKodu" required placeholder="Ürün Kodu">
+                                        <a type="button" onclick="GenerateCode( )" class="btn btn-gradient-success">Kod üret</a>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputName1">Ürün Adı </label>
+                                        <input type="text" class="form-control" id="UName" name="UrunAdi" required placeholder="Ürün Adı">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputName1">Ürün Markası</label>
+                                        <input type="text" class="form-control" id="UMarka" name="Marka" required placeholder="Ürün Markası">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlSelect1">Kategori Seçiniz</label>
+                                        <select class="form-control form-control-lg" id="SelectsProd">
+                                            <option>-</option>
+                                            @foreach (var item in (List<Kategoriler>)ViewBag.CatList)
+                                            {
+                                                <option value="@item.KategoriAdi">@item.KategoriAdi</option>
+
+                                            }
+
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputName1">Ürün Stok Adedi </label>
+                                        <input type="number" class="form-control" id="UAdet" name="UrunAdet" placeholder="Ürün Stok Adedi(Boş geçilebilir)">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputName1">Ürün Adedi </label>
+                                        <input type="number" class="form-control" id="UKullanilan" name="UrunAdet" required placeholder="Ürün Adedi">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputName1">Ürün Fiyatı </label>
+                                        <input type="text" class="form-control" id="UFiyat" name="fiyat" required placeholder="Ürün Fiyatı">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputName1"> Satış Fiyatı</label>
+                                        <input type="text" class="form-control" id="USatisFiyat" name="satisFiyati" required placeholder="Satış Fiyatı">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="addNewProd" class="btn btn-gradient-info me-2">Onayla</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <button type="button" style="border-radius:7rem; position: fixed; bottom: 20px;right: 20px;margin-right:3rem;" class="btn btn-gradient-info " style="margin-bottom:1rem;" data-bs-toggle="modal" data-bs-target="#myModal">+</button>
-                                    
-                        <script type="text/javascript">
+
+<script type="text/javascript">
 $("#UrunYukle2Holder").on("click", function() {
-    var packid = $("#").val();
+    var packid = $("#selectsPack").val();
         var AlanAdi = $("#alanAdiGets").val();
+        var text = "Bazı ürünler eklenemedi.\n"
     $.ajax({
             url: "@Url.Action("AddPack2Alan","Explorers")",
             type: 'POST',
             data:{packid:packid,AlanAdi:AlanAdi},
             dataType: 'json',
             success: function(data) {
-              //if(data.length !=0){
-
-              //}
-              //else if(data ==){
-
-              //}
-              //else{
-              //     swal({
-              //      icon: "success", title: "Başarılı", text: "Paket içerisindeki ürünler alana eklendi!", type:
-              //          "success"
-              //  }).then(function() {
-              //      location.reload();
-              //  });
-              //}
+               if(data == 0){
+                                      swal({
+                    icon: "success", title: "Başarılı", text: "Paket içerisindeki ürünler alana eklendi! Halihazırda ekli olan ürünler güncellenmedi", type:
+                        "success"
+                }).then(function() {
+                    location.reload();
+                });
+              }
+              else{
+                  for(var i =0; i<data.lenght; i++){
+                      text.append = "\n" + data.urunAdi
+                  }
+                   swal({
+                    icon: "warning", title: "UYARI", text: text , type:
+                        "warning"
+                }).then(function() {
+                    location.reload();
+                });
+              }
             },
             error: function(err) {
                 swal("Hata Oluştu", "Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.", "warning")
@@ -403,7 +421,7 @@ $("#UrunYukle2Holder").on("click", function() {
         });
 });
 
-$("#selectsPack").on("change", function() { 
+$("#selectsPack").on("change", function() {
 var packid = $("#selectsPack").val();
     $("#tableListPaketİcerik tbody").empty();
     $.ajax({
@@ -412,11 +430,10 @@ var packid = $("#selectsPack").val();
         data: {packid:packid},
         dataType: 'json',
         success: function(data) {
-            console.log(data)
             for (var i = 0; i < data.length; i++) {
             $('#tableListPaketİcerik tbody').append('<tr class="table" style="cursor:pointer;background-color:#e9e9f7; user-select: none;font-size:12px"><td class="text-center" style=" user-select: none;font-size:12px">'+data[i].urunKodu+'</td><td class="text-center" style=" user-select: none;font-size:12px">'+data[i].urunAdi+'</td><td class="text-center" style=" user-select: none;font-size:12px">'+data[i].urunAdedi+'</td> </tr>');
             }
-   
+
         },
         error:function(err){
               swal("Hata Oluştu", "Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.", "warning")
@@ -446,10 +463,10 @@ $("#addPack").on("click", function() {
             }
         });
 });
- 
-                           
+
+
 $("#addprod3").on("click", function() {
-    var UrunKodu = $("#odaAdi").val(); 
+    var UrunKodu = $("#odaAdi").val();
     var UrunAdedi = $("#UrunAdet").val();
     var RowId = $("#rowids").val();
     $.ajax({
@@ -481,7 +498,7 @@ $("#addprod3").on("click", function() {
             else {
                 swal("Hata Oluştu", "Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.", "warning")
             }
-            
+
         },
         error: function(err) {
             swal("Hata Oluştu", "Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.", "warning")
@@ -518,10 +535,10 @@ $("#addprod3").on("click", function() {
                             "warning"
                     });
                 }
-                else if (data == 2) 
+                else if (data == 2)
                 {
-swal({icon:"success",title: "Başarılı", text: "Ürün Alana Eklendi!", type: 
-"success"}).then(function(){ 
+swal({icon:"success",title: "Başarılı", text: "Ürün Alana Eklendi!", type:
+"success"}).then(function(){
    location.reload();
    }
 );
@@ -552,7 +569,7 @@ swal({icon:"success",title: "Başarılı", text: "Ürün Alana Eklendi!", type:
     }
     document.getElementById("UKod").setAttribute("value", result)
 };
-          
+
 
 $("#catAdi").on("change", function() {
     var getCatName = $("#catAdi").val();
@@ -574,7 +591,7 @@ $("#catAdi").on("change", function() {
                         markup = "<tr class='table' style='cursor:pointer;background-color:#e9e9f7;user-select:none'><td >"
                       + data[i].urunKategorisi + "</td><td style='user-select:none'>"
                       + data[i].urunKodu+"</td><td style='user-select:none'>"
-                      + data[i].urunAdi+"</td><td><a type='submit' data-bs-toggle='modal' data-bs-target='myModalOK' style='user-select:none;' class='btn btn-gradient-info btn-sm'>" 
+                      + data[i].urunAdi+"</td><td><a type='submit' data-bs-toggle='modal' data-bs-target='myModalOK' style='user-select:none;' class='btn btn-gradient-info btn-sm'>"
                       +data[i].kullanilanUrunAdet+"<a/></td><td style='user-select:none' data-bs-toggle='modal' data-bs-target='#myModalDelProduct'><button class='btn btn-gradient-info btn-sm' data-bs-toggle='modal' data-bs-target='#myModalProductUpdate' style='user-select:none'>Güncelle</button><a type='submit' class='btn btn-gradient-danger btn-sm'>Sil</a></td></tr>";
                         tableBody = $("#table tbody");
                         tableBody.append(markup);
@@ -640,7 +657,7 @@ $("#updateProduct").on("click", function() {
 
                              $("#table tbody td button").on("click", function(){
            $("#table" ).on("click", "td:nth-child(5)", function(){
-              
+
     var Send = $(this).parent("tr").find("td:nth-child(2)").text();
                var id;
 
@@ -675,7 +692,7 @@ $("#updateProduct").on("click", function() {
   title: "HATIRLATMA!",
   text: "Bu üründen en fazla " + data+" Adet Ekleyebilirsiniz",
   type: "warning",
-  confirmButtonText: "Cool" 
+  confirmButtonText: "Cool"
  });
                             }
                                         }
@@ -685,7 +702,7 @@ $("#updateProduct").on("click", function() {
                swal("Hata Oluştu","Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.","warning")
             }
         });
-});      
+});
 });
 
 
@@ -698,7 +715,7 @@ $("#updateProduct").on("click", function() {
              document.getElementById("urunAdetSil").disabled = true;
         }
 }
-var adet 
+var adet
 $("#SureAdet").on("click", function(){
      adet = $("#urunAdetSil").val();
     AlanAdi = $("#alanAdiGet").text();
@@ -749,7 +766,7 @@ var AlanAdi;
                         dataType: "Json",
                         success: function (data) {
                             $('#odaAdi').empty();
-                            
+
                                 $('#odaAdi').append("<option value='" +" --" + "'>" + "--" + "</Option>");
                                 for (var i = 0; i < data.length; i++) {
                                 $('#odaAdi').append("<option value='" + data[i].urunKodu + "'>" + data[i].urunAdi + "</Option>");
@@ -777,7 +794,7 @@ var AlanAdi;
                             }
                             else if (data == "DontAlert") {
 
-                               
+
                             }
                             else {
                                   swal({
@@ -787,7 +804,7 @@ var AlanAdi;
                                     confirmButtonText: "Cool"
                                 });
                             }
-                                        
+
                         }
                                         });
                                 });
