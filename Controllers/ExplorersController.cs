@@ -27,6 +27,7 @@ namespace Remake.Controllers
         List<Paket> packs = new List<Paket>();
         Paketholder paketHolder = new Paketholder();
         List<Paketholder> PH = new List<Paketholder>();
+        List<Paketholder> PHs = new List<Paketholder>();
         Stokısenabled stokısenabled = new Stokısenabled();
         public static int KesifIdInt,MekanidHold;
         int temp;
@@ -38,52 +39,200 @@ namespace Remake.Controllers
             return View(db.Kesiflers);
 
         }
-        public JsonResult AddPack2Alan(int packid,string AlanAdi)
+        public JsonResult AddPack2Alan(int packid, string AlanAdi)
         {
+            int stok;
+            int counter = 0;
             List<string> urunEklenmeyen = new List<string>();
             urun = new Urunler();
             alanHolder = new Alanholder();
             urunholders = new List<Urunholder>();
-            stokısenabled = db.Stokısenableds.FirstOrDefault(x=>x.Id==1);
+            stokısenabled = db.Stokısenableds.FirstOrDefault(x => x.Id == 1);
             alanHolder = db.Alanholders.FirstOrDefault(x => x.MekanId == MekanidHold && x.AlanAdi == AlanAdi && x.KesifId == KesifIdInt);
-            urunholders = db.Urunholders.Where(x=>x.AlanId==alanHolder.Id).ToList();
+            urunholders = db.Urunholders.Where(x => x.AlanId == alanHolder.Id).ToList();
+            PH = new List<Paketholder>();
+            PHs = new List<Paketholder>();
+            PH = db.Paketholders.Where(x => x.PaketId == packid).ToList();
             if (stokısenabled.IsEnabled == 0)
             {
-                PH = new List<Paketholder>();
-                PH = db.Paketholders.Where(x => x.PaketId == packid).ToList();
-                foreach(var item in urunholders)
+                foreach (var paketitem in PH)
                 {
-                    foreach(var item2 in PH)
+                    foreach (var urun in urunholders)
                     {
-                        if (item2.UrunId == item.UrunId)
+                        if (paketitem.UrunId == urun.UrunId)
                         {
-                            urun = db.Urunlers.FirstOrDefault(x=>x.Id==item.UrunId);
-                            urunEklenmeyen.Add(urun.UrunAdi);
-                        }
-                        else
-                        {
-                            urunholder = new Urunholder();
-                            urunholder.AlanId = alanHolder.Id;
-                            urunholder.UrunId = item2.UrunId;
-                            urunholder.UrunAdet = item2.UrunAdeti;
-                            db.Urunholders.Add(urunholder);
-                            db.SaveChanges();
+                            PHs.Add(paketitem); // varolanların urunid'sini tutuyor
+                            break;
                         }
                     }
                 }
-                if(urunEklenmeyen.Count == 0)
+                if (PHs.Count == 0)
                 {
-                    return Json(0); // bütün ürünler eklendi
+                    urun = new Urunler();
+                    foreach (var ph in PH)
+                    {
+                        urun = db.Urunlers.FirstOrDefault(x => x.Id == ph.UrunId);
+
+                            urun.KullanilanUrunAdet += ph.UrunAdeti;
+                            urunholder = new Urunholder();
+                            urunholder.AlanId = alanHolder.Id;
+                            urunholder.UrunId = ph.UrunId;
+                            urunholder.UrunAdet = ph.UrunAdeti;
+                            db.Urunholders.Add(urunholder);
+                            db.Entry(urun).State = EntityState.Modified;
+                            db.SaveChanges();
+                        
+                    }
+                    if (urunEklenmeyen.Count == 0)
+                    {
+                        return Json(0); // bütün ürünler eklendi
+                    }
+                    else
+                    {
+                        return Json(urunEklenmeyen); // bu ürünler eklenmedi
+                    }
                 }
                 else
                 {
-                  return Json(urunEklenmeyen); // bu ürünler eklenmedi.
+                    foreach (var deneme in PHs)
+                    {
+                        var adet = db.Urunholders.FirstOrDefault(x => x.UrunId == deneme.UrunId && x.AlanId == alanHolder.Id);
+                        deneme.UrunAdeti = adet.UrunAdet;
+                        PH.Remove(deneme);
+                    }
+                    if (PH.Count != 0)
+                    {
+                        foreach (var ph in PH)
+                        {
+                            urun = db.Urunlers.FirstOrDefault(x => x.Id == ph.UrunId);
+                           
+                                urun.KullanilanUrunAdet += ph.UrunAdeti;
+                                urunholder = new Urunholder();
+                                urunholder.AlanId = alanHolder.Id;
+                                urunholder.UrunId = ph.UrunId;
+                                urunholder.UrunAdet = ph.UrunAdeti;
+                                db.Urunholders.Add(urunholder);
+                                db.Entry(urun).State = EntityState.Modified;
+                                db.SaveChanges();
+                        }
+                        if (urunEklenmeyen.Count == 0)
+                        {
+                            return Json(0); // bütün ürünler eklendi
+                        }
+                        else
+                        {
+                            return Json(urunEklenmeyen); // bu ürünler eklenmedi
+                        }
+                    }
+                    else
+                    {
+                        if (urunEklenmeyen.Count == 0)
+                        {
+                            return Json(0); // bütün ürünler eklendi
+                        }
+                        else
+                        {
+                            return Json(urunEklenmeyen); // bu ürünler eklenmedi
+                        }
+                    }
                 }
             }
             else  // stok kontrolü yapılacak
             {
-
-            return Json(0);
+                foreach(var paketitem in PH)
+                {
+                    foreach(var urun in urunholders)
+                    {
+                        if(paketitem.UrunId == urun.UrunId)
+                        {
+                            PHs.Add(paketitem); // varolanların urunid'sini tutuyor
+                            break;
+                        }
+                    }
+                }
+                if(PHs.Count == 0)
+                {
+                    urun = new Urunler();
+                    foreach (var ph in PH)
+                    {
+                        urun = db.Urunlers.FirstOrDefault(x => x.Id == ph.UrunId);
+                        stok = (int)(urun.UrunAdet - urun.KullanilanUrunAdet);
+                        if (ph.UrunAdeti > stok)
+                        {
+                            urunEklenmeyen.Add(urun.UrunAdi);
+                        }
+                        else
+                        {
+                            urun.KullanilanUrunAdet += ph.UrunAdeti;
+                            urunholder = new Urunholder();  
+                            urunholder.AlanId = alanHolder.Id;
+                            urunholder.UrunId = ph.UrunId;
+                            urunholder.UrunAdet = ph.UrunAdeti;
+                            db.Urunholders.Add(urunholder);
+                            db.Entry(urun).State = EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                    }
+                    if (urunEklenmeyen.Count == 0)
+                    {
+                        return Json(0); // bütün ürünler eklendi
+                    }
+                    else
+                    {
+                        return Json(urunEklenmeyen); // bu ürünler eklenmedi
+                    }
+                }
+                else
+                {
+                    foreach(var deneme in PHs)
+                    {
+                        var adet = db.Urunholders.FirstOrDefault(x => x.UrunId == deneme.UrunId && x.AlanId == alanHolder.Id);
+                        deneme.UrunAdeti = adet.UrunAdet;
+                        PH.Remove(deneme);
+                    }
+                    if(PH.Count !=0)
+                    {
+                        foreach(var ph in PH)
+                        {
+                            urun = db.Urunlers.FirstOrDefault(x => x.Id == ph.UrunId);
+                            stok = (int)(urun.UrunAdet - urun.KullanilanUrunAdet);
+                            if (ph.UrunAdeti > stok)
+                            {
+                                urunEklenmeyen.Add(urun.UrunAdi);
+                            }
+                            else
+                            {
+                                urun.KullanilanUrunAdet += ph.UrunAdeti;
+                                urunholder = new Urunholder();
+                                urunholder.AlanId = alanHolder.Id;
+                                urunholder.UrunId = ph.UrunId;
+                                urunholder.UrunAdet = ph.UrunAdeti;
+                                db.Urunholders.Add(urunholder);
+                                db.Entry(urun).State = EntityState.Modified;
+                                db.SaveChanges();
+                            }
+                        }
+                        if (urunEklenmeyen.Count == 0)
+                        {
+                            return Json(0); // bütün ürünler eklendi
+                        }
+                        else
+                        {
+                            return Json(urunEklenmeyen); // bu ürünler eklenmedi
+                        }
+                    }
+                    else
+                    {
+                        if (urunEklenmeyen.Count == 0)
+                        {
+                            return Json(0); // bütün ürünler eklendi
+                        }
+                        else
+                        {
+                            return Json(urunEklenmeyen); // bu ürünler eklenmedi
+                        }
+                    }
+                }            
             }
         }
         public JsonResult getProd4Paket(int packid)

@@ -4,7 +4,7 @@
     {
         public string KesifAdi { get; set; }
         public string HazirlayanAdi { get; set; }
-        public decimal DolarKuru { get; set; }
+        public float DolarKuru { get; set; }
         public List<Urunler> UrunListesi { get; set; }
 
     }

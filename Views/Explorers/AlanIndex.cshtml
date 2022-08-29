@@ -374,28 +374,34 @@
                                     
                         <script type="text/javascript">
 $("#UrunYukle2Holder").on("click", function() {
-    var packid = $("#").val();
+    var packid = $("#selectsPack").val();
         var AlanAdi = $("#alanAdiGets").val();
+        var text = "Bazı ürünler eklenemedi.\n"
     $.ajax({
             url: "@Url.Action("AddPack2Alan","Explorers")",
             type: 'POST',
             data:{packid:packid,AlanAdi:AlanAdi},
             dataType: 'json',
             success: function(data) {
-              //if(data.length !=0){
-
-              //}
-              //else if(data ==){
-
-              //}
-              //else{
-              //     swal({
-              //      icon: "success", title: "Başarılı", text: "Paket içerisindeki ürünler alana eklendi!", type:
-              //          "success"
-              //  }).then(function() {
-              //      location.reload();
-              //  });
-              //}
+               if(data == 0){
+                                      swal({
+                    icon: "success", title: "Başarılı", text: "Paket içerisindeki ürünler alana eklendi! Halihazırda ekli olan ürünler güncellenmedi", type:
+                        "success"
+                }).then(function() {
+                    location.reload();
+                });
+              }
+              else{
+                  for(var i =0; i<data.lenght; i++){
+                      text.append = "\n" + data.urunAdi
+                  }
+                   swal({
+                    icon: "warning", title: "UYARI", text: text , type:
+                        "warning"
+                }).then(function() {
+                    location.reload();
+                });
+              }
             },
             error: function(err) {
                 swal("Hata Oluştu", "Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.", "warning")
@@ -412,7 +418,6 @@ var packid = $("#selectsPack").val();
         data: {packid:packid},
         dataType: 'json',
         success: function(data) {
-            console.log(data)
             for (var i = 0; i < data.length; i++) {
             $('#tableListPaketİcerik tbody').append('<tr class="table" style="cursor:pointer;background-color:#e9e9f7; user-select: none;font-size:12px"><td class="text-center" style=" user-select: none;font-size:12px">'+data[i].urunKodu+'</td><td class="text-center" style=" user-select: none;font-size:12px">'+data[i].urunAdi+'</td><td class="text-center" style=" user-select: none;font-size:12px">'+data[i].urunAdedi+'</td> </tr>');
             }

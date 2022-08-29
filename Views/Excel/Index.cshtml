@@ -32,7 +32,7 @@
                 <div class="card">
                   <div class="card-body"style="margin:0 auto;">
                     <p class="card-description text-center"> Bilgisayara kaydet </p>
-                      <button type="submit" id="saveXL" class="btn btn-gradient-success me-2" style="margin:0 auto;">Kaydet</button>
+                      <a href="/Excel/ExcelKaydet" type="button" id="saveXL" class="btn btn-gradient-success me-2" style="margin:0 auto;">Kaydet</a>
                   </div>
                 </div>
               </div>
@@ -49,59 +49,73 @@
             </div>
 
       <script type="text/javascript">
-var kesifid, DolarKuru;
+    var kesifid, DolarKuru;
+    $("#dolarkuru").on("change", function(){
+        kesifid = $("#kesifid").val();
+        DolarKuru = $("#dolarkuru").val();
+        if (kesifid == "--") {
+        }
+        else if (DolarKuru == "") {
 
-$("#sendXL").on("click", function() {
-     kesifid = $("#kesifid").val();
-     DolarKuru = $("#dolarkuru").val();
-    if (kesifid == "--") {
-        swal("Uyarı", "Lütfen keşif seçiniz.", "warning")
-    }
-    else if (DolarKuru == "") {
-        swal("Uyarı", "Lütfen Dolar kurunu giriniz.", "warning")
-    }
-    else {
+        }
+        else {
 
-    $.ajax({
-            url: "@Url.Action("ExcelMailGonder","Excel")",
-            type: 'POST',
-            data: {kesifid : kesifid,DolarKuru:DolarKuru},
-            dataType: 'json',
-            success: function(data) {
-                alert("Başarılı");
-            },
-            error: function(err) {
-                 swal("Hata Oluştu","Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.","warning")
-            }
-        });
-    }
+            $.ajax({
+                url: "@Url.Action("setValues","Excel")",
+                type: 'POST',
+                data: { kesifid: kesifid, DolarKuru: DolarKuru },
+                dataType: 'json',
+                success: function (data) {
+                },
+                error: function (err) {
+                    swal("Hata Oluştu", "Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.", "warning")
+                }
+            });
+        }
+    });
+    $("#kesifid").on("change", function () {
+        kesifid = $("#kesifid").val();
+        DolarKuru = $("#dolarkuru").val();
+        if (kesifid == "--") {
 
-});
+        }
+        else if (DolarKuru == "") {
 
-$("#saveXL").on("click", function() {
-     kesifid = $("#kesifid").val();
-    DolarKuru = $("#dolarkuru").val();
-    if (kesifid == "--") {
-        swal("Uyarı", "Lütfen keşif seçiniz.", "warning")
-    }
-    else if (DolarKuru == "") {
-        swal("Uyarı", "Lütfen Dolar kurunu giriniz.", "warning")
-    }
-    else {
+        }
+        else {
 
-    $.ajax({
-            url: "@Url.Action("ExcelKaydet","Excel")",
-            type: 'POST',
-            data: {kesifid : kesifid,DolarKuru:DolarKuru},
-            dataType: 'json',
-            success: function(data) {
-            },
-            error: function(err) {
-                 swal("Hata Oluştu","Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.","warning")
-            }
-        });
+            $.ajax({
+                url: "@Url.Action("setValues","Excel")",
+                type: 'POST',
+                data: { kesifid: kesifid, DolarKuru: DolarKuru },
+                dataType: 'json',
+                success: function (data) {
+                    
+                },
+                error: function (err) {
+                    swal("Hata Oluştu", "Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.", "warning")
+                }
+            });
+        }
+    });
 
-    }
-});
-          
+          $("#sendXL").on("click", function () {
+            $.ajax({
+                url: "@Url.Action("ExcelMailGonder", "Excel")",
+                type: 'POST',
+                dataType: 'json',
+                success: function (data) {
+                    if (data == 1) {
+                        swal("Başarılı", "İşlem başarılı bir şekilde tamamlandı. Lütfen Mail kutunuzu kontrol ediniz.", "success")
+                    } 
+                    else {
+                        swal("Hata Oluştu", "Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.", "warning")
+                    }
+                },
+                error: function (err) {
+                    swal("Hata Oluştu", "Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz.", "warning")
+                }
+            });
+        
+    });
       </script>
