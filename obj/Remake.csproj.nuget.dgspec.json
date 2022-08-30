@@ -1,27 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\merts\\Desktop\\p\\PrtlyRemake\\Remake.csproj": {}
+    "/Users/mwiert/Desktop/ProtalyaProje/PrtlyRemake/Remake.csproj": {}
   },
   "projects": {
-    "C:\\Users\\merts\\Desktop\\p\\PrtlyRemake\\Remake.csproj": {
+    "/Users/mwiert/Desktop/ProtalyaProje/PrtlyRemake/Remake.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\merts\\Desktop\\p\\PrtlyRemake\\Remake.csproj",
+        "projectUniqueName": "/Users/mwiert/Desktop/ProtalyaProje/PrtlyRemake/Remake.csproj",
         "projectName": "Remake",
-        "projectPath": "C:\\Users\\merts\\Desktop\\p\\PrtlyRemake\\Remake.csproj",
-        "packagesPath": "C:\\Users\\merts\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\merts\\Desktop\\p\\PrtlyRemake\\obj\\",
+        "projectPath": "/Users/mwiert/Desktop/ProtalyaProje/PrtlyRemake/Remake.csproj",
+        "packagesPath": "/Users/mwiert/.nuget/packages/",
+        "outputPath": "/Users/mwiert/Desktop/ProtalyaProje/PrtlyRemake/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\merts\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/mwiert/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "/usr/local/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -40,10 +39,6 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
-            "ClosedXML": {
-              "target": "Package",
-              "version": "[0.96.0, )"
-            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[6.0.6, )"
@@ -86,7 +81,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.400/RuntimeIdentifierGraph.json"
         }
       }
     }
