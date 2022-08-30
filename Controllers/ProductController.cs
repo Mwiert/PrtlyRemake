@@ -20,6 +20,7 @@ namespace Remake.Controllers
         Paketholder packHolder = new Paketholder();
         List<Paketholder> paketholders = new List<Paketholder>();
         int counter;
+        static int paketidHolder;
         public IActionResult Index()
         {
             try
@@ -63,6 +64,11 @@ namespace Remake.Controllers
         }
         public JsonResult SavePack(int paketid)
         {
+            paketid = paketidHolder;
+            if (paketid == 0)
+            {
+              return Json(2);
+            }
             if (listPaketStatic.Count == 0)
             {
                 return Json(0);
@@ -203,11 +209,12 @@ namespace Remake.Controllers
                 {
                     return Json(2);
                 }
-                else {
+                else {            
                     pack = new Paket();
                     pack.PaketAdi = PCName;
                     db.Pakets.Add(pack);
                     db.SaveChanges();
+                    paketidHolder = pack.Id;
                     return Json(1);
                 }
             }

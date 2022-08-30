@@ -44,6 +44,9 @@ namespace Remake.Controllers
             List<string> CatHolder = new List<string>();
             kesifid = kesifidd;
             DolarKuru = kur;
+
+            string temp = DolarKuru.Replace(",", ".");
+            DolarKuru = temp;
             if (string.IsNullOrEmpty(kesif.ToString()) || string.IsNullOrEmpty(DolarKuru))
             {
                 return RedirectToAction("Index");
@@ -174,9 +177,10 @@ namespace Remake.Controllers
                     worksheet.Cell(7, 9).Style.Fill.BackgroundColor = XLColor.FromHtml("#8cb4e2");
                     worksheet.Cell(8, 9).Style.Fill.BackgroundColor = XLColor.FromHtml("#8cb4e2");
 
-                    worksheet.Cell(7, 10).Value = " KDV'li Toplam Maaliyet (TL)";
+                    worksheet.Cell(7, 10).Value = " KDV'li Toplam Maliyet (TL)";
                     worksheet.Cell(7, 10).Style.Alignment.WrapText = true;
                     worksheet.Cell(7, 10).Style.Font.Bold = true;
+                    worksheet.Column("J").Width = 18;
                     worksheet.Cell(7, 10).Style.Fill.BackgroundColor = XLColor.FromHtml("#8cb4e2");
                     worksheet.Cell(8, 10).Style.Fill.BackgroundColor = XLColor.FromHtml("#8cb4e2");
 
@@ -200,9 +204,10 @@ namespace Remake.Controllers
                     worksheet.Cell(7, 13).Style.Fill.BackgroundColor = XLColor.FromHtml("#da9694");
                     worksheet.Cell(8, 13).Style.Fill.BackgroundColor = XLColor.FromHtml("#da9694");
 
-                    worksheet.Cell(7, 14).Value = "KDV'li Toplam Maaliyet (TL)";
+                    worksheet.Cell(7, 14).Value = "KDV'li Toplam Maliyet (TL)";
                     worksheet.Cell(7, 14).Style.Alignment.WrapText = true;
                     worksheet.Cell(7, 14).Style.Font.Bold = true;
+                    worksheet.Column("N").Width = 18;
                     worksheet.Cell(7, 14).Style.Fill.BackgroundColor = XLColor.FromHtml("#da9694");
                     worksheet.Cell(8, 14).Style.Fill.BackgroundColor = XLColor.FromHtml("#da9694");
 
@@ -215,6 +220,7 @@ namespace Remake.Controllers
                     worksheet.Cell(7, 16).Value = "Kar Tutarı (TL)";
                     worksheet.Cell(7, 16).Style.Alignment.WrapText = true;
                     worksheet.Cell(7, 16).Style.Font.Bold = true;
+                    worksheet.Column("P").Width = 18;
                     worksheet.Cell(7, 16).Style.Fill.BackgroundColor = XLColor.FromHtml("#ff7070");
                     worksheet.Cell(8, 16).Style.Fill.BackgroundColor = XLColor.FromHtml("#ff7070");
 
@@ -264,7 +270,9 @@ namespace Remake.Controllers
                                     worksheet.Cell(rowCount, 8).DataType = XLDataType.Number;
                                     worksheet.Cell(rowCount, 8).FormulaA1 = "=E"+rowCount+"*$G$"+rowCount+"";
 
-                                    worksheet.Cell(rowCount, 9).Value = dolar+"₺";
+                                    worksheet.Cell(rowCount, 9).Style.NumberFormat.Format = "0.00 TL";
+                                    worksheet.Cell(rowCount, 9).DataType = XLDataType.Number;
+                                    worksheet.Cell(rowCount, 9).Value = dolar;
                                     
                                     worksheet.Cell(rowCount, 10).Style.NumberFormat.Format = "0.00 TL";
                                     worksheet.Cell(rowCount, 10).FormulaA1 = "=PRODUCT(H" + rowCount + "*(1.18)*F2)";
@@ -276,12 +284,16 @@ namespace Remake.Controllers
 
                                     worksheet.Cell(rowCount, 12).FormulaA1 = "=E" + rowCount + "*$K$" + rowCount + "";
 
-                                    worksheet.Cell(rowCount, 13).Value = dolar + "₺";
+
+                                    worksheet.Cell(rowCount, 13).Style.NumberFormat.Format = "0.00 TL";
+                                    worksheet.Cell(rowCount, 13).DataType = XLDataType.Number;
+                                    worksheet.Cell(rowCount, 13).Value = dolar;
 
                                     worksheet.Cell(rowCount, 14).Style.NumberFormat.Format = "0.00 TL";
                                     worksheet.Cell(rowCount, 14).FormulaA1 = "=PRODUCT(L" + rowCount + "*(0.18)*F2)";
 
-
+                                    worksheet.Cell(rowCount, 15).Style.NumberFormat.Format = "$0.00";
+                                    worksheet.Cell(rowCount, 15).DataType = XLDataType.Number;
                                     worksheet.Cell(rowCount, 15).FormulaA1 = "=SUM(L" + rowCount + "-H" + rowCount + ")";
 
                                     worksheet.Cell(rowCount, 16).Style.NumberFormat.Format = "0.00 TL";
@@ -294,20 +306,34 @@ namespace Remake.Controllers
 
                                     rowCount++;
                                 }
-                                worksheet.Cell(rowCount, 8).FormulaA1 =  "=SUM(H" + (rowCount-incrmnt) + ":H" + (rowCount - 1) + ")";
+                                worksheet.Cell(rowCount, 8).Style.NumberFormat.Format = "$0.00";
+                                worksheet.Cell(rowCount, 8).DataType = XLDataType.Number;
+                                worksheet.Cell(rowCount, 8).FormulaA1 = "=SUM(H" + (rowCount - incrmnt) + ":H" + (rowCount - 1) + ")";
                                 worksheet.Cell(rowCount, 8).Style.Font.Bold = true;
+
+                                worksheet.Cell(rowCount, 10).Style.NumberFormat.Format = "0.00 TL";
+                                worksheet.Cell(rowCount, 10).DataType = XLDataType.Number;
                                 worksheet.Cell(rowCount, 10).FormulaA1 = "=SUM(J" + (rowCount - incrmnt) + ":J" + (rowCount - 1) + ")";
                                 worksheet.Cell(rowCount, 10).Style.Font.Bold = true;
 
+                                worksheet.Cell(rowCount, 12).Style.NumberFormat.Format = "$0.00";
+                                worksheet.Cell(rowCount, 12).DataType = XLDataType.Number;
                                 worksheet.Cell(rowCount, 12).FormulaA1 = "=SUM(L" + (rowCount - incrmnt) + ":L" + (rowCount - 1) + ")";
                                 worksheet.Cell(rowCount, 12).Style.Font.Bold = true;
 
+                                worksheet.Cell(rowCount, 14).Style.NumberFormat.Format = "0.00 TL";
+                                worksheet.Cell(rowCount, 14).DataType = XLDataType.Number;
                                 worksheet.Cell(rowCount, 14).FormulaA1 = "=SUM(J" + (rowCount - incrmnt) + ":J" + (rowCount - 1) + ")";
                                 worksheet.Cell(rowCount, 14).Style.Font.Bold = true;
 
+
+                                worksheet.Cell(rowCount, 15).Style.NumberFormat.Format = "$0.00";
+                                worksheet.Cell(rowCount, 15).DataType = XLDataType.Number;
                                 worksheet.Cell(rowCount, 15).FormulaA1 = "=SUM(L" + (rowCount - incrmnt) + ":L" + (rowCount - 1) + ")";
                                 worksheet.Cell(rowCount, 15).Style.Font.Bold = true;
 
+                                worksheet.Cell(rowCount, 16).Style.NumberFormat.Format = "0.00 TL";
+                                worksheet.Cell(rowCount, 16).DataType = XLDataType.Number;
                                 worksheet.Cell(rowCount, 16).FormulaA1 = "=SUM(P" + (rowCount - incrmnt) + ":P" + (rowCount - 1) + ")";
                                 worksheet.Cell(rowCount, 16).Style.Font.Bold = true;
 
@@ -375,7 +401,10 @@ namespace Remake.Controllers
                                     worksheet.Cell(rowCount, 8).DataType = XLDataType.Number;
                                     worksheet.Cell(rowCount, 8).FormulaA1 = "=E" + rowCount + "*$G$" + rowCount + "";
 
-                                    worksheet.Cell(rowCount, 9).Value = dolar+"₺";
+
+                                    worksheet.Cell(rowCount, 9).Style.NumberFormat.Format = "0.00 TL";
+                                    worksheet.Cell(rowCount, 9).DataType = XLDataType.Number;
+                                    worksheet.Cell(rowCount, 9).Value = dolar;
 
                                     worksheet.Cell(rowCount, 10).Style.NumberFormat.Format = "0.00 TL";
                                     worksheet.Cell(rowCount, 10).FormulaA1 = "=PRODUCT(H" + rowCount + "*(1.18)*F2)";
@@ -387,7 +416,9 @@ namespace Remake.Controllers
 
                                     worksheet.Cell(rowCount, 12).FormulaA1 = "=E" + rowCount + "*$K$" + rowCount + "";
 
-                                    worksheet.Cell(rowCount, 13).Value = dolar + "₺";
+                                    worksheet.Cell(rowCount, 13).Style.NumberFormat.Format = "0.00 TL";
+                                    worksheet.Cell(rowCount, 13).DataType = XLDataType.Number;
+                                    worksheet.Cell(rowCount, 13).Value = dolar ;
 
                                     worksheet.Cell(rowCount, 14).Style.NumberFormat.Format = "0.00 TL";
                                     worksheet.Cell(rowCount, 14).FormulaA1 = "=PRODUCT(L" + rowCount + "*(0.18)*F2)";
@@ -406,23 +437,35 @@ namespace Remake.Controllers
 
                                     rowCount++;
                                 }
+                                worksheet.Cell(rowCount, 8).Style.NumberFormat.Format = "$0.00";
+                                worksheet.Cell(rowCount, 8).DataType = XLDataType.Number;
                                 worksheet.Cell(rowCount, 8).FormulaA1 = "=SUM(H" + (rowCount - incrmnt) + ":H" + (rowCount - 1) + ")";
                                 worksheet.Cell(rowCount, 8).Style.Font.Bold = true;
+
+                                worksheet.Cell(rowCount, 10).Style.NumberFormat.Format = "0.00 TL";
+                                worksheet.Cell(rowCount, 10).DataType = XLDataType.Number;
                                 worksheet.Cell(rowCount, 10).FormulaA1 = "=SUM(J" + (rowCount - incrmnt) + ":J" + (rowCount - 1) + ")";
                                 worksheet.Cell(rowCount, 10).Style.Font.Bold = true;
 
-
+                                worksheet.Cell(rowCount, 12).Style.NumberFormat.Format = "$0.00";
+                                worksheet.Cell(rowCount, 12).DataType = XLDataType.Number;
                                 worksheet.Cell(rowCount, 12).FormulaA1 = "=SUM(L" + (rowCount - incrmnt) + ":L" + (rowCount - 1) + ")";
                                 worksheet.Cell(rowCount, 12).Style.Font.Bold = true;
 
 
+                                worksheet.Cell(rowCount, 14).Style.NumberFormat.Format = "0.00 TL";
+                                worksheet.Cell(rowCount, 14).DataType = XLDataType.Number;
                                 worksheet.Cell(rowCount, 14).FormulaA1 = "=SUM(J" + (rowCount - incrmnt) + ":J" + (rowCount - 1) + ")";
                                 worksheet.Cell(rowCount, 14).Style.Font.Bold = true;
 
+                                worksheet.Cell(rowCount, 15).Style.NumberFormat.Format = "$0.00";
+                                worksheet.Cell(rowCount, 15).DataType = XLDataType.Number;
                                 worksheet.Cell(rowCount, 15).FormulaA1 = "=SUM(L" + (rowCount - incrmnt) + ":L" + (rowCount - 1) + ")";
                                 worksheet.Cell(rowCount, 15).Style.Font.Bold = true;
 
 
+                                worksheet.Cell(rowCount, 16).Style.NumberFormat.Format = "0.00 TL";
+                                worksheet.Cell(rowCount, 16).DataType = XLDataType.Number;
                                 worksheet.Cell(rowCount, 16).FormulaA1 = "=SUM(P" + (rowCount - incrmnt) + ":P" + (rowCount - 1) + ")";
                                 worksheet.Cell(rowCount, 16).Style.Font.Bold = true;
 
@@ -454,6 +497,9 @@ namespace Remake.Controllers
             List<string> CatHolder = new List<string>();
             kesifid = kesifidd;
             DolarKuru = kur;
+
+            string temp = DolarKuru.Replace(",", ".");
+            DolarKuru = temp;
             if (string.IsNullOrEmpty(kesif.ToString()) || string.IsNullOrEmpty(DolarKuru))
             {
                 return Json(0);
@@ -584,9 +630,10 @@ namespace Remake.Controllers
                     worksheet.Cell(7, 9).Style.Fill.BackgroundColor = XLColor.FromHtml("#8cb4e2");
                     worksheet.Cell(8, 9).Style.Fill.BackgroundColor = XLColor.FromHtml("#8cb4e2");
 
-                    worksheet.Cell(7, 10).Value = " KDV'li Toplam Maaliyet (TL)";
+                    worksheet.Cell(7, 10).Value = " KDV'li Toplam Maliyet (TL)";
                     worksheet.Cell(7, 10).Style.Alignment.WrapText = true;
                     worksheet.Cell(7, 10).Style.Font.Bold = true;
+                    worksheet.Column("J").Width = 18;
                     worksheet.Cell(7, 10).Style.Fill.BackgroundColor = XLColor.FromHtml("#8cb4e2");
                     worksheet.Cell(8, 10).Style.Fill.BackgroundColor = XLColor.FromHtml("#8cb4e2");
 
@@ -610,9 +657,10 @@ namespace Remake.Controllers
                     worksheet.Cell(7, 13).Style.Fill.BackgroundColor = XLColor.FromHtml("#da9694");
                     worksheet.Cell(8, 13).Style.Fill.BackgroundColor = XLColor.FromHtml("#da9694");
 
-                    worksheet.Cell(7, 14).Value = "KDV'li Toplam Maaliyet (TL)";
+                    worksheet.Cell(7, 14).Value = "KDV'li Toplam Maliyet (TL)";
                     worksheet.Cell(7, 14).Style.Alignment.WrapText = true;
                     worksheet.Cell(7, 14).Style.Font.Bold = true;
+                    worksheet.Column("N").Width = 18;
                     worksheet.Cell(7, 14).Style.Fill.BackgroundColor = XLColor.FromHtml("#da9694");
                     worksheet.Cell(8, 14).Style.Fill.BackgroundColor = XLColor.FromHtml("#da9694");
 
@@ -625,6 +673,7 @@ namespace Remake.Controllers
                     worksheet.Cell(7, 16).Value = "Kar Tutarı (TL)";
                     worksheet.Cell(7, 16).Style.Alignment.WrapText = true;
                     worksheet.Cell(7, 16).Style.Font.Bold = true;
+                    worksheet.Column("P").Width = 18;
                     worksheet.Cell(7, 16).Style.Fill.BackgroundColor = XLColor.FromHtml("#ff7070");
                     worksheet.Cell(8, 16).Style.Fill.BackgroundColor = XLColor.FromHtml("#ff7070");
 
@@ -674,7 +723,9 @@ namespace Remake.Controllers
                                     worksheet.Cell(rowCount, 8).DataType = XLDataType.Number;
                                     worksheet.Cell(rowCount, 8).FormulaA1 = "=E" + rowCount + "*$G$" + rowCount + "";
 
-                                    worksheet.Cell(rowCount, 9).Value = dolar + "₺";
+                                    worksheet.Cell(rowCount, 9).Style.NumberFormat.Format = "0.00 TL";
+                                    worksheet.Cell(rowCount, 9).DataType = XLDataType.Number;
+                                    worksheet.Cell(rowCount, 9).Value = dolar;
 
                                     worksheet.Cell(rowCount, 10).Style.NumberFormat.Format = "0.00 TL";
                                     worksheet.Cell(rowCount, 10).FormulaA1 = "=PRODUCT(H" + rowCount + "*(1.18)*F2)";
@@ -684,14 +735,21 @@ namespace Remake.Controllers
                                     worksheet.Cell(rowCount, 11).DataType = XLDataType.Number;
                                     worksheet.Cell(rowCount, 11).Value = item.SatisFiyati;
 
+
+                                    worksheet.Cell(rowCount, 12).Style.NumberFormat.Format = "$0.00";
+                                    worksheet.Cell(rowCount, 12).DataType = XLDataType.Number;
                                     worksheet.Cell(rowCount, 12).FormulaA1 = "=E" + rowCount + "*$K$" + rowCount + "";
 
-                                    worksheet.Cell(rowCount, 13).Value = dolar + "₺";
+
+                                    worksheet.Cell(rowCount, 13).Style.NumberFormat.Format = "0.00 TL";
+                                    worksheet.Cell(rowCount, 13).DataType = XLDataType.Number;
+                                    worksheet.Cell(rowCount, 13).Value = dolar;
 
                                     worksheet.Cell(rowCount, 14).Style.NumberFormat.Format = "0.00 TL";
                                     worksheet.Cell(rowCount, 14).FormulaA1 = "=PRODUCT(L" + rowCount + "*(0.18)*F2)";
 
-
+                                    worksheet.Cell(rowCount, 15).Style.NumberFormat.Format = "$0.00";
+                                    worksheet.Cell(rowCount, 15).DataType = XLDataType.Number;
                                     worksheet.Cell(rowCount, 15).FormulaA1 = "=SUM(L" + rowCount + "-H" + rowCount + ")";
 
                                     worksheet.Cell(rowCount, 16).Style.NumberFormat.Format = "0.00 TL";
@@ -704,20 +762,34 @@ namespace Remake.Controllers
 
                                     rowCount++;
                                 }
+                                worksheet.Cell(rowCount, 8).Style.NumberFormat.Format = "$0.00";
+                                worksheet.Cell(rowCount, 8).DataType = XLDataType.Number;
                                 worksheet.Cell(rowCount, 8).FormulaA1 = "=SUM(H" + (rowCount - incrmnt) + ":H" + (rowCount - 1) + ")";
                                 worksheet.Cell(rowCount, 8).Style.Font.Bold = true;
+
+                                worksheet.Cell(rowCount, 10).Style.NumberFormat.Format = "0.00 TL";
+                                worksheet.Cell(rowCount, 10).DataType = XLDataType.Number;
                                 worksheet.Cell(rowCount, 10).FormulaA1 = "=SUM(J" + (rowCount - incrmnt) + ":J" + (rowCount - 1) + ")";
                                 worksheet.Cell(rowCount, 10).Style.Font.Bold = true;
 
+                                worksheet.Cell(rowCount, 12).Style.NumberFormat.Format = "$0.00";
+                                worksheet.Cell(rowCount, 12).DataType = XLDataType.Number;
                                 worksheet.Cell(rowCount, 12).FormulaA1 = "=SUM(L" + (rowCount - incrmnt) + ":L" + (rowCount - 1) + ")";
                                 worksheet.Cell(rowCount, 12).Style.Font.Bold = true;
 
+                                worksheet.Cell(rowCount, 14).Style.NumberFormat.Format = "0.00 TL";
+                                worksheet.Cell(rowCount, 14).DataType = XLDataType.Number;
                                 worksheet.Cell(rowCount, 14).FormulaA1 = "=SUM(J" + (rowCount - incrmnt) + ":J" + (rowCount - 1) + ")";
                                 worksheet.Cell(rowCount, 14).Style.Font.Bold = true;
 
+
+                                worksheet.Cell(rowCount, 15).Style.NumberFormat.Format = "$0.00";
+                                worksheet.Cell(rowCount, 15).DataType = XLDataType.Number;
                                 worksheet.Cell(rowCount, 15).FormulaA1 = "=SUM(L" + (rowCount - incrmnt) + ":L" + (rowCount - 1) + ")";
                                 worksheet.Cell(rowCount, 15).Style.Font.Bold = true;
 
+                                worksheet.Cell(rowCount, 16).Style.NumberFormat.Format = "0.00 TL";
+                                worksheet.Cell(rowCount, 16).DataType = XLDataType.Number;
                                 worksheet.Cell(rowCount, 16).FormulaA1 = "=SUM(P" + (rowCount - incrmnt) + ":P" + (rowCount - 1) + ")";
                                 worksheet.Cell(rowCount, 16).Style.Font.Bold = true;
 
@@ -727,7 +799,7 @@ namespace Remake.Controllers
                             }
                             else
                             {
-                                //rowCount += incrmnt;  // ??
+                                //rowCount += incrmnt;  // ???
                                 lines = rowCount;
                                 rowCount += 2;
                                 worksheet.Rows(lines, lines + 1).Style.Fill.BackgroundColor = XLColor.LightGray;
@@ -785,7 +857,10 @@ namespace Remake.Controllers
                                     worksheet.Cell(rowCount, 8).DataType = XLDataType.Number;
                                     worksheet.Cell(rowCount, 8).FormulaA1 = "=E" + rowCount + "*$G$" + rowCount + "";
 
-                                    worksheet.Cell(rowCount, 9).Value = dolar + "₺";
+
+                                    worksheet.Cell(rowCount, 9).Style.NumberFormat.Format = "0.00 TL";
+                                    worksheet.Cell(rowCount, 9).DataType = XLDataType.Number;
+                                    worksheet.Cell(rowCount, 9).Value = dolar;
 
                                     worksheet.Cell(rowCount, 10).Style.NumberFormat.Format = "0.00 TL";
                                     worksheet.Cell(rowCount, 10).FormulaA1 = "=PRODUCT(H" + rowCount + "*(1.18)*F2)";
@@ -797,7 +872,9 @@ namespace Remake.Controllers
 
                                     worksheet.Cell(rowCount, 12).FormulaA1 = "=E" + rowCount + "*$K$" + rowCount + "";
 
-                                    worksheet.Cell(rowCount, 13).Value = dolar + "₺";
+                                    worksheet.Cell(rowCount, 13).Style.NumberFormat.Format = "0.00 TL";
+                                    worksheet.Cell(rowCount, 13).DataType = XLDataType.Number;
+                                    worksheet.Cell(rowCount, 13).Value = dolar;
 
                                     worksheet.Cell(rowCount, 14).Style.NumberFormat.Format = "0.00 TL";
                                     worksheet.Cell(rowCount, 14).FormulaA1 = "=PRODUCT(L" + rowCount + "*(0.18)*F2)";
@@ -816,23 +893,35 @@ namespace Remake.Controllers
 
                                     rowCount++;
                                 }
+                                worksheet.Cell(rowCount, 8).Style.NumberFormat.Format = "$0.00";
+                                worksheet.Cell(rowCount, 8).DataType = XLDataType.Number;
                                 worksheet.Cell(rowCount, 8).FormulaA1 = "=SUM(H" + (rowCount - incrmnt) + ":H" + (rowCount - 1) + ")";
                                 worksheet.Cell(rowCount, 8).Style.Font.Bold = true;
+
+                                worksheet.Cell(rowCount, 10).Style.NumberFormat.Format = "0.00 TL";
+                                worksheet.Cell(rowCount, 10).DataType = XLDataType.Number;
                                 worksheet.Cell(rowCount, 10).FormulaA1 = "=SUM(J" + (rowCount - incrmnt) + ":J" + (rowCount - 1) + ")";
                                 worksheet.Cell(rowCount, 10).Style.Font.Bold = true;
 
-
+                                worksheet.Cell(rowCount, 12).Style.NumberFormat.Format = "$0.00";
+                                worksheet.Cell(rowCount, 12).DataType = XLDataType.Number;
                                 worksheet.Cell(rowCount, 12).FormulaA1 = "=SUM(L" + (rowCount - incrmnt) + ":L" + (rowCount - 1) + ")";
                                 worksheet.Cell(rowCount, 12).Style.Font.Bold = true;
 
 
+                                worksheet.Cell(rowCount, 14).Style.NumberFormat.Format = "0.00 TL";
+                                worksheet.Cell(rowCount, 14).DataType = XLDataType.Number;
                                 worksheet.Cell(rowCount, 14).FormulaA1 = "=SUM(J" + (rowCount - incrmnt) + ":J" + (rowCount - 1) + ")";
                                 worksheet.Cell(rowCount, 14).Style.Font.Bold = true;
 
+                                worksheet.Cell(rowCount, 15).Style.NumberFormat.Format = "$0.00";
+                                worksheet.Cell(rowCount, 15).DataType = XLDataType.Number;
                                 worksheet.Cell(rowCount, 15).FormulaA1 = "=SUM(L" + (rowCount - incrmnt) + ":L" + (rowCount - 1) + ")";
                                 worksheet.Cell(rowCount, 15).Style.Font.Bold = true;
 
 
+                                worksheet.Cell(rowCount, 16).Style.NumberFormat.Format = "0.00 TL";
+                                worksheet.Cell(rowCount, 16).DataType = XLDataType.Number;
                                 worksheet.Cell(rowCount, 16).FormulaA1 = "=SUM(P" + (rowCount - incrmnt) + ":P" + (rowCount - 1) + ")";
                                 worksheet.Cell(rowCount, 16).Style.Font.Bold = true;
 

@@ -674,6 +674,9 @@ $("#UrunYukle2HolderTwo").on("click", function() {
             if (data == 0) {
                   swal("Hata Oluştu", "Paket boş olduğu için işlem başarısız.", "warning")
             }
+            else if(data == 2){
+                  swal("Hata Oluştu", "Beklenmedik bir hata oluştu. Lütfen biraz bekleyip tekrar deneyiniz", "warning")
+            }
             else{
                 swal({
                     icon: "success", title: "Başarılı", text: "Paket Kaydedildi!", type:

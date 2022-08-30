@@ -1,34 +1,29 @@
 ﻿<Properties StartupConfiguration="{870EB7BB-347A-451E-9FBD-A638545F947E}|rreeemaakeee">
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/mwiert/Desktop/PrtlyRemake/Controllers/ExcelController.cs" relfile="Controllers/ExcelController.cs" line="850" column="1" />
-    </BreakpointStore>
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.ItemProperties.Remake PreferredExecutionTarget="/Applications/Safari.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Security/Validations/ResetPassword/rePassword.cs">
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Views/Category/ListIndex.cshtml">
     <Files>
       <File FileName="Models/kesifdbContext.cs" Line="19" Column="33" />
-      <File FileName="Views/Product/Index.cshtml" Line="676" Column="14" />
+      <File FileName="Views/Product/Index.cshtml" Line="235" Column="53" />
       <File FileName="Models/ExcelEntites.cs" Line="1" Column="1" />
       <File FileName="Security/Validations/excelOps/excelSendMail.cs" Line="13" Column="42" />
       <File FileName="Views/Explorers/AlanIndex.cshtml" Line="619" Column="38" />
-      <File FileName="Controllers/ExcelController.cs" Line="323" Column="82" />
-      <File FileName="Security/Validations/ResetPassword/rePassword.cs" Line="1" Column="1" />
+      <File FileName="Controllers/ExcelController.cs" Line="948" Column="1" />
+      <File FileName="Security/Validations/ResetPassword/rePassword.cs" Line="17" Column="33" />
+      <File FileName="Views/Category/Index.cshtml" Line="107" Column="53" />
+      <File FileName="Views/Category/ListIndex.cshtml" Line="99" Column="95" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Remake" expanded="True">
             <Node name="Remake" expanded="True">
-              <Node name="Security" expanded="True">
-                <Node name="Validations" expanded="True">
-                  <Node name="ResetPassword" expanded="True">
-                    <Node name="rePassword.cs" selected="True" />
-                  </Node>
-                </Node>
+              <Node name="Views" expanded="True">
+                <Node name="Category" expanded="True" />
               </Node>
             </Node>
           </Node>
@@ -39,4 +34,5 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.Remake PreferredExecutionTarget="/Applications/Opera GX.app" />
 </Properties>
